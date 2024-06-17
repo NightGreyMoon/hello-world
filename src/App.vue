@@ -1,26 +1,40 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
+<script setup lang="ts">
+import { computed } from 'vue';
+import { NConfigProvider, darkTheme } from 'naive-ui';
+import { useAppStore } from './store/modules/app';
+import { useThemeStore } from './store/modules/theme';
+import { naiveDateLocales, naiveLocales } from './locales/naive';
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+defineOptions({
+  name: 'App'
+});
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+const appStore = useAppStore();
+const themeStore = useThemeStore();
+
+const naiveDarkTheme = computed(() => (themeStore.darkMode ? darkTheme : undefined));
+
+const naiveLocale = computed(() => {
+  return naiveLocales[appStore.locale];
+});
+
+const naiveDateLocale = computed(() => {
+  return naiveDateLocales[appStore.locale];
+});
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<template>
+  <NConfigProvider
+    :theme="naiveDarkTheme"
+    :theme-overrides="themeStore.naiveTheme"
+    :locale="naiveLocale"
+    :date-locale="naiveDateLocale"
+    class="h-full"
+  >
+    <AppProvider>
+      <RouterView class="bg-layout" />
+    </AppProvider>
+  </NConfigProvider>
+</template>
+
+<style scoped></style>
