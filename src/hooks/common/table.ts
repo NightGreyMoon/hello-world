@@ -213,13 +213,6 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     await getData();
   }
 
-  async function onUpdated() {
-    window.$message?.success($t('common.updateSuccess'));
-    new Promise(resolve => setTimeout(resolve, 2000)).then(() => {
-      getData();
-    });
-  }
-
   return {
     drawerVisible,
     openDrawer,
@@ -230,8 +223,7 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     handleEdit,
     checkedRowKeys,
     onBatchDeleted,
-    onDeleted,
-    onUpdated
+    onDeleted
   };
 }
 
