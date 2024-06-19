@@ -281,6 +281,8 @@ declare namespace App {
         tip: string;
         trigger: string;
         update: string;
+        disable: string;
+        enable: string;
         updateSuccess: string;
         userCenter: string;
         yesOrNo: {
@@ -432,6 +434,131 @@ declare namespace App {
             desc5: string;
           };
           creativity: string;
+        };
+        lesson: {
+          common: {
+            title: string;
+            name: string;
+            course: string;
+            status: string;
+            remark: string;
+          };
+          manage: {
+            name: string;
+            course: string;
+            status: string;
+            remark: string;
+          };
+          form: {
+            name: string;
+            course: string;
+            remark: string;
+          };
+          addLesson: string;
+          editLesson: string;
+        };
+        student: {
+          common: {
+            title: string;
+            name: string;
+            gender: string;
+            parentName: string;
+            school: string;
+            grade: string;
+            birthDate: string;
+            status: string;
+            userId: string;
+            remark: string;
+          };
+          manage: {
+            name: string;
+            gender: string;
+            parentName: string;
+            school: string;
+            grade: string;
+            birthDate: string;
+            registerDate: string;
+            payDate: string;
+            status: string;
+            remark: string;
+          };
+          form: {
+            name: string;
+            school: string;
+            gender: string;
+            grade: string;
+            birthDate: string;
+            status: string;
+            remark: string;
+          };
+          addStudent: string;
+          editStudent: string;
+        };
+        enrollment: {
+          common: {
+            title: string;
+            studentName: string;
+            lessonName: string;
+            enrollmentDate: string;
+            paymentDate: string;
+            amount: string;
+            referee: string;
+            status: string;
+            remark: string;
+          };
+          manage: {
+            studentName: string;
+            lessonName: string;
+            lessonCourse: string;
+            enrollmentDate: string;
+            paymentDate: string;
+            amount: string;
+            referee: string;
+            status: string;
+            remark: string;
+          };
+          search: {
+            studentName: string;
+            lessonName: string;
+            remark: string;
+          };
+          form: {
+            student: string;
+            lesson: string;
+            referee: string;
+            enrollmentDate: string;
+            paymentDate: string;
+            amount: string;
+            remark: string;
+          };
+          add: string;
+          edit: string;
+        };
+        score: {
+          common: {
+            title: string;
+            add: string;
+            edit: string;
+            studentName: string;
+            lessonName: string;
+            type: string;
+          };
+          manage: {
+            studentName: string;
+            lessonName: string;
+            course: string;
+            point: string;
+            date: string;
+            status: string;
+            type: string;
+            remark: string;
+          };
+          form: {
+            studentName: string;
+            lessonName: string;
+            point: string;
+            type: string;
+          };
         };
         function: {
           tab: {

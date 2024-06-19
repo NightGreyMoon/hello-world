@@ -1,6 +1,6 @@
 const local: App.I18n.Schema = {
   system: {
-    title: 'Malus 管理系统'
+    title: '比弗利'
   },
   common: {
     action: '操作',
@@ -36,6 +36,8 @@ const local: App.I18n.Schema = {
     tip: '提示',
     trigger: '触发',
     update: '更新',
+    disable: '禁用',
+    enable: '启用',
     updateSuccess: '更新成功',
     userCenter: '个人中心',
     yesOrNo: {
@@ -190,7 +192,16 @@ const local: App.I18n.Schema = {
     plugin_print: '打印',
     plugin_swiper: 'Swiper',
     plugin_video: '视频',
-    plugin_barcode: '条形码'
+    plugin_barcode: '条形码',
+    lesson_manage: '课程管理',
+    lesson: '课程信息',
+    score_manage: '成绩管理',
+    score: '成绩记录',
+    student_manage: '学生管理',
+    student: '学生信息',
+    enrollment_manage: '报课管理',
+    enrollment: '报课记录',
+    system: '系统信息'
   },
   page: {
     login: {
@@ -241,7 +252,7 @@ const local: App.I18n.Schema = {
     },
     about: {
       title: '关于',
-      introduction: `SoybeanAdmin 是一个优雅且功能强大的后台管理模板，基于最新的前端技术栈，包括 Vue3, Vite5, TypeScript, Pinia 和 UnoCSS。它内置了丰富的主题配置和组件，代码规范严谨，实现了自动化的文件路由系统。此外，它还采用了基于 ApiFox 的在线Mock数据方案。SoybeanAdmin 为您提供了一站式的后台管理解决方案，无需额外配置，开箱即用。同样是一个快速学习前沿技术的最佳实践。`,
+      introduction: `Soybean Admin 是一个优雅且功能强大的后台管理模板，基于最新的前端技术栈，包括 Vue3, Vite5, TypeScript, Pinia 和 UnoCSS。它内置了丰富的主题配置和组件，代码规范严谨，实现了自动化的文件路由系统。此外，它还采用了基于 ApiFox 的在线Mock数据方案。SoybeanAdmin 为您提供了一站式的后台管理解决方案，无需额外配置，开箱即用。同样是一个快速学习前沿技术的最佳实践。`,
       projectInfo: {
         title: '项目信息',
         version: '版本',
@@ -434,6 +445,162 @@ const local: App.I18n.Schema = {
           iconify: 'iconify图标',
           local: '本地图标'
         }
+      }
+    },
+    student: {
+      common: {
+        title: '学生信息',
+        name: '姓名',
+        gender: '性别',
+        parentName: '家长姓名',
+        school: '在读学校',
+        grade: '年级',
+        birthDate: '出生年月',
+        status: '是否启用',
+        userId: '所属账户',
+        remark: '备注'
+      },
+      manage: {
+        name: '姓名',
+        gender: '性别',
+        parentName: '家长姓名',
+        school: '在读学校',
+        grade: '在读年级',
+        birthDate: '出生年月',
+        registerDate: '报读日期',
+        payDate: '缴费日期',
+        status: '是否启用',
+        remark: '备注'
+      },
+      form: {
+        name: '请输入学生姓名',
+        school: '请输入在读学校',
+        gender: '请输入学生性别',
+        grade: '请输入学生年级',
+        birthDate: '请输入学生出生年月',
+        status: '是否启用',
+        remark: '请按需填写备注'
+      },
+      addStudent: '新增学生',
+      editStudent: '编辑学生'
+    },
+    lesson: {
+      common: {
+        title: '课程信息',
+        name: '课程名称',
+        status: '状态',
+        course: '科目',
+        remark: '备注'
+      },
+      manage: {
+        name: '课程名称',
+        course: '科目',
+        status: '是否启用',
+        remark: '备注'
+      },
+      form: {
+        name: '请输入课程名称',
+        course: '请输入科目',
+        remark: '请按需填写备注'
+      },
+      addLesson: '新增课程',
+      editLesson: '编辑课程'
+    },
+    enrollment: {
+      common: {
+        title: '报名记录',
+        studentName: '学生姓名',
+        lessonName: '课程名称',
+        enrollmentDate: '报名日期',
+        paymentDate: '缴费日期',
+        amount: '缴费金额',
+        referee: '推荐人',
+        status: '是否启用',
+        remark: '备注'
+      },
+      manage: {
+        studentName: '学生姓名',
+        lessonName: '课程名称',
+        lessonCourse: '课程学科',
+        enrollmentDate: '报名日期',
+        paymentDate: '缴费日期',
+        amount: '缴费金额',
+        referee: '推荐人',
+        status: '是否启用',
+        remark: '备注'
+      },
+      search: {
+        studentName: '请输入学生姓名',
+        lessonName: '请输入课程名称',
+        remark: '请按需填写备注'
+      },
+      form: {
+        student: '学生',
+        lesson: '课程',
+        referee: '推荐人',
+        enrollmentDate: '报名日期',
+        paymentDate: '缴费日期',
+        amount: '缴费金额',
+        remark: '备注'
+      },
+      add: '新增报名',
+      edit: '编辑报名'
+    },
+    score: {
+      common: {
+        title: '成绩记录',
+        add: '记录新成绩',
+        edit: '修改成绩',
+        studentName: '学生姓名',
+        lessonName: '课程名称',
+        type: '类型'
+      },
+      manage: {
+        studentName: '学生姓名',
+        lessonName: '关联课程(可空)',
+        course: '科目',
+        point: '分数',
+        date: '日期',
+        status: '记录状态',
+        type: '类型',
+        remark: '备注'
+      },
+      form: {
+        studentName: '请输入学生姓名',
+        lessonName: '请输入课程',
+        point: '请输入分数',
+        type: '请选择类型'
+      }
+    },
+    curriculum: {
+      common: {
+        title: '排课记录',
+        add: '新增排课',
+        edit: '修改排课',
+        teacherName: '老师姓名',
+        lessonName: '课程名称',
+        remark: '备注'
+      },
+      manage: {
+        teacherName: '老师',
+        lessonName: '课程',
+        lessonCourse: '课程学科',
+        classRoom: '教室',
+        dayOfWeek: '周几',
+        date: '日期',
+        status: '状态',
+        startTime: '开始时间',
+        endTime: '结束时间',
+        remark: '备注'
+      },
+      form: {
+        teacherName: '请输入老师姓名',
+        lessonName: '请输入课程',
+        classRoom: '请填写教室',
+        date: '请选择日期',
+        startTime: '请选择开始时间',
+        endTime: '请选择结束时间',
+        remark: '请输入备注'
       }
     }
   },

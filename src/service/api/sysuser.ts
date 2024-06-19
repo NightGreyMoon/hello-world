@@ -34,3 +34,21 @@ export function deleteSysUser(userid?: number) {
     method: 'post'
   });
 }
+
+/** get parent user list */
+export function getParentList(params?: Api.SystemManage.UserSearchParams) {
+  return request<Api.SystemManage.UserList>({
+    url: '/SysUser/PageList?RoleId=5&pageSize=100',
+    method: 'get',
+    params
+  });
+}
+
+/** get teacher user list */
+export function getTeacherList(params?: Api.SystemManage.UserSearchParams) {
+  return request<Api.SystemManage.UserList>({
+    url: '/SysUser/PageList?RoleId=4&pageSize=100',
+    method: 'get',
+    params
+  });
+}

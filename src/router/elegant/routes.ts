@@ -49,6 +49,73 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'curriculum',
+    path: '/curriculum',
+    component: 'layout.base',
+    meta: {
+      title: 'curriculum',
+      i18nKey: 'route.curriculum'
+    },
+    children: [
+      {
+        name: 'curriculum_calendar',
+        path: '/curriculum/calendar',
+        component: 'view.curriculum_calendar',
+        meta: {
+          title: 'curriculum_calendar',
+          i18nKey: 'route.curriculum_calendar'
+        }
+      },
+      {
+        name: 'curriculum_curriculum',
+        path: '/curriculum/curriculum',
+        component: 'view.curriculum_curriculum',
+        meta: {
+          title: 'curriculum_curriculum',
+          i18nKey: 'route.curriculum_curriculum'
+        }
+      },
+      {
+        name: 'curriculum_manage',
+        path: '/curriculum/manage',
+        component: 'view.curriculum_manage',
+        meta: {
+          title: 'curriculum_manage',
+          i18nKey: 'route.curriculum_manage'
+        }
+      },
+      {
+        name: 'curriculum_teacher',
+        path: '/curriculum/teacher',
+        component: 'view.curriculum_teacher',
+        meta: {
+          title: 'curriculum_teacher',
+          i18nKey: 'route.curriculum_teacher'
+        }
+      }
+    ]
+  },
+  {
+    name: 'enrollment',
+    path: '/enrollment',
+    component: 'layout.base',
+    meta: {
+      title: 'enrollment',
+      i18nKey: 'route.enrollment'
+    },
+    children: [
+      {
+        name: 'enrollment_manage',
+        path: '/enrollment/manage',
+        component: 'view.enrollment_manage',
+        meta: {
+          title: 'enrollment_manage',
+          i18nKey: 'route.enrollment_manage'
+        }
+      }
+    ]
+  },
+  {
     name: 'function',
     path: '/function',
     component: 'layout.base',
@@ -178,6 +245,26 @@ export const generatedRoutes: GeneratedRoute[] = [
       icon: 'mdi:monitor-dashboard',
       order: 1
     }
+  },
+  {
+    name: 'lesson',
+    path: '/lesson',
+    component: 'layout.base',
+    meta: {
+      title: 'lesson',
+      i18nKey: 'route.lesson'
+    },
+    children: [
+      {
+        name: 'lesson_manage',
+        path: '/lesson/manage',
+        component: 'view.lesson_manage',
+        meta: {
+          title: 'lesson_manage',
+          i18nKey: 'route.lesson_manage'
+        }
+      }
+    ]
   },
   {
     name: 'login',
@@ -432,6 +519,55 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       }
     ]
+  },
+  {
+    name: 'score',
+    path: '/score',
+    component: 'layout.base',
+    meta: {
+      title: 'score',
+      i18nKey: 'route.score'
+    },
+    children: [
+      {
+        name: 'score_manage',
+        path: '/score/manage',
+        component: 'view.score_manage',
+        meta: {
+          title: 'score_manage',
+          i18nKey: 'route.score_manage'
+        }
+      }
+    ]
+  },
+  {
+    name: 'student',
+    path: '/student',
+    component: 'layout.base',
+    meta: {
+      title: 'student',
+      i18nKey: 'route.student'
+    },
+    children: [
+      {
+        name: 'student_manage',
+        path: '/student/manage',
+        component: 'view.student_manage',
+        meta: {
+          title: 'student_manage',
+          i18nKey: 'route.student_manage'
+        }
+      }
+    ]
+  },
+  {
+    name: 'system',
+    path: '/system',
+    component: 'layout.base$view.system',
+    meta: {
+      title: 'system',
+      i18nKey: 'route.system'
+    }
   },
   {
     name: 'user-center',

@@ -146,6 +146,92 @@ declare namespace Api {
     /** user list */
     type UserList = Common.PaginatingQueryRecord<User>;
 
+    /** student */
+    type Student = Common.CommonRecord<{
+      name: string;
+      gender: string;
+      grade: string;
+      school: string;
+      birthTimeStamp: number;
+      userId: number;
+      remark: string;
+    }>;
+
+    /** student search params */
+    type StudentSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.Student, 'name' | 'gender' | 'grade' | 'school' | 'remark'> & CommonSearchParams
+    >;
+
+    type Lesson = Common.CommonRecord<{
+      name: string;
+      course: string;
+    }>;
+
+    /** enrollment */
+    type Enrollment = Common.CommonRecord<{
+      id: number;
+      studentName: string;
+      lessonName: string;
+      studentId: number;
+      lessonId: number;
+      referee: string;
+      remark: string;
+      amount: number;
+      paymentTimeStamp: number;
+      enrollmentTimeStamp: number;
+    }>;
+
+    /** enrollment search params */
+    type EnrollmentSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.Enrollment, 'studentName' | 'lessonName' | 'remark'> & CommonSearchParams
+    >;
+
+    /** score */
+    type Score = Common.CommonRecord<{
+      id: number;
+      studentName: string;
+      lessonName: string;
+      studentId: number;
+      lessonId: number;
+      course: string;
+      type: string;
+      remark: string;
+      point: number;
+      dateTimeStamp: number;
+    }>;
+    /** score search params */
+    type ScoreSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.Score, 'studentName' | 'course' | 'lessonName' | 'type'> & CommonSearchParams
+    >;
+    /** curriculum */
+    type Curriculum = Common.CommonRecord<{
+      id: number;
+      teacherName: string;
+      lessonName: string;
+      teacherId: number;
+      lessonId: number;
+      lessonCourse: string;
+      classRoom: string;
+      remark: string;
+      dayOfWeek: number;
+      dateTimeStamp: number;
+      startTimeStamp: number;
+      endTimeStamp: number;
+    }>;
+    /** curriculum search params */
+    type CurriculumSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.Curriculum, 'teacherName' | 'teacherId' | 'lessonName' | 'classRoom' | 'remark'> &
+        CommonSearchParams
+    >;
+
+    type CurriculumSearchByClassRoomParams = {
+      classRoom: string;
+      year: number;
+      month: number;
+      day: number;
+      drawerVisible: boolean;
+    };
+
     /**
      * menu type
      *

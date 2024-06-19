@@ -1,14 +1,14 @@
 /** Default theme settings */
 export const themeSettings: App.Theme.ThemeSetting = {
   themeScheme: 'light',
-  themeColor: '#646cff',
+  themeColor: '#edb549',
   otherColor: {
-    info: '#2080f0',
-    success: '#52c41a',
-    warning: '#faad14',
-    error: '#f5222d'
+    info: '#3b3939',
+    success: '#22c55e',
+    warning: '#769ff7',
+    error: '#f43f5e'
   },
-  isInfoFollowPrimary: true,
+  isInfoFollowPrimary: false,
   layout: {
     mode: 'vertical',
     scrollMode: 'content'
@@ -42,7 +42,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
   footer: {
     visible: true,
     fixed: false,
-    height: 48,
+    height: 24,
     right: true
   }
 };

@@ -25,6 +25,13 @@ declare module "@elegant-router/types" {
     "404": "/404";
     "500": "/500";
     "about": "/about";
+    "curriculum": "/curriculum";
+    "curriculum_calendar": "/curriculum/calendar";
+    "curriculum_curriculum": "/curriculum/curriculum";
+    "curriculum_manage": "/curriculum/manage";
+    "curriculum_teacher": "/curriculum/teacher";
+    "enrollment": "/enrollment";
+    "enrollment_manage": "/enrollment/manage";
     "function": "/function";
     "function_hide-child": "/function/hide-child";
     "function_hide-child_one": "/function/hide-child/one";
@@ -39,6 +46,8 @@ declare module "@elegant-router/types" {
     "function_tab": "/function/tab";
     "function_toggle-auth": "/function/toggle-auth";
     "home": "/home";
+    "lesson": "/lesson";
+    "lesson_manage": "/lesson/manage";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "manage": "/manage";
     "manage_menu": "/manage/menu";
@@ -64,6 +73,11 @@ declare module "@elegant-router/types" {
     "plugin_print": "/plugin/print";
     "plugin_swiper": "/plugin/swiper";
     "plugin_video": "/plugin/video";
+    "score": "/score";
+    "score_manage": "/score/manage";
+    "student": "/student";
+    "student_manage": "/student/manage";
+    "system": "/system";
     "user-center": "/user-center";
   };
 
@@ -104,12 +118,18 @@ declare module "@elegant-router/types" {
     | "404"
     | "500"
     | "about"
+    | "curriculum"
+    | "enrollment"
     | "function"
     | "home"
+    | "lesson"
     | "login"
     | "manage"
     | "multi-menu"
     | "plugin"
+    | "score"
+    | "student"
+    | "system"
     | "user-center"
   >;
 
@@ -133,6 +153,11 @@ declare module "@elegant-router/types" {
     | "500"
     | "login"
     | "about"
+    | "curriculum_calendar"
+    | "curriculum_curriculum"
+    | "curriculum_manage"
+    | "curriculum_teacher"
+    | "enrollment_manage"
     | "function_hide-child_one"
     | "function_hide-child_three"
     | "function_hide-child_two"
@@ -145,6 +170,7 @@ declare module "@elegant-router/types" {
     | "function_tab"
     | "function_toggle-auth"
     | "home"
+    | "lesson_manage"
     | "manage_menu"
     | "manage_role"
     | "manage_user-detail"
@@ -161,6 +187,9 @@ declare module "@elegant-router/types" {
     | "plugin_print"
     | "plugin_swiper"
     | "plugin_video"
+    | "score_manage"
+    | "student_manage"
+    | "system"
     | "user-center"
   >;
 
