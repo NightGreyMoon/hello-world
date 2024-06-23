@@ -1,3 +1,4 @@
+Cloned from https://gitee.com/Pridejoy/MalusAdmin and did some personal study
 <div align="center">
 	<img src="./public/favicon.svg" width="160" />
 	<h1>Soybean Admin</h1>
