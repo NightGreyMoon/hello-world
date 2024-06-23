@@ -385,6 +385,26 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'parent',
+    path: '/parent',
+    component: 'layout.base',
+    meta: {
+      title: 'parent',
+      i18nKey: 'route.parent'
+    },
+    children: [
+      {
+        name: 'parent_home',
+        path: '/parent/home',
+        component: 'view.parent_home',
+        meta: {
+          title: 'parent_home',
+          i18nKey: 'route.parent_home'
+        }
+      }
+    ]
+  },
+  {
     name: 'plugin',
     path: '/plugin',
     component: 'layout.base',

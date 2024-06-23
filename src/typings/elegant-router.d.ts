@@ -60,6 +60,8 @@ declare module "@elegant-router/types" {
     "multi-menu_second": "/multi-menu/second";
     "multi-menu_second_child": "/multi-menu/second/child";
     "multi-menu_second_child_home": "/multi-menu/second/child/home";
+    "parent": "/parent";
+    "parent_home": "/parent/home";
     "plugin": "/plugin";
     "plugin_barcode": "/plugin/barcode";
     "plugin_charts": "/plugin/charts";
@@ -126,6 +128,7 @@ declare module "@elegant-router/types" {
     | "login"
     | "manage"
     | "multi-menu"
+    | "parent"
     | "plugin"
     | "score"
     | "student"
@@ -152,6 +155,7 @@ declare module "@elegant-router/types" {
     | "404"
     | "500"
     | "login"
+    | "parent_home"
     | "about"
     | "curriculum_calendar"
     | "curriculum_curriculum"
