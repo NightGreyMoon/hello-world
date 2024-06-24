@@ -20,6 +20,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   500: () => import("@/views/_builtin/500/index.vue"),
   login: () => import("@/views/_builtin/login/index.vue"),
   parent_home: () => import("@/views/_builtin/parent/home/index.vue"),
+  parent_lesson: () => import("@/views/_builtin/parent/lesson/index.vue"),
   about: () => import("@/views/about/index.vue"),
   curriculum_calendar: () => import("@/views/curriculum/calendar/index.vue"),
   curriculum_curriculum: () => import("@/views/curriculum/curriculum/index.vue"),

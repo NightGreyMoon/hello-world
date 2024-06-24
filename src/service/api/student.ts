@@ -1,13 +1,12 @@
 import { request } from '../request';
 
-/** 角色分页 */
-// export function getSysRolePage(params?: Api.SystemManage.RoleSearchParams) {
-//   return request<Api.SystemManage.Role>({
-//     url: '/SysRole/PageList',
-//     method: 'get',
-//     params
-//   });
-// }
+/** 获取账户已确认绑定的学生列表 */
+export function getConfirmedStudents(id: number) {
+  return request<Student>({
+    url: `/Student/AllStudentForUser?id=${id}`,
+    method: 'get'
+  });
+}
 
 // 新增学生
 export function addStudent(data?: any) {

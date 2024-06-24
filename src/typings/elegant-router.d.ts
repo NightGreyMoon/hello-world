@@ -62,6 +62,7 @@ declare module "@elegant-router/types" {
     "multi-menu_second_child_home": "/multi-menu/second/child/home";
     "parent": "/parent";
     "parent_home": "/parent/home";
+    "parent_lesson": "/parent/lesson";
     "plugin": "/plugin";
     "plugin_barcode": "/plugin/barcode";
     "plugin_charts": "/plugin/charts";
@@ -156,6 +157,7 @@ declare module "@elegant-router/types" {
     | "500"
     | "login"
     | "parent_home"
+    | "parent_lesson"
     | "about"
     | "curriculum_calendar"
     | "curriculum_curriculum"

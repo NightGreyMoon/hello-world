@@ -401,6 +401,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'parent_home',
           i18nKey: 'route.parent_home'
         }
+      },
+      {
+        name: 'parent_lesson',
+        path: '/parent/lesson',
+        component: 'view.parent_lesson',
+        meta: {
+          title: 'parent_lesson',
+          i18nKey: 'route.parent_lesson'
+        }
       }
     ]
   },
