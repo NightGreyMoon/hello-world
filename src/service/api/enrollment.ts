@@ -26,3 +26,11 @@ export function updateEnrollment(data?: any) {
     data
   });
 }
+
+// 获取在读课程
+export function getEnrollmentForStudent(id: number) {
+  return request<EnrolledLesson>({
+    url: `/Enrollment/EnrolledLessons?id=${id}`,
+    method: 'get'
+  });
+}
