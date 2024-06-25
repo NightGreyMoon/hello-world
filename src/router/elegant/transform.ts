@@ -190,6 +190,7 @@ const routeMap: RouteMap = {
   "parent_confirm-student": "/parent/confirm-student",
   "parent_home": "/parent/home",
   "parent_lesson": "/parent/lesson",
+  "parent_me": "/parent/me",
   "plugin": "/plugin",
   "plugin_barcode": "/plugin/barcode",
   "plugin_charts": "/plugin/charts",

@@ -64,6 +64,7 @@ declare module "@elegant-router/types" {
     "parent_confirm-student": "/parent/confirm-student";
     "parent_home": "/parent/home";
     "parent_lesson": "/parent/lesson";
+    "parent_me": "/parent/me";
     "plugin": "/plugin";
     "plugin_barcode": "/plugin/barcode";
     "plugin_charts": "/plugin/charts";
@@ -160,6 +161,7 @@ declare module "@elegant-router/types" {
     | "parent_confirm-student"
     | "parent_home"
     | "parent_lesson"
+    | "parent_me"
     | "about"
     | "curriculum_calendar"
     | "curriculum_curriculum"
