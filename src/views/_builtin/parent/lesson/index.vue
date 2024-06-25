@@ -4,7 +4,7 @@ import { NCard, NTabPane, NTabs } from 'naive-ui';
 import { getConfirmedStudents, getEnrollmentForStudent } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 
-const students = ref<Curriculum[]>([]);
+const students = ref<Student[]>([]);
 
 const lessons = ref<EnrolledLesson[]>([]);
 

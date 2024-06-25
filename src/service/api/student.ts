@@ -8,6 +8,14 @@ export function getConfirmedStudents(id: number) {
   });
 }
 
+/** 获取账户待确认绑定的学生列表 */
+export function getUnConfirmedStudents(id: number) {
+  return request<Student>({
+    url: `/Student/StudentToConfirm?id=${id}`,
+    method: 'get'
+  });
+}
+
 // 新增学生
 export function addStudent(data?: any) {
   return request<boolean>({

@@ -394,6 +394,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'parent_confirm-student',
+        path: '/parent/confirm-student',
+        component: 'view.parent_confirm-student',
+        meta: {
+          title: 'parent_confirm-student',
+          i18nKey: 'route.parent_confirm-student'
+        }
+      },
+      {
         name: 'parent_home',
         path: '/parent/home',
         component: 'view.parent_home',
