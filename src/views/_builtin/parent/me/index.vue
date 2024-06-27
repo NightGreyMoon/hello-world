@@ -45,7 +45,7 @@ onMounted(() => {
         </NCard>
       </NCarouselItem>
       <NCarouselItem :style="{ width: '90%' }">
-        <NCard>
+        <NCard size="huge">
           林多多
           <br />
           就读学校：汕头市第一中学
@@ -54,7 +54,7 @@ onMounted(() => {
         </NCard>
       </NCarouselItem>
       <NCarouselItem :style="{ width: '90%' }">
-        <NCard>
+        <NCard size="huge">
           林少少
           <br />
           就读学校：汕头市第一中学
