@@ -27,6 +27,42 @@ onMounted(() => {
         <NEllipsis style="max-width: 240px">林多多家长</NEllipsis>
       </NFlex>
     </div>
+
+    <NCarousel
+      effect="card"
+      prev-slide-style="transform: translateX(-195px) translateZ(-150px);"
+      next-slide-style="transform: translateX(-115px) translateZ(-150px);"
+      style="height: 200px"
+      :show-dots="false"
+    >
+      <NCarouselItem :style="{ width: '90%' }">
+        <NCard size="huge">
+          林多多
+          <br />
+          就读学校：汕头市第一中学
+          <br />
+          就读年级：初三
+        </NCard>
+      </NCarouselItem>
+      <NCarouselItem :style="{ width: '90%' }">
+        <NCard>
+          林多多
+          <br />
+          就读学校：汕头市第一中学
+          <br />
+          就读年级：初三
+        </NCard>
+      </NCarouselItem>
+      <NCarouselItem :style="{ width: '90%' }">
+        <NCard>
+          林少少
+          <br />
+          就读学校：汕头市第一中学
+          <br />
+          就读年级：初一
+        </NCard>
+      </NCarouselItem>
+    </NCarousel>
     <div style="margin: 10px 2px">
       <NButton type="primary" block>
         <template #icon>
