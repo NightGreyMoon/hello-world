@@ -18,7 +18,7 @@ export function getAllCurriculum(params?: Api.SystemManage.ScoreSearchParams) {
   });
 }
 
-// 更新成绩记录
+// 更新排课记录
 export function updateCurriculum(data?: any) {
   return request<boolean>({
     url: '/Curriculum/Update',
@@ -27,7 +27,7 @@ export function updateCurriculum(data?: any) {
   });
 }
 
-// 作废成绩
+// 作废排课记录
 export function disableCurriculum(data?: any) {
   return request<boolean>({
     url: `/Curriculum/Delete?id=${data}`,
@@ -35,10 +35,18 @@ export function disableCurriculum(data?: any) {
   });
 }
 
-// 启用成绩
+// 启用排课记录
 export function enableCurriculum(data?: any) {
   return request<boolean>({
     url: `/Curriculum/UnDelete?id=${data}`,
+    method: 'get'
+  });
+}
+
+// 作废排课记录
+export function confirmCurriculum(data?: any) {
+  return request<boolean>({
+    url: `/Curriculum/Confirm?id=${data}`,
     method: 'get'
   });
 }

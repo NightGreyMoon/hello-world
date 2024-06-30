@@ -9,4 +9,5 @@ type EnrolledLesson = {
   enrollmentTimeStamp: number;
   paymentTimeStamp: number;
   amount: number;
+  toAttendCount: number;
 };

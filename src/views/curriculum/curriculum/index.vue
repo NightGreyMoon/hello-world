@@ -4,7 +4,13 @@ import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { NEmpty, NRadioGroup, NSpace, NTable, useDialog, useMessage } from 'naive-ui';
 import { Dayjs } from 'dayjs';
 import { useAppStore } from '@/store/modules/app';
-import { getAttendanceByCurriculum, getCurriculumById, setComment, updateSignInForCurriculum } from '@/service/api';
+import {
+  confirmCurriculum,
+  getAttendanceByCurriculum,
+  getCurriculumById,
+  setComment,
+  updateSignInForCurriculum
+} from '@/service/api';
 import { useRouterPush } from '@/hooks/common/router';
 import { $t } from '@/locales';
 
@@ -18,6 +24,7 @@ const { routerPushByKey } = useRouterPush();
 const route = useRoute();
 
 const curriculum = ref<Curriculum>();
+const hasConfirmed = ref(true);
 
 const isLoading = ref(true);
 
@@ -56,6 +63,7 @@ async function getData() {
     const { error, data } = await getCurriculumById(curriculumId);
     if (!error) {
       curriculum.value = data;
+      hasConfirmed.value = data.hasConfirmed;
       isLoading.value = false;
     }
   } catch (error) {
@@ -85,6 +93,12 @@ function submitComment() {
   closeModal();
 }
 
+function confirmStatus() {
+  const curriculumId: number = route.query.id;
+  confirmCurriculum(curriculumId);
+  getData();
+}
+
 onMounted(async () => {
   getData();
 });
@@ -108,6 +122,10 @@ onMounted(async () => {
         {{ curriculum.classRoom }}
         <NDivider vertical />
         {{ curriculum.teacherName }}
+      </template>
+      <template #header-extra>
+        <NTag v-if="hasConfirmed">已上课</NTag>
+        <NTag v-else>待上课</NTag>
       </template>
     </NCard>
     <!--
@@ -176,7 +194,11 @@ onMounted(async () => {
           </tbody>
         </NTable>
       </NSpace>
+      <template v-if="!hasConfirmed" #action>
+        <NButton type="primary" block @click="confirmStatus">确认已上课</NButton>
+      </template>
     </NCard>
+
     <NModal v-model:show="showModal" class="custom-card" preset="card" title="提交评语" size="huge" :bordered="false">
       <NInput
         v-model:value="attendanceComment"

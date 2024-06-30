@@ -74,7 +74,9 @@ onMounted(() => {
             <br />
             缴费金额：{{ lesson.amount }}
           </template>
-          <template #footer>出勤：{{ lesson.signInCount }} 缺勤：{{ lesson.notSignInCount }}</template>
+          <template #footer>
+            出勤：{{ lesson.signInCount }} 缺勤：{{ lesson.notSignInCount }} | 待上课：{{ lesson.toAttendCount }}
+          </template>
         </NCard>
       </NTabPane>
     </NTabs>
