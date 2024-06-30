@@ -408,7 +408,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.parent_home',
         meta: {
           title: 'parent_home',
-          i18nKey: 'route.parent_home'
+          i18nKey: 'route.parent_home',
+          constant: true
         }
       },
       {
@@ -417,7 +418,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.parent_lesson',
         meta: {
           title: 'parent_lesson',
-          i18nKey: 'route.parent_lesson'
+          i18nKey: 'route.parent_lesson',
+          constant: true
         }
       },
       {
@@ -426,7 +428,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.parent_me',
         meta: {
           title: 'parent_me',
-          i18nKey: 'route.parent_me'
+          i18nKey: 'route.parent_me',
+          constant: true
         }
       }
     ]

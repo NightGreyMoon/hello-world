@@ -1,7 +1,22 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
 import { NAvatar, NButton, NCard, NEllipsis, NFlex, NListItem, NSpace, NTabPane, NTabs } from 'naive-ui';
+import { useRouterPush } from '@/hooks/common/router';
 import { getUnConfirmedStudents } from '@/service/api';
+
+const { routerPushByKey } = useRouterPush();
+
+function handleUpdateValue(value: string) {
+  console.log(value);
+  const newRoute = `/parent/${value}`;
+  console.log(newRoute);
+  // routerPushByKey(newRoute);
+  window.location = newRoute;
+}
+
+onMounted(() => {
+  console.log('parent_home visited');
+});
 </script>
 
 <template>
@@ -41,6 +56,16 @@ import { getUnConfirmedStudents } from '@/service/api';
       <br />
       填充内容 填充内容
       <br />
+      填充内容 填充内容
+      <br />
+      填充内容 填充内容
+      <br />
+      填充内容 填充内容
+      <br />
+      填充内容 填充内容
+      <br />
+      填充内容 填充内容
+      <br />
       填充内容
       <br />
       填充内容
@@ -55,32 +80,37 @@ import { getUnConfirmedStudents } from '@/service/api';
       <br />
     </div>
   </NFlex>
-  <NAffix :trigger-bottom="600" bottom="10" position="absolute" :listen-to="() => containerRef">
-    <NTabs default-value="home" size="large" justify-content="space-evenly" placement="bottom">
-      <NTab name="home" tab="首页">
-        <template #default>
-          <div class="tab-title">
-            <SvgIcon icon="mdi-home-outline" class="text-30px" />
-            首页
-          </div>
-        </template>
-      </NTab>
-      <NTab name="lesson" tab="课程">
-        <template #default>
-          <div class="tab-title">
-            <SvgIcon icon="mdi-book-education-outline" class="text-30px" />
-            课程
-          </div>
-        </template>
-      </NTab>
-      <NTab name="me" tab="我的">
+  <NTabs
+    default-value="home"
+    size="large"
+    class="fixedElement"
+    justify-content="space-evenly"
+    placement="bottom"
+    @update:value="handleUpdateValue"
+  >
+    <NTab name="home" tab="首页">
+      <template #default>
         <div class="tab-title">
-          <SvgIcon icon="mdi-account-outline" class="text-30px" />
-          我的
+          <SvgIcon icon="mdi-home-outline" class="text-30px" />
+          首页
         </div>
-      </NTab>
-    </NTabs>
-  </NAffix>
+      </template>
+    </NTab>
+    <NTab name="lesson" tab="课程">
+      <template #default>
+        <div class="tab-title">
+          <SvgIcon icon="mdi-book-education-outline" class="text-30px" />
+          课程
+        </div>
+      </template>
+    </NTab>
+    <NTab name="me" tab="我的">
+      <div class="tab-title">
+        <SvgIcon icon="mdi-account-outline" class="text-30px" />
+        我的
+      </div>
+    </NTab>
+  </NTabs>
 </template>
 
 <style scoped>
@@ -92,5 +122,13 @@ import { getUnConfirmedStudents } from '@/service/api';
 
 .tab-title {
   text-align: center;
+}
+
+.fixedElement {
+  background-color: #ececec;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
 }
 </style>

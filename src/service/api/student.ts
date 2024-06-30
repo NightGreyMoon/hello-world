@@ -1,17 +1,25 @@
 import { request } from '../request';
 
 /** 获取账户已确认绑定的学生列表 */
-export function getConfirmedStudents(id: number) {
+export function getConfirmedStudents() {
   return request<Student>({
-    url: `/Student/AllStudentForUser?id=${id}`,
+    url: `/Student/AllStudentForUser`,
     method: 'get'
   });
 }
 
-/** 获取账户待确认绑定的学生列表 */
-export function getUnConfirmedStudents(id: number) {
+/** 获取当前账户待确认绑定的学生列表 */
+export function getUnConfirmedStudents() {
   return request<Student>({
-    url: `/Student/StudentToConfirm?id=${id}`,
+    url: `/Student/StudentToConfirm`,
+    method: 'get'
+  });
+}
+
+/** 为当前账户待确认绑定学生 */
+export function confirmStudent(id: number) {
+  return request<Student>({
+    url: `/Student/ConfirmStudent?id=${id}`,
     method: 'get'
   });
 }
