@@ -394,6 +394,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'parent_calendar',
+        path: '/parent/calendar',
+        component: 'view.parent_calendar',
+        meta: {
+          title: 'parent_calendar',
+          i18nKey: 'route.parent_calendar'
+        }
+      },
+      {
         name: 'parent_confirm-student',
         path: '/parent/confirm-student',
         component: 'view.parent_confirm-student',

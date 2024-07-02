@@ -99,6 +99,14 @@ export function getAttendanceByCurriculum(id: number) {
   });
 }
 
+// 根据排学生Id获取上课记录
+export function getAttendanceByStudent(id: number, year: number, month: number, day: number) {
+  return request<Attendance[]>({
+    url: `/Attendance/GetDayForStudent?id=${id}&year=${year}&month=${month}&day=${day}`,
+    method: 'get'
+  });
+}
+
 // 更新上课记录签到状态
 export function updateSignInForCurriculum(id: number) {
   return request<boolean>({
