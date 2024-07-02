@@ -1,9 +1,9 @@
 <script setup lang="tsx">
 import { computed, onMounted, reactive, ref, watch } from 'vue';
-import { NSkeleton, NTabPane, NTabs, useDialog, useMessage } from 'naive-ui';
+import { NTabPane, NTabs, useDialog, useMessage } from 'naive-ui';
 import dayjs, { Dayjs } from 'dayjs';
 import { useAppStore } from '@/store/modules/app';
-import { getAttendanceByStudent, getBetweenDates, getConfirmedStudents } from '@/service/api';
+import { getAttendanceByStudent, getBetweenDates, getComment, getConfirmedStudents, udpateCancel } from '@/service/api';
 import { useRouterPush } from '@/hooks/common/router';
 import { $t } from '@/locales';
 
@@ -19,6 +19,8 @@ const weekdays = ref<string[]>([]);
 
 const students = ref<Student[]>([]);
 const selectedStudentId = ref(0);
+const attendanceComment = ref('');
+const showModal: boolean = ref(false);
 
 async function getStudents() {
   const { error, data } = await getConfirmedStudents(4);
@@ -88,6 +90,27 @@ function handleTabChanged(value: string) {
   window.location = newRoute;
 }
 
+async function updateIsCancelled(id: number) {
+  const { error, data } = await udpateCancel(id);
+  if (!error) {
+    const isCancelled: boolean = data;
+    if (isCancelled) {
+      message.info('请假成功');
+    } else {
+      message.info('取消请假成功');
+    }
+    loadToday();
+  }
+}
+
+async function openModal(id: number) {
+  const { error, data } = await getComment(id);
+  if (!error) {
+    attendanceComment.value = data;
+    showModal.value = true;
+  }
+}
+
 watch(defaultTimeStamp, () => {
   if (defaultTimeStamp.value > 0) {
     loadToday();
@@ -132,8 +155,8 @@ onMounted(async () => {
         </template>
       </NTabPane>
     </NTabs>
-    <NList v-if="curriculums?.length > 0" hoverable clickable>
-      <NListItem v-for="curriculum in curriculums" :key="curriculum.id" @click="checkCurriculum(curriculum.id)">
+    <NList v-if="curriculums?.length > 0" hoverable>
+      <NListItem v-for="curriculum in curriculums" :key="curriculum.id">
         <template #prefix>
           <NButton type="primary" ghost style="height: 70px">
             {{ dayjs(curriculum.curriculumStartTimeStamp).format('HH:mm') }}
@@ -155,8 +178,28 @@ onMounted(async () => {
             <NTag v-else :bordered="false" type="error">缺勤</NTag>
           </template>
           <NTag v-if="curriculum.isCancelled" :bordered="false" checkable>已请假</NTag>
+          <NButton
+            v-if="!curriculum.curriculumHasConfirmed && !curriculum.isCancelled"
+            size="tiny"
+            tertiary
+            type="primary"
+            @click="updateIsCancelled(curriculum.id)"
+          >
+            请假
+          </NButton>
+          <NButton
+            v-if="!curriculum.curriculumHasConfirmed && curriculum.isCancelled"
+            size="tiny"
+            tertiary
+            type="primary"
+            @click="updateIsCancelled(curriculum.id)"
+          >
+            取消请假
+          </NButton>
           <NDivider v-if="curriculum.comment" vertical />
-          <NButton v-if="curriculum.comment" size="tiny">查看评价</NButton>
+          <NButton v-if="curriculum.comment" size="tiny" type="primary" @click="openModal(curriculum.id)">
+            查看评价
+          </NButton>
         </NThing>
       </NListItem>
     </NList>
@@ -193,6 +236,18 @@ onMounted(async () => {
         </div>
       </NTab>
     </NTabs>
+
+    <NModal v-model:show="showModal" class="custom-card" preset="card" title="教师评语" size="huge" :bordered="false">
+      <NInput
+        v-model:value="attendanceComment"
+        type="textarea"
+        maxlength="100"
+        :autosize="{
+          minRows: 3,
+          maxRows: 7
+        }"
+      />
+    </NModal>
   </div>
 </template>
 

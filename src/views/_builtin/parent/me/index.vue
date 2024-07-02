@@ -32,6 +32,11 @@ function goConfirmStudents() {
   window.location = '/parent/confirm-student';
 }
 
+function goLessons() {
+  // routerPushByKey('parent_confirm-student');
+  window.location = '/parent/lesson';
+}
+
 function changeStudent(currentIndex: number) {
   console.log(`changed to studect ${currentIndex}`);
   studectIndex.value = currentIndex;
@@ -99,7 +104,7 @@ onMounted(() => {
       </NListItem>
       <NListItem>
         <template #suffix>></template>
-        <NButton text>
+        <NButton text block @click="goLessons">
           <template #icon>
             <SvgIcon icon="mdi-book-edit-outline" />
           </template>
@@ -164,7 +169,7 @@ onMounted(() => {
   z-index: 100;
 }
 
-.n-button {
-  text-align: left;
+.n-button--block {
+  justify-content: start;
 }
 </style>
