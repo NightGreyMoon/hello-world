@@ -84,9 +84,9 @@ async function handleUpdateValue(value: string) {
 
 function handleTabChanged(value: string) {
   console.log(value);
-  const newRoute = `/parent/${value}`;
+  const newRoute = `/#/parent/${value}`;
   console.log(newRoute);
-  // routerPushByKey(newRoute);
+  routerPushByKey(`parent_${value}`);
   window.location = newRoute;
 }
 

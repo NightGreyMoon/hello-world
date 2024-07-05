@@ -2,6 +2,7 @@
 import { NButton, NDatePicker, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
 import { disableCurriculum, enableCurriculum, getAllCurriculum } from '@/service/api';
+import { useRouterPush } from '@/hooks/common/router';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -11,6 +12,7 @@ import CurriculumSearch from './modules/curriculum-search.vue';
 import CurriculumOperateDrawer from './modules/curriculum-operate-drawer.vue';
 
 const appStore = useAppStore();
+const { routerPushByKey } = useRouterPush();
 
 type Model = Pick<Api.SystemManage.CurriculumSearchParams, 'teacherName' | 'remark' | 'lessonName' | 'classRoom'>;
 
@@ -162,6 +164,9 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
             <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
               {$t('common.edit')}
             </NButton>
+            <NButton type="info" ghost size="small" onClick={() => view(row.id)}>
+              查看详情
+            </NButton>
             <NButton type="error" ghost size="small" onClick={() => disable(row.id)}>
               作废
             </NButton>
@@ -194,6 +199,10 @@ function disable(id: number) {
 function enable(id: number) {
   enableCurriculum(id);
   onUpdated();
+}
+
+function view(id: number) {
+  routerPushByKey('curriculum_detail', { query: { id: `${id}` } });
 }
 </script>
 

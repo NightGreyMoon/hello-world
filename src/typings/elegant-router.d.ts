@@ -28,6 +28,7 @@ declare module "@elegant-router/types" {
     "curriculum": "/curriculum";
     "curriculum_calendar": "/curriculum/calendar";
     "curriculum_curriculum": "/curriculum/curriculum";
+    "curriculum_detail": "/curriculum/detail";
     "curriculum_manage": "/curriculum/manage";
     "curriculum_teacher": "/curriculum/teacher";
     "enrollment": "/enrollment";
@@ -167,6 +168,7 @@ declare module "@elegant-router/types" {
     | "about"
     | "curriculum_calendar"
     | "curriculum_curriculum"
+    | "curriculum_detail"
     | "curriculum_manage"
     | "curriculum_teacher"
     | "enrollment_manage"

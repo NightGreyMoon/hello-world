@@ -27,6 +27,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   about: () => import("@/views/about/index.vue"),
   curriculum_calendar: () => import("@/views/curriculum/calendar/index.vue"),
   curriculum_curriculum: () => import("@/views/curriculum/curriculum/index.vue"),
+  curriculum_detail: () => import("@/views/curriculum/detail/index.vue"),
   curriculum_manage: () => import("@/views/curriculum/manage/index.vue"),
   curriculum_teacher: () => import("@/views/curriculum/teacher/index.vue"),
   enrollment_manage: () => import("@/views/enrollment/manage/index.vue"),

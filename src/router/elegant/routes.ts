@@ -76,6 +76,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'curriculum_detail',
+        path: '/curriculum/detail',
+        component: 'view.curriculum_detail',
+        meta: {
+          title: 'curriculum_detail',
+          i18nKey: 'route.curriculum_detail'
+        }
+      },
+      {
         name: 'curriculum_manage',
         path: '/curriculum/manage',
         component: 'view.curriculum_manage',
@@ -399,7 +408,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.parent_calendar',
         meta: {
           title: 'parent_calendar',
-          i18nKey: 'route.parent_calendar'
+          i18nKey: 'route.parent_calendar',
+          constant: true
         }
       },
       {

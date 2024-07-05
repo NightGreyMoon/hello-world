@@ -21,9 +21,9 @@ async function getStudents() {
 
 function handleTabChanged(value: string) {
   console.log(value);
-  const newRoute = `/parent/${value}`;
+  const newRoute = `/#/parent/${value}`;
   console.log(newRoute);
-  // routerPushByKey(newRoute);
+  routerPushByKey(`parent_${value}`);
   window.location = newRoute;
 }
 
@@ -138,7 +138,7 @@ onMounted(() => {
         </div>
       </template>
     </NTab>
-    <NTab name="lesson" tab="课程">
+    <NTab name="calendar" tab="课程">
       <template #default>
         <div class="tab-title">
           <SvgIcon icon="mdi-book-education-outline" class="text-30px" />
