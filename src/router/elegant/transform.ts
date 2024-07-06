@@ -154,6 +154,7 @@ const routeMap: RouteMap = {
   "curriculum": "/curriculum",
   "curriculum_calendar": "/curriculum/calendar",
   "curriculum_curriculum": "/curriculum/curriculum",
+  "curriculum_detail": "/curriculum/detail",
   "curriculum_manage": "/curriculum/manage",
   "curriculum_teacher": "/curriculum/teacher",
   "enrollment": "/enrollment",

@@ -16,3 +16,4 @@ export * from './score';
 export * from './curriculum';
 export * from './date';
 export * from './attendance';
+export * from './message';

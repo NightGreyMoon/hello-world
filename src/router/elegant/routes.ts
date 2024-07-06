@@ -335,6 +335,26 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'message',
+    path: '/message',
+    component: 'layout.base',
+    meta: {
+      title: 'message',
+      i18nKey: 'route.message'
+    },
+    children: [
+      {
+        name: 'message_log',
+        path: '/message/log',
+        component: 'view.message_log',
+        meta: {
+          title: 'message_log',
+          i18nKey: 'route.message_log'
+        }
+      }
+    ]
+  },
+  {
     name: 'multi-menu',
     path: '/multi-menu',
     component: 'layout.base',
