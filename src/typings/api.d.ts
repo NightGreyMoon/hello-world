@@ -224,6 +224,34 @@ declare namespace Api {
         CommonSearchParams
     >;
 
+    /** message log */
+    type MessageLog = Common.CommonRecord<{
+      id: number;
+      type: string;
+      purpose: string;
+      userId: number;
+      userName: string;
+      curriculumId: number;
+      curriculumLessonName: string;
+      curriculumClassRoom: string;
+      curriculumDateTimeStamp: number;
+      curriculumStartTimeStamp: number;
+      curriculumEndTimeStamp: number;
+      weChatTemplateId: string;
+      content: string;
+      ifSuccess: boolean;
+      sentDateTime: string;
+    }>;
+
+    /** message log search params */
+    type MessageLogSearchParams = CommonType.RecordNullable<
+      Pick<
+        Api.SystemManage.MessageLog,
+        'type' | 'purpose' | 'curriculumLessonName' | 'curriculumClassRoom' | 'ifSuccess' | 'userName'
+      > &
+        CommonSearchParams
+    >;
+
     type CurriculumSearchByClassRoomParams = {
       classRoom: string;
       year: number;

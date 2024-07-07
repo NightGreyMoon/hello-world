@@ -13,16 +13,21 @@ import MessageSearch from './modules/message-search.vue';
 const appStore = useAppStore();
 const { routerPushByKey } = useRouterPush();
 
-type Model = Pick<Api.SystemManage.CurriculumSearchParams, 'teacherName' | 'remark' | 'lessonName' | 'classRoom'>;
+type Model = Pick<
+  Api.SystemManage.MessageLogSearchParams,
+  'type' | 'purpose' | 'curriculumLessonName' | 'curriculumClassRoom' | 'ifSuccess' | 'userName'
+>;
 
 const model: Model = createDefaultModel();
 
 function createDefaultModel(): Model {
   return {
-    teacherName: '',
-    lessonName: '',
-    classRoom: '',
-    remark: ''
+    ifSuccess: null,
+    curriculumLessonName: '',
+    curriculumClassRoom: '',
+    userName: '',
+    type: '',
+    purpose: ''
   };
 }
 
@@ -31,20 +36,17 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
   apiParams: {
     pageNo: 1,
     pageSize: 10,
-    teacherName: model.teacherName,
-    remark: model.remark,
-    lessonName: model.lessonName,
-    classRoom: model.classRoom,
+    ifSuccess: model.ifSuccess,
+    curriculumLessonName: model.curriculumLessonName,
+    curriculumClassRoom: model.curriculumClassRoom,
+    userName: model.userName,
+    type: model.type,
+    purpose: model.purpose,
     // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
     // the value can not be undefined, otherwise the property in Form will not be reactive
     status: null
   },
   columns: () => [
-    {
-      type: 'selection',
-      align: 'center',
-      width: 48
-    },
     {
       key: 'id',
       title: $t('common.index'),
@@ -64,7 +66,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       width: 120
     },
     {
-      key: 'sysCreateTime',
+      key: 'sentDateTime',
       title: '发送时间',
       width: 100
     },
@@ -127,7 +129,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
     },
     {
       key: 'ifSuccess',
-      title: '是否成功发送',
+      title: '是否成功',
       align: 'center',
       width: 80,
       render: row => {
