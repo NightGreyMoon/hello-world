@@ -34,3 +34,11 @@ export function getEnrollmentForStudent(id: number) {
     method: 'get'
   });
 }
+
+// 获取指定课程已报名学生
+export function getEnrolledStudents(id: number) {
+  return request<EnrolledLesson>({
+    url: `/Enrollment/EnrolledStudents?id=${id}`,
+    method: 'get'
+  });
+}

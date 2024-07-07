@@ -15,3 +15,11 @@ export function udpateCancel(id?: number) {
     method: 'get'
   });
 }
+
+export function addAttendance(data?: any) {
+  return request<boolean>({
+    url: '/Attendance/Add',
+    method: 'post',
+    data
+  });
+}

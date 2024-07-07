@@ -13,6 +13,7 @@ import {
 } from '@/service/api';
 import { useRouterPush } from '@/hooks/common/router';
 import { $t } from '@/locales';
+import AddStudentDrawer from './modules/add-student-drawer.vue';
 
 const appStore = useAppStore();
 
@@ -23,12 +24,16 @@ const message = useMessage();
 const { routerPushByKey } = useRouterPush();
 const route = useRoute();
 
+const curriculumId = ref(0);
 const curriculum = ref<Curriculum>();
 const hasConfirmed = ref(true);
+const lessonId = ref(0);
 
 const isLoading = ref(true);
 
-const showModal: boolean = ref(false);
+const showModal = ref(false);
+
+const drawerVisible = ref(false);
 
 const attendanceId = ref(0);
 const attendanceComment = ref('');
@@ -53,19 +58,20 @@ async function updateSignIn(value: string) {
 
 async function getData() {
   isLoading.value = true;
-  const curriculumId: number = route.query.id;
+  curriculumId.value = route.query.id;
   try {
-    const { error, data } = await getCurriculumById(curriculumId);
+    const { error, data } = await getCurriculumById(curriculumId.value);
     if (!error) {
       curriculum.value = data;
       hasConfirmed.value = data.hasConfirmed;
+      lessonId.value = data.lessonId;
     }
   } catch (error) {
     console.error('Error fetching Curriculum:', error);
   }
 
   try {
-    const { error, data } = await getAttendanceByCurriculum(curriculumId);
+    const { error, data } = await getAttendanceByCurriculum(curriculumId.value);
     if (!error) {
       attendances.value = data;
     }
@@ -84,11 +90,22 @@ async function openModal(id: number) {
   }
 }
 
+function showDrawer() {
+  drawerVisible.value = true;
+}
+
 function cancelCurriculum() {
   const curriculumId: number = route.query.id;
   // confirmCurriculum(curriculumId);
   // getData();
   message.success('已成功取消');
+}
+
+function confirmCurriculum() {
+  const curriculumId: number = route.query.id;
+  // confirmCurriculum(curriculumId);
+  // getData();
+  message.success('已成功确认');
 }
 
 onMounted(async () => {
@@ -139,6 +156,7 @@ onMounted(async () => {
               <th>学生姓名</th>
               <th>签到状态</th>
               <th>评语</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -165,6 +183,17 @@ onMounted(async () => {
                   </template>
                 </NButton>
               </td>
+              <td style="width: 50px">
+                <NPopconfirm @positive-click="cancelCurriculum">
+                  <template #trigger>
+                    <NButton type="error" ghost>
+                      <icon-ic-round-delete class="text-icon" />
+                      移除
+                    </NButton>
+                  </template>
+                  要移除该学生吗？
+                </NPopconfirm>
+              </td>
             </tr>
           </tbody>
         </NTable>
@@ -173,10 +202,22 @@ onMounted(async () => {
       <template v-if="!hasConfirmed" #action>
         <NFlex justify="end">
           <NPopconfirm @positive-click="cancelCurriculum">
-            <template #trigger><NButton type="primary">取消排课并通知家长</NButton></template>
-            确认要取消该排课并发消息通知到所有学生家长吗？该操作无法回滚
+            <template #trigger><NButton type="primary">确认排课并通知家长</NButton></template>
+            要确认该排课并发消息通知到所有学生家长吗？
+          </NPopconfirm>
+          <NPopconfirm @positive-click="cancelCurriculum">
+            <template #trigger><NButton type="error">取消排课并通知家长</NButton></template>
+            要取消该排课并发消息通知到所有学生家长吗？
           </NPopconfirm>
         </NFlex>
+      </template>
+      <template #header-extra>
+        <NButton @click="showDrawer">
+          增加学生到当前排课
+          <template #icon>
+            <icon-ic-round-search class="text-icon" />
+          </template>
+        </NButton>
       </template>
     </NCard>
 
@@ -192,6 +233,13 @@ onMounted(async () => {
         }"
       />
     </NModal>
+
+    <AddStudentDrawer
+      v-model:visible="drawerVisible"
+      :curriculum-id="curriculumId"
+      :lesson-id="lessonId"
+      @submitted="getData"
+    />
   </div>
 </template>
 
