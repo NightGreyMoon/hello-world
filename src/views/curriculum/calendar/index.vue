@@ -16,7 +16,7 @@ const { formRef, validate, restoreValidation } = useNaiveForm();
 
 const lessonOptions = ref<CommonType.Option<string>[]>([]);
 
-async function getLessonOptions(search: string) {
+async function getRoomOptions(search: string) {
   const { error, data } = await getClassRoomOptions(search); // TODO:改一下单页大小
   console.log(data);
   if (!error) {
@@ -31,7 +31,8 @@ async function getLessonOptions(search: string) {
 
 onMounted(async () => {
   try {
-    getLessonOptions('');
+    getRoomOptions('');
+    handleUpdateValue();
   } catch (error) {
     console.error('Error fetching options:', error);
   }
@@ -53,7 +54,7 @@ function createDefaultModel(): Model {
 
 function handleSearch(query: string) {
   if (!query.length) {
-    getLessonOptions(query);
+    getRoomOptions(query);
   }
 }
 
@@ -85,14 +86,17 @@ function dateChanged(_: number, { year, month, date }: { year: number; month: nu
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <NCard :title="$t('page.curriculum.common.title')" :bordered="false" size="small" class="card-wrapped">
-      <NSelect
-        v-model:value="model.classRoom"
-        :options="lessonOptions"
-        :placeholder="$t('page.curriculum.form.classRoom')"
-        filterable
-        @search="handleSearch"
-        @update:value="handleUpdateValue"
-      />
+      <template #header-extra>
+        <NSelect
+          v-model:value="model.classRoom"
+          :options="lessonOptions"
+          :placeholder="$t('page.curriculum.form.classRoom')"
+          filterable
+          clearable
+          @search="handleSearch"
+          @update:value="handleUpdateValue"
+        />
+      </template>
       <NCalendar
         v-model:value="value"
         #="{ year, month, date }"
@@ -103,8 +107,9 @@ function dateChanged(_: number, { year, month, date }: { year: number; month: nu
           <template v-for="(item, index) in records" :key="index">
             <li v-if="item.day === date && item.month === month">
               <NTag :bordered="false" type="warning" style="margin-top: 5px">
-                {{ new Date(item.startTimeStamp).toLocaleTimeString() }}
-                <NEllipsis style="max-width: 80px">{{ item.lessonName }}</NEllipsis>
+                <NTime :time="item.startTimeStamp" format="HH:mm"></NTime>
+                -
+                <NEllipsis style="max-width: 140px">{{ item.lessonName }}</NEllipsis>
               </NTag>
             </li>
           </template>
