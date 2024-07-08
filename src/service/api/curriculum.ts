@@ -43,10 +43,26 @@ export function enableCurriculum(data?: any) {
   });
 }
 
-// 作废排课记录
+// 确认排课记录
 export function confirmCurriculum(data?: any) {
   return request<boolean>({
     url: `/Curriculum/Confirm?id=${data}`,
+    method: 'get'
+  });
+}
+
+// 取消排课记录并通知家长
+export function cancelCurriculum(id: number) {
+  return request<boolean>({
+    url: `/Message/CancelCurriculum?curriculumId=${id}`,
+    method: 'get'
+  });
+}
+
+// 确认排课记录并通知家长
+export function confirmCurriculumAndNotify(id: number) {
+  return request<boolean>({
+    url: `/Message/PlanCurriculum?curriculumId=${id}`,
     method: 'get'
   });
 }

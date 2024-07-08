@@ -115,23 +115,10 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       }
     },
     {
-      key: 'sysIsDelete',
-      title: $t('page.student.manage.status'),
+      key: 'status',
+      title: '状态',
       align: 'center',
-      width: 80,
-      render: row => {
-        if (row.status === null) {
-          return null;
-        }
-        const isDelete: boolean = row.sysIsDelete as boolean;
-        const tagMap: any = {
-          false: 'success',
-          true: 'error'
-        };
-
-        const label = isDelete ? '作废' : '有效';
-        return <NTag type={tagMap[isDelete]}>{label}</NTag>;
-      }
+      width: 80
     },
     {
       key: 'remark',
@@ -147,28 +134,25 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       render: row => {
         const isDelete: boolean = row.sysIsDelete as boolean;
 
-        if (isDelete) {
+        if (row.status === '已取消' || row.status === '已确认') {
           return (
             <div class="flex-center justify-end gap-8px">
-              <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
-                {$t('common.edit')}
-              </NButton>
-              <NButton type="success" ghost size="small" onClick={() => enable(row.id)}>
-                启用
+              <NButton type="info" ghost size="small" onClick={() => view(row.id)}>
+                查看详情
               </NButton>
             </div>
           );
         }
         return (
           <div class="flex-center justify-end gap-8px">
-            <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
-              {$t('common.edit')}
-            </NButton>
             <NButton type="info" ghost size="small" onClick={() => view(row.id)}>
               查看详情
             </NButton>
+            <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+              {$t('common.edit')}
+            </NButton>
             <NButton type="error" ghost size="small" onClick={() => disable(row.id)}>
-              作废
+              删除
             </NButton>
           </div>
         );

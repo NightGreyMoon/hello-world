@@ -5,7 +5,8 @@ import { NEmpty, NRadioGroup, NSpace, NTable, useDialog, useMessage } from 'naiv
 import { Dayjs } from 'dayjs';
 import { useAppStore } from '@/store/modules/app';
 import {
-  confirmCurriculum,
+  cancelCurriculum,
+  confirmCurriculumAndNotify,
   getAttendanceByCurriculum,
   getComment,
   getCurriculumById,
@@ -94,18 +95,26 @@ function showDrawer() {
   drawerVisible.value = true;
 }
 
-function cancelCurriculum() {
+async function cancel() {
   const curriculumId: number = route.query.id;
-  // confirmCurriculum(curriculumId);
-  // getData();
-  message.success('已成功取消');
+  const { error, data } = await cancelCurriculum(curriculumId);
+  if (!error) {
+    getData();
+    message.success('已成功取消');
+  } else {
+    message.error('取消失败');
+  }
 }
 
-function confirmCurriculum() {
+async function confirmCurriculum() {
   const curriculumId: number = route.query.id;
-  // confirmCurriculum(curriculumId);
-  // getData();
-  message.success('已成功确认');
+  const { error, data } = await confirmCurriculumAndNotify(curriculumId);
+  if (!error) {
+    getData();
+    message.success('已成功排课');
+  } else {
+    message.error('排课失败');
+  }
 }
 
 onMounted(async () => {
@@ -136,8 +145,9 @@ onMounted(async () => {
           <NGi>授课教室： {{ curriculum.classRoom }}</NGi>
           <NGi>
             授课状态：
-            <NTag v-if="hasConfirmed">已上课</NTag>
-            <NTag v-else>待上课</NTag>
+            <NTag v-if="curriculum.status === '已取消'" type="error">{{ curriculum.status }}</NTag>
+            <NTag v-else-if="curriculum.status === '已确认'" type="primary">{{ curriculum.status }}</NTag>
+            <NTag v-else>{{ curriculum.status }}</NTag>
           </NGi>
         </NGrid>
       </template>
@@ -199,13 +209,14 @@ onMounted(async () => {
         </NTable>
         <NEmpty v-else size="large" description="暂无学生上课记录"></NEmpty>
       </NSpace>
-      <template v-if="!hasConfirmed" #action>
-        <NFlex justify="end">
-          <NPopconfirm @positive-click="cancelCurriculum">
+      <template #action>
+        <NSkeleton v-if="isLoading" text :repeat="1" />
+        <NFlex v-else justify="end">
+          <NPopconfirm v-if="curriculum.status === '排期中'" @positive-click="confirmCurriculum">
             <template #trigger><NButton type="primary">确认排课并通知家长</NButton></template>
             要确认该排课并发消息通知到所有学生家长吗？
           </NPopconfirm>
-          <NPopconfirm @positive-click="cancelCurriculum">
+          <NPopconfirm v-if="curriculum.status === '待开课'" @positive-click="cancel">
             <template #trigger><NButton type="error">取消排课并通知家长</NButton></template>
             要取消该排课并发消息通知到所有学生家长吗？
           </NPopconfirm>
