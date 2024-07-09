@@ -26,6 +26,8 @@ export function useRouterPush(inSetup = true) {
   async function routerPushByKey(key: RouteKey, options?: RouterPushOptions) {
     const { query, params } = options || {};
 
+    console.log(`router push by key:${key}`);
+
     const routeLocation: RouteLocationRaw = {
       name: key
     };

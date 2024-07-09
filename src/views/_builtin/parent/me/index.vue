@@ -24,12 +24,12 @@ function handleTabChanged(value: string) {
   const newRoute = `/#/parent/${value}`;
   console.log(newRoute);
   routerPushByKey(`parent_${value}`);
-  window.location = newRoute;
+  // window.location = newRoute;
 }
 
 function goConfirmStudents() {
-  // routerPushByKey('parent_confirm-student');
-  window.location = '/parent/confirm-student';
+  routerPushByKey('parent_confirm-student');
+  // window.location = '/parent/confirm-student';
 }
 
 function goLessons() {

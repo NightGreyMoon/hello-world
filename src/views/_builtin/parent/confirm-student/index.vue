@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
-import { NCard, NCheckbox, NCheckboxGroup, useMessage } from 'naive-ui';
+import { NCard, NCheckbox, NCheckboxGroup, useDialog, useMessage } from 'naive-ui';
 import { useRouterPush } from '@/hooks/common/router';
 import { confirmStudent, getUnConfirmedStudents } from '@/service/api';
 
+const dialog = useDialog();
 const students = ref<Student[]>([]);
 const message = useMessage();
 const { routerBack } = useRouterPush();
@@ -23,11 +24,22 @@ function handleClick() {
 
 function confirmBind() {
   // message.info(JSON.stringify(studentIds.value));
-  for (let index = 0; index < studentIds.value.length; index++) {
-    const element = studentIds.value[index];
-    message.info(element);
-    confirmStudent(element);
-    window.location = '/parent/me';
+  if (studentIds.value !== null && studentIds.value.length > 0) {
+    for (let index = 0; index < studentIds.value.length; index += 1) {
+      const element = studentIds.value[index];
+      confirmStudent(element);
+    }
+
+    dialog.success({
+      title: '绑定成功',
+      content: `已绑定，点击右上角返回`,
+      positiveText: 'OK',
+      onPositiveClick: () => {
+        getUserOptions();
+      }
+    });
+  } else {
+    message.info('请先选中要绑定的学生');
   }
 }
 
