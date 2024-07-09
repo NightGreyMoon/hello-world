@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { NButton, NDatePicker, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
-import { disableStudent, enableStudent, getAllStudent } from '@/service/api';
+import { disableStudent, enableStudent, getAllStudent, inStudyStudent, unStudyStudent } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -97,7 +97,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       align: 'center',
       width: 80,
       render: row => {
-        if (row.status === null) {
+        if (row.sysIsDelete === null) {
           return null;
         }
         const isDelete: boolean = row.sysIsDelete as boolean;
@@ -108,6 +108,25 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
 
         const label = isDelete ? '已禁用' : '已启用';
         return <NTag type={tagMap[isDelete]}>{label}</NTag>;
+      }
+    },
+    {
+      key: 'inStudy',
+      title: '就读状态',
+      align: 'center',
+      width: 80,
+      render: row => {
+        if (row.inStudy === null) {
+          return null;
+        }
+        const inStudy: boolean = row.inStudy as boolean;
+        const tagMap: any = {
+          false: 'success',
+          true: 'warning'
+        };
+
+        const label = inStudy ? '在读' : '结业';
+        return <NTag type={tagMap[inStudy]}>{label}</NTag>;
       }
     },
     {
@@ -122,16 +141,19 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       align: 'center',
       width: 130,
       render: row => {
-        const isDelete: boolean = row.sysIsDelete as boolean;
+        const ifInStudy: boolean = row.inStudy as boolean;
 
-        if (isDelete) {
+        if (ifInStudy) {
           return (
             <div class="flex-center justify-end gap-8px">
               <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
                 {$t('common.edit')}
               </NButton>
-              <NButton type="success" ghost size="small" onClick={() => enable(row.id)}>
-                {$t('common.enable')}
+              <NButton type="success" ghost size="small" onClick={() => unStudy(row.id)}>
+                结业
+              </NButton>
+              <NButton type="error" ghost size="small" onClick={() => disable(row.id)}>
+                {$t('common.disable')}
               </NButton>
             </div>
           );
@@ -141,8 +163,8 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
             <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
               {$t('common.edit')}
             </NButton>
-            <NButton type="error" ghost size="small" onClick={() => disable(row.id)}>
-              {$t('common.disable')}
+            <NButton type="error" ghost size="small" onClick={() => inStudy(row.id)}>
+              在读
             </NButton>
           </div>
         );
@@ -172,6 +194,14 @@ function disable(id: number) {
 }
 function enable(id: number) {
   enableStudent(id);
+  onUpdated();
+}
+function inStudy(id: number) {
+  inStudyStudent(id);
+  onUpdated();
+}
+function unStudy(id: number) {
+  unStudyStudent(id);
   onUpdated();
 }
 </script>

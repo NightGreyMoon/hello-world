@@ -58,6 +58,22 @@ export function enableStudent(data?: any) {
   });
 }
 
+// 学生设为在读
+export function inStudyStudent(data?: any) {
+  return request<boolean>({
+    url: `/Student/InStudy?id=${data}`,
+    method: 'get'
+  });
+}
+
+// 学生设为结业
+export function unStudyStudent(data?: any) {
+  return request<boolean>({
+    url: `/Student/UnStudy?id=${data}`,
+    method: 'get'
+  });
+}
+
 // 学生列表
 export function getAllStudent(params?: Api.SystemManage.StudentSearchParams) {
   return request<SysRoleList>({
