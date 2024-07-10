@@ -64,6 +64,8 @@ function createDefaultModel(): Model {
     referee: '',
     enrollmentTimeStamp: 1546272000000,
     paymentTimeStamp: 1546272000000,
+    packageCount: 18,
+    remainingCount: 18,
     remark: ''
   };
 }
@@ -188,6 +190,12 @@ watch(visible, () => {
         </NFormItem>
         <NFormItem :label="$t('page.enrollment.form.amount')" path="amount">
           <NInput v-model:value="model.amount" :placeholder="$t('page.enrollment.form.amount')" />
+        </NFormItem>
+        <NFormItem label="购买课次" path="packageCount">
+          <NInput v-model:value="model.packageCount" />
+        </NFormItem>
+        <NFormItem label="剩余课次" path="remainingCount">
+          <NInput v-model:value="model.remainingCount" />
         </NFormItem>
         <NFormItem :label="$t('page.enrollment.form.referee')" path="referee">
           <NInput v-model:value="model.referee" :placeholder="$t('page.enrollment.form.referee')" />

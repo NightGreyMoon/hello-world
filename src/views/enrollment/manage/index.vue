@@ -101,6 +101,18 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       width: 100
     },
     {
+      key: 'packageCount',
+      title: '购买课次',
+      align: 'center',
+      width: 100
+    },
+    {
+      key: 'remainingCount',
+      title: '剩余课次',
+      align: 'center',
+      width: 100
+    },
+    {
       key: 'sysIsDelete',
       title: $t('page.enrollment.manage.status'),
       align: 'center',
