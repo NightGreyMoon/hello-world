@@ -490,6 +490,7 @@ declare namespace App {
             birthDate: string;
             status: string;
             remark: string;
+            userId: string;
           };
           addStudent: string;
           editStudent: string;

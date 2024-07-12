@@ -73,6 +73,8 @@ type RuleKey = Extract<keyof Model, 'account' | 'status'>;
 const rules: Record<RuleKey, App.Global.FormRule> = {
   name: defaultRequiredRule,
   gender: defaultRequiredRule,
+  school: defaultRequiredRule,
+  grade: defaultRequiredRule,
   userId: defaultRequiredRule
 };
 
@@ -174,31 +176,20 @@ watch(visible, () => {
             :placeholder="$t('page.student.form.gender')"
           />
         </NFormItem>
+        <NFormItem :label="$t('page.student.common.birthDate')" path="birthDate">
+          <NDatePicker v-model:value="model.birthTimeStamp" :placeholder="$t('page.student.form.birthDate')" />
+        </NFormItem>
         <NFormItem :label="$t('page.student.common.school')" path="school">
           <NInput v-model:value="model.school" :placeholder="$t('page.student.form.school')" />
         </NFormItem>
         <NFormItem :label="$t('page.student.common.grade')" path="grade">
           <NSelect v-model:value="model.grade" :placeholder="$t('page.student.form.grade')" :options="gradeOptions" />
         </NFormItem>
-        <NFormItem :label="$t('page.student.common.birthDate')" path="birthDate">
-          <NDatePicker v-model:value="model.birthTimeStamp" :placeholder="$t('page.student.form.birthDate')" />
+        <NFormItem :label="$t('page.student.common.userId')" path="userId">
+          <NSelect v-model:value="model.userId" :options="userOptions" :placeholder="$t('page.student.form.userId')" />
         </NFormItem>
         <NFormItem :label="$t('page.student.common.remark')" path="remark">
           <NInput v-model:value="model.remark" :placeholder="$t('page.student.form.remark')" />
-        </NFormItem>
-        <!--
- <NFormItem :label="$t('page.manage.user.userStatus')" path="status">
-          <NRadioGroup v-model:value="model.status">
-            <NRadio v-for="item in enableStatus" :key="item.key" :value="item.key" :label="item.name" />
-          </NRadioGroup>
-        </NFormItem> 
--->
-        <NFormItem :label="$t('page.student.common.userId')" path="userId">
-          <NSelect
-            v-model:value="model.userId"
-            :options="userOptions"
-            :placeholder="$t('page.manage.user.form.userRole')"
-          />
         </NFormItem>
       </NForm>
       <template #footer>

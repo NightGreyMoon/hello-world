@@ -449,40 +449,41 @@ const local: App.I18n.Schema = {
     },
     student: {
       common: {
-        title: '学生信息',
-        name: '姓名',
-        gender: '性别',
-        parentName: '家长姓名',
-        school: '在读学校',
-        grade: '年级',
+        title: '学生基本信息',
+        name: '学生姓名',
+        gender: '学生性别',
+        parentName: '关联家长',
+        school: '就读学校',
+        grade: '就读年级',
         birthDate: '出生年月',
-        status: '是否启用',
-        userId: '所属账户',
+        status: '报读状态',
+        userId: '关联家长',
         remark: '备注'
       },
       manage: {
-        name: '姓名',
-        gender: '性别',
-        parentName: '家长姓名',
-        school: '在读学校',
-        grade: '在读年级',
+        name: '学生姓名',
+        gender: '学生性别',
+        parentName: '关联家长',
+        school: '就读学校',
+        grade: '就读年级',
         birthDate: '出生年月',
         registerDate: '报读日期',
         payDate: '缴费日期',
-        status: '是否启用',
+        status: '报读状态',
         remark: '备注'
       },
       form: {
         name: '请输入学生姓名',
         school: '请输入在读学校',
-        gender: '请输入学生性别',
-        grade: '请输入学生年级',
+        gender: '请选择学生性别',
+        grade: '请选择就读年级',
         birthDate: '请输入学生出生年月',
+        userId: '请选择关联家长账号',
         status: '是否启用',
-        remark: '请按需填写备注'
+        remark: '请按需输入备注信息'
       },
-      addStudent: '新增学生',
-      editStudent: '编辑学生'
+      addStudent: '新增：学生基本信息',
+      editStudent: '编辑：学生基本信息'
     },
     lesson: {
       common: {
@@ -501,7 +502,7 @@ const local: App.I18n.Schema = {
       form: {
         name: '请输入课程名称',
         course: '请输入科目',
-        remark: '请按需填写备注'
+        remark: '请输入备注'
       },
       addLesson: '新增课程',
       editLesson: '编辑课程'
@@ -532,7 +533,7 @@ const local: App.I18n.Schema = {
       search: {
         studentName: '请输入学生姓名',
         lessonName: '请输入课程名称',
-        remark: '请按需填写备注'
+        remark: '请输入备注'
       },
       form: {
         student: '学生',
@@ -605,7 +606,7 @@ const local: App.I18n.Schema = {
     }
   },
   form: {
-    required: '不能为空',
+    required: '该字段不能为空',
     userName: {
       required: '请输入用户名',
       invalid: '用户名格式不正确'

@@ -39,32 +39,32 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
     status: null
   },
   columns: () => [
-    {
-      type: 'selection',
-      align: 'center',
-      width: 48
-    },
+    // {
+    //   type: 'selection',
+    //   align: 'center',
+    //   width: 48
+    // },
     {
       key: 'id',
       title: $t('common.index'),
-      width: 64,
+      // width: 64,
       align: 'center'
     },
     {
       key: 'name',
       title: $t('page.student.manage.name'),
-      align: 'center',
-      width: 120
+      align: 'center'
+      // width: 120
     },
     {
       key: 'gender',
-      title: $t('page.student.manage.gender'),
-      width: 70
+      title: $t('page.student.manage.gender')
+      // width: 70
     },
     {
       key: 'birthDate',
       title: $t('page.student.manage.birthDate'),
-      width: 100,
+      // width: 100,
       render: row => {
         if (row.birthDate === null) {
           return '';
@@ -76,43 +76,24 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
     {
       key: 'parentName',
       title: $t('page.student.manage.parentName'),
-      align: 'center',
-      width: 120
+      align: 'center'
+      // width: 120
     },
     {
       key: 'grade',
       title: $t('page.student.manage.grade'),
-      align: 'center',
-      width: 100
+      align: 'center'
+      // width: 100
     },
     {
       key: 'school',
       title: $t('page.student.manage.school'),
-      align: 'center',
-      width: 100
-    },
-    {
-      key: 'sysIsDelete',
-      title: $t('page.student.manage.status'),
-      align: 'center',
-      width: 80,
-      render: row => {
-        if (row.sysIsDelete === null) {
-          return null;
-        }
-        const isDelete: boolean = row.sysIsDelete as boolean;
-        const tagMap: any = {
-          false: 'success',
-          true: 'warning'
-        };
-
-        const label = isDelete ? '已禁用' : '已启用';
-        return <NTag type={tagMap[isDelete]}>{label}</NTag>;
-      }
+      align: 'center'
+      // width: 100
     },
     {
       key: 'inStudy',
-      title: '就读状态',
+      title: $t('page.student.manage.status'),
       align: 'center',
       width: 80,
       render: row => {
@@ -133,13 +114,13 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       key: 'remark',
       title: $t('page.student.manage.remark'),
       align: 'left',
-      minWidth: 120
+      minWidth: 160
     },
     {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 130,
+      width: 160,
       render: row => {
         const ifInStudy: boolean = row.inStudy as boolean;
 
@@ -153,7 +134,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
                 结业
               </NButton>
               <NButton type="error" ghost size="small" onClick={() => disable(row.id)}>
-                {$t('common.disable')}
+                {$t('common.delete')}
               </NButton>
             </div>
           );
@@ -163,7 +144,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
             <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
               {$t('common.edit')}
             </NButton>
-            <NButton type="error" ghost size="small" onClick={() => inStudy(row.id)}>
+            <NButton type="info" ghost size="small" onClick={() => inStudy(row.id)}>
               在读
             </NButton>
           </div>
