@@ -171,7 +171,7 @@ watch(visible, () => {
 </script>
 
 <template>
-  <NDrawer v-model:show="visible" :title="title" display-directive="show" :width="560">
+  <NDrawer v-model:show="visible" :title="title" display-directive="show" :width="640">
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model" :rules="rules">
         <NFormItem :label="$t('page.curriculum.manage.teacherName')" path="teacherId">

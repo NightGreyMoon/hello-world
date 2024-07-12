@@ -74,7 +74,7 @@ watch(visible, () => {
 </script>
 
 <template>
-  <NDrawer v-model:show="visible" :title="props.classroom" display-directive="show" :width="560">
+  <NDrawer v-model:show="visible" :title="props.classroom" display-directive="show" :width="640">
     <NDrawerContent :title="props.classroom" :native-scrollbar="false" closable>
       <NAlert type="default">{{ props.year }}-{{ props.month }}-{{ props.day }}</NAlert>
       <NList v-if="curriculums !== null" hoverable>

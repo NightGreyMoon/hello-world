@@ -89,7 +89,7 @@ watch(visible, () => {
 </script>
 
 <template>
-  <NDrawer v-model:show="visible" title="增加学生到当前排课" display-directive="show" :width="560">
+  <NDrawer v-model:show="visible" title="增加学生到当前排课" display-directive="show" :width="640">
     <NDrawerContent title="增加学生到当前排课" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model" :rules="rules">
         <NFormItem label="选择学生" path="studentId">
