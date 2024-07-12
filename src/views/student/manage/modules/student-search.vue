@@ -80,22 +80,7 @@ async function search() {
           <NInput v-model:value="model.remark" :placeholder="$t('page.student.form.remark')" />
         </NFormItemGi>
 
-        <!--
- <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.userEmail')" path="userEmail" class="pr-24px">
-          <NInput v-model:value="model.userEmail" :placeholder="$t('page.manage.user.form.userEmail')" />
-        </NFormItemGi> 
--->
-        <!--
- <NFormItemGi span="24 s:12 m:6" :label="$t('page.manage.user.userStatus')" path="userStatus" class="pr-24px">
-          <NSelect
-            v-model:value="model.status"
-            :placeholder="$t('page.manage.user.form.userStatus')"
-            :options="translateOptions(enableStatusOptions)"
-            clearable
-          />
-        </NFormItemGi> 
--->
-        <NFormItemGi span="24 s:12 m:6" class="pr-24px">
+        <NFormItemGi span="24" class="pr-24px">
           <NSpace class="w-full" justify="end">
             <NButton @click="reset">
               <template #icon>

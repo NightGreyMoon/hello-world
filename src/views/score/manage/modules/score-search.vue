@@ -75,7 +75,7 @@ async function search() {
           <NSelect v-model:value="model.type" :options="typeOptions" :placeholder="$t('page.score.form.type')" />
         </NFormItemGi>
 
-        <NFormItemGi span="24 s:12 m:6" class="pr-24px">
+        <NFormItemGi span="24" class="pr-24px">
           <NSpace class="w-full" justify="end">
             <NButton @click="reset">
               <template #icon>

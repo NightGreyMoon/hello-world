@@ -55,7 +55,7 @@ async function search() {
     <NForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="80">
       <NGrid responsive="screen" item-responsive>
         <NFormItemGi
-          span="24 s:8 m:4"
+          span="24 s:12 m:6"
           :label="$t('page.curriculum.common.teacherName')"
           path="teachertName"
           class="pr-24px"
@@ -64,7 +64,7 @@ async function search() {
         </NFormItemGi>
 
         <NFormItemGi
-          span="24 s:8 m:4"
+          span="24 s:12 m:6"
           :label="$t('page.curriculum.common.lessonName')"
           path="lessonName"
           class="pr-24px"
@@ -72,15 +72,20 @@ async function search() {
           <NInput v-model:value="model.lessonName" :placeholder="$t('page.curriculum.form.lessonName')" />
         </NFormItemGi>
 
-        <NFormItemGi span="24 s:8 m:4" :label="$t('page.curriculum.manage.classRoom')" path="classRoom" class="pr-24px">
+        <NFormItemGi
+          span="24 s:12 m:6"
+          :label="$t('page.curriculum.manage.classRoom')"
+          path="classRoom"
+          class="pr-24px"
+        >
           <NInput v-model:value="model.classRoom" :placeholder="$t('page.curriculum.form.classRoom')" />
         </NFormItemGi>
 
-        <NFormItemGi span="24 s:8 m:4" :label="$t('page.curriculum.common.remark')" path="remark" class="pr-24px">
+        <NFormItemGi span="24 s:12 m:6" :label="$t('page.curriculum.common.remark')" path="remark" class="pr-24px">
           <NInput v-model:value="model.remark" :placeholder="$t('page.curriculum.form.remark')" />
         </NFormItemGi>
 
-        <NFormItemGi span="24 s:8 m:4" class="pr-24px">
+        <NFormItemGi span="24" class="pr-24px">
           <NSpace class="w-full" justify="end">
             <NButton @click="reset">
               <template #icon>
