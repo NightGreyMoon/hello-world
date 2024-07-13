@@ -555,24 +555,26 @@ const local: App.I18n.Schema = {
         add: '记录新成绩',
         edit: '修改成绩',
         studentName: '学生姓名',
-        lessonName: '课程名称',
+        lessonName: '报读课程',
+        lessonCourse: '报读科目',
         type: '类型'
       },
       manage: {
         studentName: '学生姓名',
-        lessonName: '关联课程(可空)',
+        lessonName: '关联课程',
         course: '科目',
         point: '分数',
-        date: '日期',
+        date: '记录日期',
         status: '记录状态',
         type: '类型',
         remark: '备注'
       },
       form: {
         studentName: '请输入学生姓名',
-        lessonName: '请输入课程',
+        lessonName: '请输入报读课程',
+        lessonCourse: '请选择报读科目',
         point: '请输入分数',
-        type: '请选择类型'
+        type: '请选择是校内成绩还是培训班成绩'
       }
     },
     curriculum: {

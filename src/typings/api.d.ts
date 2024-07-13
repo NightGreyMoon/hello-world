@@ -203,7 +203,7 @@ declare namespace Api {
     }>;
     /** score search params */
     type ScoreSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.Score, 'studentName' | 'course' | 'lessonName' | 'type'> & CommonSearchParams
+      Pick<Api.SystemManage.Score, 'studentName' | 'course' | 'lessonName'> & CommonSearchParams
     >;
     /** curriculum */
     type Curriculum = Common.CommonRecord<{

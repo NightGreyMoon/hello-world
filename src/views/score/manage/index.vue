@@ -14,7 +14,7 @@ import ScoreOperateDrawer from './modules/score-operate-drawer.vue';
 
 const appStore = useAppStore();
 
-type Model = Pick<Api.SystemManage.ScoreSearchParams, 'studentName' | 'course' | 'lessonName' | 'type'>;
+type Model = Pick<Api.SystemManage.ScoreSearchParams, 'studentName' | 'course' | 'lessonName'>;
 
 const model: Model = createDefaultModel();
 
@@ -22,8 +22,7 @@ function createDefaultModel(): Model {
   return {
     studentName: '',
     lessonName: '',
-    course: '',
-    type: ''
+    course: null
   };
 }
 
@@ -43,11 +42,11 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
     status: null
   },
   columns: () => [
-    {
-      type: 'selection',
-      align: 'center',
-      width: 48
-    },
+    // {
+    //   type: 'selection',
+    //   align: 'center',
+    //   width: 48
+    // },
     {
       key: 'id',
       title: $t('common.index'),

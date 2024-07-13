@@ -544,6 +544,7 @@ declare namespace App {
             edit: string;
             studentName: string;
             lessonName: string;
+            lessonCourse: string;
             type: string;
           };
           manage: {
@@ -559,6 +560,7 @@ declare namespace App {
           form: {
             studentName: string;
             lessonName: string;
+            lessonCourse: string;
             point: string;
             type: string;
           };

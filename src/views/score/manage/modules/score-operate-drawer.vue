@@ -21,17 +21,6 @@ interface Emits {
   (e: 'submitted'): void;
 }
 
-const enableStatus: any = [
-  {
-    key: 1,
-    name: '启用'
-  },
-  {
-    key: 0,
-    name: '禁用'
-  }
-];
-
 const emit = defineEmits<Emits>();
 
 const visible = defineModel<boolean>('visible', {
@@ -62,7 +51,7 @@ function createDefaultModel(): Model {
     lessonId: null,
     point: null,
     course: null,
-    dateTimeStamp: 1546272000000,
+    dateTimeStamp: 1720800000000,
     type: null,
     remark: ''
   };
@@ -71,17 +60,18 @@ function createDefaultModel(): Model {
 type RuleKey = Extract<keyof Model, 'account' | 'status'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
-  name: defaultRequiredRule,
-  gender: defaultRequiredRule,
-  userId: defaultRequiredRule
+  studentId: defaultRequiredRule,
+  course: defaultRequiredRule,
+  point: defaultRequiredRule,
+  type: defaultRequiredRule,
+  dateTimeStamp: defaultRequiredRule
 };
 
 /** the enabled student options */
 const userOptions = ref<CommonType.Option<string>[]>([]);
 
 async function getUserOptions() {
-  const { error, data } = await getAllStudent(); // TODO:改一下单页大小
-  console.log(data);
+  const { error, data } = await getAllStudent();
   if (!error) {
     const options = data.records.map(item => ({
       label: item.name,
@@ -96,8 +86,7 @@ async function getUserOptions() {
 const lessonOptions = ref<CommonType.Option<string>[]>([]);
 
 async function getLessonOptions() {
-  const { error, data } = await getAllLesson(); // TODO:改一下单页大小
-  console.log(data);
+  const { error, data } = await getAllLesson();
   if (!error) {
     const options = data.records.map(item => ({
       label: `${item.name} - ${item.course}`,
@@ -106,6 +95,17 @@ async function getLessonOptions() {
 
     lessonOptions.value = [...options];
   }
+}
+
+function parse(input: string) {
+  const nums = input.replace(/,/g, '').trim();
+  if (/^\d+(\.(\d+)?)?$/.test(nums)) return Number(nums);
+  return nums === '' ? null : Number.NaN;
+}
+
+function format(value: number | null) {
+  if (value === null) return '';
+  return value.toLocaleString('en-US');
 }
 
 const typeOptions = ref<CommonType.Option<string>[]>([
@@ -183,25 +183,38 @@ watch(visible, () => {
             :placeholder="$t('page.enrollment.form.student')"
           />
         </NFormItem>
+
+        <NFormItem :label="$t('page.score.manage.type')" path="type">
+          <NSelect v-model:value="model.type" :options="typeOptions" :placeholder="$t('page.score.form.type')" />
+        </NFormItem>
+
+        <NFormItem :label="$t('page.score.manage.course')" path="course">
+          <NSelect v-model:value="model.course" :options="courseOptions" :placeholder="$t('page.lesson.form.course')" />
+        </NFormItem>
+
         <NFormItem :label="$t('page.score.manage.lessonName')" path="lessonId">
           <NSelect
             v-model:value="model.lessonId"
             :options="lessonOptions"
             :placeholder="$t('page.enrollment.form.lesson')"
+            filterable
           />
         </NFormItem>
         <NFormItem :label="$t('page.score.manage.date')" path="dateTimeStamp">
           <NDatePicker v-model:value="model.dateTimeStamp" :placeholder="$t('page.enrollment.form.enrollmentDate')" />
         </NFormItem>
+
         <NFormItem :label="$t('page.score.manage.point')" path="point">
-          <NInput v-model:value="model.point" :placeholder="$t('page.score.form.point')" />
+          <NInputNumber
+            v-model:value="model.point"
+            :parse="parse"
+            :format="format"
+            clearable
+            :precision="1"
+            :placeholder="$t('page.score.form.point')"
+          />
         </NFormItem>
-        <NFormItem :label="$t('page.score.manage.course')" path="course">
-          <NSelect v-model:value="model.course" :options="courseOptions" :placeholder="$t('page.lesson.form.course')" />
-        </NFormItem>
-        <NFormItem :label="$t('page.score.manage.type')" path="type">
-          <NSelect v-model:value="model.type" :options="typeOptions" :placeholder="$t('page.score.form.type')" />
-        </NFormItem>
+
         <NFormItem :label="$t('page.student.common.remark')" path="remark">
           <NInput v-model:value="model.remark" :placeholder="$t('page.student.form.remark')" />
         </NFormItem>
