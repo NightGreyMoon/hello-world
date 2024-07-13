@@ -489,19 +489,19 @@ const local: App.I18n.Schema = {
       common: {
         title: '课程信息',
         name: '课程名称',
-        status: '状态',
-        course: '科目',
+        status: '课程状态',
+        course: '所属科目',
         remark: '备注'
       },
       manage: {
         name: '课程名称',
-        course: '科目',
-        status: '是否启用',
+        course: '所属科目',
+        status: '课程状态',
         remark: '备注'
       },
       form: {
         name: '请输入课程名称',
-        course: '请输入科目',
+        course: '请选择所属科目',
         remark: '请输入备注'
       },
       addLesson: '新增课程',

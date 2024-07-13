@@ -118,7 +118,13 @@ watch(visible, () => {
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model" :rules="rules">
         <NFormItem :label="$t('page.lesson.common.name')" path="name">
-          <NInput v-model:value="model.name" :placeholder="$t('page.lesson.form.course')" />
+          <NInput
+            v-model:value="model.name"
+            :placeholder="$t('page.lesson.form.course')"
+            maxlength="50"
+            show-count
+            clearable
+          />
         </NFormItem>
         <NFormItem :label="$t('page.lesson.common.course')" path="course">
           <NSelect v-model:value="model.course" :options="courseOptions" :placeholder="$t('page.lesson.form.course')" />

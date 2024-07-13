@@ -19,11 +19,11 @@ const { columns, columnChecks, data, loading, getData, mobilePagination } = useT
     status: null
   },
   columns: () => [
-    {
-      type: 'selection',
-      align: 'center',
-      width: 48
-    },
+    // {
+    //   type: 'selection',
+    //   align: 'center',
+    //   width: 48
+    // },
     {
       key: 'id',
       title: $t('common.index'),
@@ -54,10 +54,10 @@ const { columns, columnChecks, data, loading, getData, mobilePagination } = useT
         const isDelete: boolean = row.sysIsDelete as boolean;
         const tagMap: any = {
           false: 'success',
-          true: 'warning'
+          true: 'error'
         };
 
-        const label = isDelete ? '已禁用' : '已启用';
+        const label = isDelete ? '停课' : '开课';
         return <NTag type={tagMap[isDelete]}>{label}</NTag>;
       }
     },
@@ -76,7 +76,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination } = useT
                 {$t('common.edit')}
               </NButton>
               <NButton type="success" ghost size="small" onClick={() => enable(row.id)}>
-                {$t('common.enable')}
+                开课
               </NButton>
             </div>
           );
@@ -87,7 +87,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination } = useT
               {$t('common.edit')}
             </NButton>
             <NButton type="error" ghost size="small" onClick={() => disable(row.id)}>
-              {$t('common.disable')}
+              停课
             </NButton>
           </div>
         );
