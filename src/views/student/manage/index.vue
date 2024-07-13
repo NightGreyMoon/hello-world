@@ -104,12 +104,12 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         }
         const ifInStudy: boolean = row.inStudy as boolean;
         const tagMap: any = {
-          false: 'success',
-          true: 'warning'
+          false: 'info',
+          true: 'success'
         };
 
         const label = ifInStudy ? '在读' : '结业';
-        return <NTag type={tagMap[inStudy]}>{label}</NTag>;
+        return <NTag type={tagMap[ifInStudy]}>{label}</NTag>;
       }
     },
     {
