@@ -84,7 +84,7 @@ function dateChanged(_: number, { year, month, date }: { year: number; month: nu
 </script>
 
 <template>
-  <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+  <div class="min-h-600px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <NCard :title="$t('page.curriculum.common.title')" :bordered="false" size="small" class="card-wrapped">
       <template #header-extra>
         <NSelect
@@ -97,24 +97,26 @@ function dateChanged(_: number, { year, month, date }: { year: number; month: nu
           @update:value="handleUpdateValue"
         />
       </template>
-      <NCalendar
-        v-model:value="value"
-        #="{ year, month, date }"
-        :on-panel-change="handelMonthChange"
-        @update:value="dateChanged"
-      >
-        <ul v-if="records.length > 0">
-          <template v-for="(item, index) in records" :key="index">
-            <li v-if="item.day === date && item.month === month">
-              <NTag :bordered="false" type="warning" style="margin-top: 5px">
-                <NTime :time="item.startTimeStamp" format="HH:mm"></NTime>
-                -
-                <NEllipsis style="max-width: 140px">{{ item.lessonName }}</NEllipsis>
-              </NTag>
-            </li>
-          </template>
-        </ul>
-      </NCalendar>
+      <NScrollbar style="max-height: 900px">
+        <NCalendar
+          v-model:value="value"
+          #="{ year, month, date }"
+          :on-panel-change="handelMonthChange"
+          @update:value="dateChanged"
+        >
+          <ul v-if="records.length > 0">
+            <template v-for="(item, index) in records" :key="index">
+              <li v-if="item.day === date && item.month === month">
+                <NTag :bordered="false" type="warning" style="margin-top: 5px">
+                  <NTime :time="item.startTimeStamp" format="HH:mm"></NTime>
+                  -
+                  <NEllipsis style="max-width: 140px">{{ item.lessonName }}</NEllipsis>
+                </NTag>
+              </li>
+            </template>
+          </ul>
+        </NCalendar>
+      </NScrollbar>
       <ClassroomScheduleDrawer
         v-model:visible="model.drawerVisible"
         v-model:classroom="model.classRoom"
