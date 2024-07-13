@@ -1,12 +1,12 @@
 <script setup lang="tsx">
-import { NButton, NDatePicker, NPopconfirm, NTag } from 'naive-ui';
+import { ref } from 'vue';
+import type { DataTableInst } from 'naive-ui';
+import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
-import { disableStudent, enableStudent, getAllStudent, inStudyStudent, unStudyStudent } from '@/service/api';
+import { disableStudent, getAllStudent, inStudyStudent, unStudyStudent } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
-import { yesOrNoRecord } from '@/constants/common';
-import { enableStatusRecord } from '@/constants/business';
 import StudentOperateDrawer from './modules/student-operate-drawer.vue';
 import StudentSearch from './modules/student-search.vue';
 
@@ -24,6 +24,8 @@ function createDefaultModel(): Model {
     remark: ''
   };
 }
+
+const tableRef = ref<DataTableInst>();
 
 const { columns, columnChecks, data, loading, getData, mobilePagination, searchParams, resetSearchParams } = useTable({
   apiFn: getAllStudent,
@@ -100,13 +102,13 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         if (row.inStudy === null) {
           return null;
         }
-        const inStudy: boolean = row.inStudy as boolean;
+        const ifInStudy: boolean = row.inStudy as boolean;
         const tagMap: any = {
           false: 'success',
           true: 'warning'
         };
 
-        const label = inStudy ? '在读' : '结业';
+        const label = ifInStudy ? '在读' : '结业';
         return <NTag type={tagMap[inStudy]}>{label}</NTag>;
       }
     },
@@ -114,13 +116,14 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       key: 'remark',
       title: $t('page.student.manage.remark'),
       align: 'left',
+      resizable: true,
       minWidth: 160
     },
     {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 160,
+      width: 170,
       render: row => {
         const ifInStudy: boolean = row.inStudy as boolean;
 
@@ -133,9 +136,16 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
               <NButton type="success" ghost size="small" onClick={() => unStudy(row.id)}>
                 结业
               </NButton>
-              <NButton type="error" ghost size="small" onClick={() => disable(row.id)}>
-                {$t('common.delete')}
-              </NButton>
+              <NPopconfirm onPositiveClick={() => disable(row.id)}>
+                {{
+                  default: () => $t('common.confirmDelete'),
+                  trigger: () => (
+                    <NButton type="error" ghost size="small">
+                      {$t('common.delete')}
+                    </NButton>
+                  )
+                }}
+              </NPopconfirm>
             </div>
           );
         }
@@ -147,6 +157,16 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
             <NButton type="info" ghost size="small" onClick={() => inStudy(row.id)}>
               在读
             </NButton>
+            <NPopconfirm onPositiveClick={() => disable(row.id)}>
+              {{
+                default: () => $t('common.confirmDelete'),
+                trigger: () => (
+                  <NButton type="error" ghost size="small">
+                    {$t('common.delete')}
+                  </NButton>
+                )
+              }}
+            </NPopconfirm>
           </div>
         );
       }
@@ -169,21 +189,28 @@ const {
 function edit(id: number) {
   handleEdit(id);
 }
+
 function disable(id: number) {
   disableStudent(id);
   onUpdated();
 }
-function enable(id: number) {
-  enableStudent(id);
-  onUpdated();
-}
+
 function inStudy(id: number) {
   inStudyStudent(id);
   onUpdated();
 }
+
 function unStudy(id: number) {
   unStudyStudent(id);
   onUpdated();
+}
+
+function exportCSV() {
+  console.log('Export clicked');
+  tableRef.value?.downloadCsv({
+    fileName: '学生信息'
+    // keepOriginalData: false
+  });
 }
 </script>
 
@@ -197,9 +224,16 @@ function unStudy(id: number) {
       class="sm:flex-1-hidden card-wrapper"
     >
       <template #header-extra>
-        <TableHeaderOperation v-model:columns="columnChecks" :loading="loading" @add="handleAdd" @refresh="getData" />
+        <TableHeaderOperation
+          v-model:columns="columnChecks"
+          :loading="loading"
+          @add="handleAdd"
+          @refresh="getData"
+          @export-c-s-v="exportCSV"
+        />
       </template>
       <NDataTable
+        ref="tableRef"
         v-model:checked-row-keys="checkedRowKeys"
         :columns="columns"
         :data="data"
@@ -211,6 +245,7 @@ function unStudy(id: number) {
         :row-key="row => row.id"
         :pagination="mobilePagination"
         class="sm:h-full"
+        striped
       />
       <StudentOperateDrawer
         v-model:visible="drawerVisible"

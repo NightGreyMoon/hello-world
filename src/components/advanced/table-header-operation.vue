@@ -15,6 +15,7 @@ interface Emits {
   (e: 'add'): void;
   (e: 'delete'): void;
   (e: 'refresh'): void;
+  (e: 'exportCSV'): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -33,6 +34,10 @@ function batchDelete() {
 
 function refresh() {
   emit('refresh');
+}
+
+function exportCSV() {
+  emit('exportCSV');
 }
 </script>
 
@@ -66,6 +71,7 @@ function refresh() {
       </template>
       {{ $t('common.refresh') }}
     </NButton>
+    <NButton size="small" @click="exportCSV">导出CSV</NButton>
     <TableColumnSetting v-model:columns="columns" />
     <slot name="suffix"></slot>
   </NSpace>
