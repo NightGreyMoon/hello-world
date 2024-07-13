@@ -174,18 +174,18 @@ watch(visible, () => {
   <NDrawer v-model:show="visible" :title="title" display-directive="show" :width="640">
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model" :rules="rules">
-        <NFormItem :label="$t('page.curriculum.manage.teacherName')" path="teacherId">
-          <NSelect
-            v-model:value="model.teacherId"
-            :options="userOptions"
-            :placeholder="$t('page.curriculum.form.teacherName')"
-          />
-        </NFormItem>
         <NFormItem :label="$t('page.curriculum.manage.lessonName')" path="lessonId">
           <NSelect
             v-model:value="model.lessonId"
             :options="lessonOptions"
             :placeholder="$t('page.curriculum.form.lessonName')"
+          />
+        </NFormItem>
+        <NFormItem :label="$t('page.curriculum.manage.teacherName')" path="teacherId">
+          <NSelect
+            v-model:value="model.teacherId"
+            :options="userOptions"
+            :placeholder="$t('page.curriculum.form.teacherName')"
           />
         </NFormItem>
         <NFormItem :label="$t('page.curriculum.manage.classRoom')" path="classRoom">
