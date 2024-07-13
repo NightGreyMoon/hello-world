@@ -82,3 +82,11 @@ export function getAllStudent(params?: Api.SystemManage.StudentSearchParams) {
     params
   });
 }
+
+// 搜索学生，返回关键字匹配的前10条记录
+export function searchStudent(keyboard: string) {
+  return request<Student>({
+    url: `/Student/Search?keyword=${keyboard}`,
+    method: 'get'
+  });
+}

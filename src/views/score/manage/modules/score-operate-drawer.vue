@@ -2,7 +2,7 @@
 import { computed, reactive, ref, watch } from 'vue';
 import { NDatePicker, NSelect } from 'naive-ui';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { addScore, getAllLesson, getAllStudent, updateScore } from '@/service/api';
+import { addScore, getAllLesson, searchStudent, updateScore } from '@/service/api';
 import { $t } from '@/locales';
 defineOptions({
   name: 'ScoreOperateDrawer'
@@ -67,18 +67,23 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
   dateTimeStamp: defaultRequiredRule
 };
 
-/** the enabled student options */
-const userOptions = ref<CommonType.Option<string>[]>([]);
+const isLoadingStudent = ref(false);
+const studentOptions = ref<CommonType.Option<string>[]>([]);
 
-async function getUserOptions() {
-  const { error, data } = await getAllStudent();
+async function getStudentOptions(query: string) {
+  if (!query.length) {
+    studentOptions.value = [];
+    return;
+  }
+  isLoadingStudent.value = true;
+  const { error, data } = await searchStudent(query);
   if (!error) {
-    const options = data.records.map(item => ({
+    const options = data.map(item => ({
       label: item.name,
       value: item.id
     }));
-
-    userOptions.value = [...options];
+    studentOptions.value = [...options];
+    isLoadingStudent.value = false;
   }
 }
 
@@ -166,7 +171,6 @@ watch(visible, () => {
   if (visible.value) {
     handleUpdateModelWhenEdit();
     restoreValidation();
-    getUserOptions();
     getLessonOptions();
   }
 });
@@ -179,8 +183,14 @@ watch(visible, () => {
         <NFormItem :label="$t('page.enrollment.form.student')" path="studentId">
           <NSelect
             v-model:value="model.studentId"
-            :options="userOptions"
+            :options="studentOptions"
             :placeholder="$t('page.enrollment.form.student')"
+            filterable
+            clearable
+            remote
+            :loading="isLoadingStudent"
+            :clear-filter-after-select="false"
+            @search="getStudentOptions"
           />
         </NFormItem>
 
