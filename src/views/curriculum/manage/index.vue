@@ -1,6 +1,7 @@
 <script setup lang="tsx">
 import { NButton, NDatePicker, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
+import dayjs from 'dayjs';
 import { disableCurriculum, enableCurriculum, getAllCurriculum } from '@/service/api';
 import { useRouterPush } from '@/hooks/common/router';
 import { useAppStore } from '@/store/modules/app';
@@ -41,96 +42,111 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
     status: null
   },
   columns: () => [
-    {
-      type: 'selection',
-      align: 'center',
-      width: 48
-    },
+    // {
+    //   type: 'selection',
+    //   align: 'center',
+    //   width: 48
+    // },
     {
       key: 'id',
       title: $t('common.index'),
-      width: 64,
+      // width: 64,
       align: 'center'
+    },
+    {
+      key: 'lessonName',
+      title: $t('page.curriculum.manage.lessonName')
+      // width: 180
+    },
+    {
+      key: 'lessonCourse',
+      title: $t('page.curriculum.manage.lessonCourse')
+      // width: 100
     },
     {
       key: 'teacherName',
       title: $t('page.curriculum.manage.teacherName'),
-      align: 'center',
-      width: 120
-    },
-    {
-      key: 'lessonName',
-      title: $t('page.curriculum.manage.lessonName'),
-      width: 180
-    },
-    {
-      key: 'lessonCourse',
-      title: $t('page.curriculum.manage.lessonCourse'),
-      width: 100
+      align: 'center'
+      // width: 120
     },
     {
       key: 'classRoom',
-      title: $t('page.curriculum.manage.classRoom'),
-      width: 150
+      title: $t('page.curriculum.manage.classRoom')
+      // width: 150
     },
     {
       key: 'date',
       title: $t('page.curriculum.manage.date'),
-      width: 100,
+      // width: 100,
       render: row => {
         if (row.date === null) {
           return '';
         }
-        const date = new Date(row.date);
-        return date.toLocaleDateString();
+        const date = dayjs(row.date);
+        return date.format('YYYY-MM-DD');
       }
     },
     {
       key: 'dayOfWeek',
       title: $t('page.curriculum.manage.dayOfWeek'),
-      width: 60
+      // width: 60
+      render: row => {
+        if (row.dayOfWeek === null) {
+          return '';
+        }
+        const weekdayMap: any = {
+          0: '周日',
+          1: '周一',
+          2: '周二',
+          3: '周三',
+          4: '周四',
+          5: '周五',
+          6: '周六'
+        };
+        return weekdayMap[row.dayOfWeek];
+      }
     },
     {
       key: 'startTime',
       title: $t('page.curriculum.manage.startTime'),
-      width: 100,
+      // width: 100,
       render: row => {
         if (row.startTime === null) {
           return '';
         }
-        const date = new Date(row.startTime);
-        return date.toLocaleTimeString();
+        const date = dayjs(row.startTime);
+        return date.format('HH:mm');
       }
     },
     {
       key: 'endTime',
       title: $t('page.curriculum.manage.endTime'),
-      width: 100,
+      // width: 100,
       render: row => {
         if (row.endTime === null) {
           return '';
         }
-        const date = new Date(row.endTime);
-        return date.toLocaleTimeString();
+        const date = dayjs(row.endTime);
+        return date.format('HH:mm');
       }
     },
     {
       key: 'status',
       title: '状态',
-      align: 'center',
-      width: 80
+      align: 'center'
+      // width: 80
     },
     {
       key: 'remark',
       title: $t('page.student.manage.remark'),
-      align: 'left',
-      minWidth: 120
+      align: 'left'
+      // minWidth: 140
     },
     {
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 130,
+      width: 180,
       render: row => {
         const isDelete: boolean = row.sysIsDelete as boolean;
 
@@ -214,6 +230,7 @@ function view(id: number) {
         :row-key="row => row.id"
         :pagination="mobilePagination"
         class="sm:h-full"
+        striped
       />
       <CurriculumOperateDrawer
         v-model:visible="drawerVisible"

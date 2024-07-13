@@ -587,12 +587,12 @@ const local: App.I18n.Schema = {
         remark: '备注'
       },
       manage: {
-        teacherName: '老师',
-        lessonName: '课程',
+        teacherName: '授课老师',
+        lessonName: '课程名称',
         lessonCourse: '课程学科',
-        classRoom: '教室',
-        dayOfWeek: '周几',
-        date: '日期',
+        classRoom: '授课教室',
+        dayOfWeek: '授课日',
+        date: '授课日期',
         status: '状态',
         startTime: '开始时间',
         endTime: '结束时间',
