@@ -8,3 +8,10 @@ export function getSysData(params?: any) {
     params
   });
 }
+
+export function getHomeData() {
+  return request<SystemInfo>({
+    url: '/Home/Dashboard',
+    method: 'get'
+  });
+}

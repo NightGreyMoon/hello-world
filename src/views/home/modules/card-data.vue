@@ -1,11 +1,27 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { createReusableTemplate } from '@vueuse/core';
 import { $t } from '@/locales';
+import { getHomeData } from '@/service/api';
 
 defineOptions({
   name: 'CardData'
 });
+
+const studentCount = ref(0);
+const enrollmentCount = ref(0);
+const curriculumCount = ref(0);
+const attendanceCount = ref(0);
+
+async function getData() {
+  const { error, data } = await getHomeData();
+  if (!error) {
+    studentCount.value = data.studentCount;
+    enrollmentCount.value = data.enrollmentCount;
+    curriculumCount.value = data.curriculumCount;
+    attendanceCount.value = data.attendanceCount;
+  }
+}
 
 interface CardData {
   key: string;
@@ -22,47 +38,47 @@ interface CardData {
 const cardData = computed<CardData[]>(() => [
   {
     key: 'visitCount',
-    title: $t('page.home.visitCount'),
-    value: 9725,
+    title: '绑定学生数量',
+    value: studentCount.value,
     unit: '',
     color: {
       start: '#ec4786',
       end: '#b955a4'
     },
-    icon: 'ant-design:bar-chart-outlined'
+    icon: 'ant-design:usergroup-add-outlined'
   },
   {
     key: 'turnover',
-    title: $t('page.home.turnover'),
-    value: 1026,
-    unit: '$',
+    title: '课程报名数量',
+    value: enrollmentCount.value,
+    unit: '',
     color: {
       start: '#865ec0',
       end: '#5144b4'
     },
-    icon: 'ant-design:money-collect-outlined'
+    icon: 'ant-design:solution-outlined'
   },
   {
     key: 'downloadCount',
-    title: $t('page.home.downloadCount'),
-    value: 970925,
+    title: '排课记录数量',
+    value: curriculumCount.value,
     unit: '',
     color: {
       start: '#56cdf3',
       end: '#719de3'
     },
-    icon: 'carbon:document-download'
+    icon: 'ant-design:contacts-outlined'
   },
   {
     key: 'dealCount',
-    title: $t('page.home.dealCount'),
-    value: 9527,
+    title: '上课出勤数量',
+    value: attendanceCount.value,
     unit: '',
     color: {
       start: '#fcbc25',
       end: '#f68057'
     },
-    icon: 'ant-design:trademark-circle-outlined'
+    icon: 'ant-design:book-outlined'
   }
 ]);
 
@@ -75,6 +91,10 @@ const [DefineGradientBg, GradientBg] = createReusableTemplate<GradientBgProps>()
 function getGradientColor(color: CardData['color']) {
   return `linear-gradient(to bottom right, ${color.start}, ${color.end})`;
 }
+
+onBeforeMount(() => {
+  getData();
+});
 </script>
 
 <template>
