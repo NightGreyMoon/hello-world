@@ -1,4 +1,6 @@
 <script setup lang="tsx">
+import { ref } from 'vue';
+import type { DataTableInst } from 'naive-ui';
 import { NButton, NDatePicker, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
 import { disableStudent, enableStudent, getAllEnrollment } from '@/service/api';
@@ -24,6 +26,8 @@ function createDefaultModel(): Model {
   };
 }
 
+const tableRef = ref<DataTableInst>();
+
 const { columns, columnChecks, data, loading, getData, mobilePagination, searchParams, resetSearchParams } = useTable({
   apiFn: getAllEnrollment,
   apiParams: {
@@ -37,11 +41,11 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
     status: null
   },
   columns: () => [
-    {
-      type: 'selection',
-      align: 'center',
-      width: 48
-    },
+    // {
+    //  type: 'selection',
+    //  align: 'center',
+    //  width: 48
+    // },
     {
       key: 'id',
       title: $t('common.index'),
@@ -51,18 +55,22 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
     {
       key: 'studentName',
       title: $t('page.enrollment.manage.studentName'),
-      align: 'center',
-      width: 120
+      align: 'center'
+    },
+    {
+      key: 'studentGrade',
+      title: $t('page.enrollment.manage.studentGrade'),
+      align: 'center'
+    },
+    {
+      key: 'lessonCourse',
+      title: $t('page.enrollment.manage.lessonCourse'),
+      align: 'center'
     },
     {
       key: 'lessonName',
       title: $t('page.enrollment.manage.lessonName'),
       width: 180
-    },
-    {
-      key: 'lessonCourse',
-      title: $t('page.enrollment.manage.lessonCourse'),
-      width: 100
     },
     {
       key: 'enrollmentDate',
@@ -112,25 +120,25 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       align: 'center',
       width: 100
     },
-    {
-      key: 'sysIsDelete',
-      title: $t('page.enrollment.manage.status'),
-      align: 'center',
-      width: 80,
-      render: row => {
-        if (row.status === null) {
-          return null;
-        }
-        const isDelete: boolean = row.sysIsDelete as boolean;
-        const tagMap: any = {
-          false: 'success',
-          true: 'warning'
-        };
+    // {
+    //   key: 'sysIsDelete',
+    //   title: $t('page.enrollment.manage.status'),
+    //   align: 'center',
+    //   width: 80,
+    //   render: row => {
+    //     if (row.status === null) {
+    //       return null;
+    //     }
+    //     const isDelete: boolean = row.sysIsDelete as boolean;
+    //     const tagMap: any = {
+    //       false: 'success',
+    //       true: 'warning'
+    //     };
 
-        const label = isDelete ? '已禁用' : '已启用';
-        return <NTag type={tagMap[isDelete]}>{label}</NTag>;
-      }
-    },
+    //     const label = isDelete ? '已禁用' : '已启用';
+    //     return <NTag type={tagMap[isDelete]}>{label}</NTag>;
+    //   }
+    // },
     {
       key: 'remark',
       title: $t('page.enrollment.manage.remark'),
@@ -143,31 +151,38 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       align: 'center',
       width: 130,
       render: row => {
-        const isDelete: boolean = row.sysIsDelete as boolean;
-
-        if (isDelete) {
-          return (
-            <div class="flex-center justify-end gap-8px">
-              <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
-                {$t('common.edit')}
-              </NButton>
-              <NButton type="success" ghost size="small" onClick={() => enable(row.id)}>
-                {$t('common.enable')}
-              </NButton>
-            </div>
-          );
-        }
+        // const isDelete: boolean = row.sysIsDelete as boolean;
         return (
           <div class="flex-center justify-end gap-8px">
             <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
               {$t('common.edit')}
             </NButton>
-            <NButton type="error" ghost size="small" onClick={() => disable(row.id)}>
-              {$t('common.disable')}
-            </NButton>
           </div>
         );
       }
+      //   if (isDelete) {
+      //     return (
+      //       <div class="flex-center justify-end gap-8px">
+      //         <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+      //           {$t('common.edit')}
+      //         </NButton>
+      //         <NButton type="success" ghost size="small" onClick={() => enable(row.id)}>
+      //           {$t('common.enable')}
+      //         </NButton>
+      //       </div>
+      //     );
+      //   }
+      //   return (
+      //     <div class="flex-center justify-end gap-8px">
+      //       <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+      //         {$t('common.edit')}
+      //       </NButton>
+      //       <NButton type="error" ghost size="small" onClick={() => disable(row.id)}>
+      //         {$t('common.disable')}
+      //       </NButton>
+      //     </div>
+      //   );
+      // }
     }
   ]
 });
@@ -195,6 +210,14 @@ function enable(id: number) {
   enableStudent(id);
   onUpdated();
 }
+
+function exportCSV() {
+  console.log('Export clicked');
+  tableRef.value?.downloadCsv({
+    fileName: '学生报名信息'
+    // keepOriginalData: false
+  });
+}
 </script>
 
 <template>
@@ -207,9 +230,16 @@ function enable(id: number) {
       class="sm:flex-1-hidden card-wrapper"
     >
       <template #header-extra>
-        <TableHeaderOperation v-model:columns="columnChecks" :loading="loading" @add="handleAdd" @refresh="getData" />
+        <TableHeaderOperation
+          v-model:columns="columnChecks"
+          :loading="loading"
+          @add="handleAdd"
+          @refresh="getData"
+          @export-c-s-v="exportCSV"
+        />
       </template>
       <NDataTable
+        ref="tableRef"
         v-model:checked-row-keys="checkedRowKeys"
         :columns="columns"
         :data="data"
@@ -221,6 +251,7 @@ function enable(id: number) {
         :row-key="row => row.id"
         :pagination="mobilePagination"
         class="sm:h-full"
+        striped
       />
       <EnrollmentOperateDrawer
         v-model:visible="drawerVisible"

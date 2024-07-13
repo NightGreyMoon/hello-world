@@ -509,10 +509,11 @@ const local: App.I18n.Schema = {
     },
     enrollment: {
       common: {
-        title: '报名记录',
+        title: '学生报名信息',
         studentName: '学生姓名',
-        lessonName: '课程名称',
-        enrollmentDate: '报名日期',
+        lessonCourse: '报读科目',
+        lessonName: '报读课程',
+        enrollmentDate: '报读日期',
         paymentDate: '缴费日期',
         amount: '缴费金额',
         referee: '推荐人',
@@ -521,9 +522,10 @@ const local: App.I18n.Schema = {
       },
       manage: {
         studentName: '学生姓名',
-        lessonName: '课程名称',
-        lessonCourse: '课程学科',
-        enrollmentDate: '报名日期',
+        studentGrade: '就读年级',
+        lessonName: '报读课程',
+        lessonCourse: '报读科目',
+        enrollmentDate: '报读日期',
         paymentDate: '缴费日期',
         amount: '缴费金额',
         referee: '推荐人',
@@ -533,19 +535,19 @@ const local: App.I18n.Schema = {
       search: {
         studentName: '请输入学生姓名',
         lessonName: '请输入课程名称',
-        remark: '请输入备注'
+        remark: '请输入备注信息'
       },
       form: {
-        student: '学生',
-        lesson: '课程',
-        referee: '推荐人',
-        enrollmentDate: '报名日期',
+        student: '请输入学生姓名',
+        lesson: '请选择报读课程',
+        referee: '请输入推荐人姓名',
+        enrollmentDate: '报读日期',
         paymentDate: '缴费日期',
-        amount: '缴费金额',
-        remark: '备注'
+        amount: '请输入缴费金额',
+        remark: '请按需输入备注信息备注'
       },
-      add: '新增报名',
-      edit: '编辑报名'
+      add: '新增：学生报名信息',
+      edit: '编辑：学生报名信息'
     },
     score: {
       common: {

@@ -1,4 +1,6 @@
 <script setup lang="tsx">
+import { ref } from 'vue';
+import type { DataTableInst } from 'naive-ui';
 import { NButton, NDatePicker, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
 import { disableScore, enableScore, getAllScore } from '@/service/api';
@@ -24,6 +26,8 @@ function createDefaultModel(): Model {
     type: ''
   };
 }
+
+const tableRef = ref<DataTableInst>();
 
 const { columns, columnChecks, data, loading, getData, mobilePagination, searchParams, resetSearchParams } = useTable({
   apiFn: getAllScore,
@@ -174,6 +178,14 @@ function enable(id: number) {
   enableScore(id);
   onUpdated();
 }
+
+function exportCSV() {
+  console.log('Export clicked');
+  tableRef.value?.downloadCsv({
+    fileName: '学生成绩信息'
+    // keepOriginalData: false
+  });
+}
 </script>
 
 <template>
@@ -181,9 +193,16 @@ function enable(id: number) {
     <ScoreSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" />
     <NCard :title="$t('page.score.common.title')" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
       <template #header-extra>
-        <TableHeaderOperation v-model:columns="columnChecks" :loading="loading" @add="handleAdd" @refresh="getData" />
+        <TableHeaderOperation
+          v-model:columns="columnChecks"
+          :loading="loading"
+          @add="handleAdd"
+          @refresh="getData"
+          @export-c-s-v="exportCSV"
+        />
       </template>
       <NDataTable
+        ref="tableRef"
         v-model:checked-row-keys="checkedRowKeys"
         :columns="columns"
         :data="data"

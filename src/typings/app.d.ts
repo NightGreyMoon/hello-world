@@ -499,6 +499,7 @@ declare namespace App {
           common: {
             title: string;
             studentName: string;
+            lessonCourse: string;
             lessonName: string;
             enrollmentDate: string;
             paymentDate: string;
@@ -509,6 +510,7 @@ declare namespace App {
           };
           manage: {
             studentName: string;
+            studentGrade: string;
             lessonName: string;
             lessonCourse: string;
             enrollmentDate: string;

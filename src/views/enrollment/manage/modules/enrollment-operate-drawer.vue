@@ -51,7 +51,15 @@ const title = computed(() => {
 
 type Model = Pick<
   Api.SystemManage.Enrollment,
-  'studentId' | 'lessonId' | 'enrollmentTimeStamp' | 'paymentTimeStamp' | 'amount' | 'referee' | 'remark'
+  | 'studentId'
+  | 'lessonId'
+  | 'enrollmentTimeStamp'
+  | 'paymentTimeStamp'
+  | 'amount'
+  | 'referee'
+  | 'remark'
+  | 'packageCount'
+  | 'remainingCount'
 >;
 
 const model: Model = reactive(createDefaultModel());
@@ -62,8 +70,8 @@ function createDefaultModel(): Model {
     lessonId: null,
     amount: null,
     referee: '',
-    enrollmentTimeStamp: 1546272000000,
-    paymentTimeStamp: 1546272000000,
+    enrollmentTimeStamp: 1720800000000,
+    paymentTimeStamp: 1720800000000,
     packageCount: 18,
     remainingCount: 18,
     remark: ''
@@ -73,9 +81,11 @@ function createDefaultModel(): Model {
 type RuleKey = Extract<keyof Model, 'account' | 'status'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
-  name: defaultRequiredRule,
-  gender: defaultRequiredRule,
-  userId: defaultRequiredRule
+  studentId: defaultRequiredRule,
+  lessonId: defaultRequiredRule,
+  amount: defaultRequiredRule,
+  packageCount: defaultRequiredRule,
+  remainingCount: defaultRequiredRule
 };
 
 /** the enabled student options */
@@ -108,6 +118,17 @@ async function getLessonOptions() {
 
     lessonOptions.value = [...options];
   }
+}
+
+function parse(input: string) {
+  const nums = input.replace(/,/g, '').trim();
+  if (/^\d+(\.(\d+)?)?$/.test(nums)) return Number(nums);
+  return nums === '' ? null : Number.NaN;
+}
+
+function format(value: number | null) {
+  if (value === null) return '';
+  return value.toLocaleString('en-US');
 }
 
 function handleUpdateModelWhenEdit() {
@@ -165,43 +186,50 @@ watch(visible, () => {
   <NDrawer v-model:show="visible" :title="title" display-directive="show" :width="640">
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm ref="formRef" :model="model" :rules="rules">
-        <NFormItem :label="$t('page.enrollment.form.student')" path="studentId">
+        <NFormItem :label="$t('page.enrollment.common.studentName')" path="studentId">
           <NSelect
             v-model:value="model.studentId"
             :options="userOptions"
             :placeholder="$t('page.enrollment.form.student')"
           />
         </NFormItem>
-        <NFormItem :label="$t('page.enrollment.form.lesson')" path="lessonId">
+        <NFormItem :label="$t('page.enrollment.common.lessonName')" path="lessonId">
           <NSelect
             v-model:value="model.lessonId"
             :options="lessonOptions"
             :placeholder="$t('page.enrollment.form.lesson')"
           />
         </NFormItem>
-        <NFormItem :label="$t('page.enrollment.form.enrollmentDate')" path="enrollmentTimeStamp">
+        <NFormItem :label="$t('page.enrollment.common.enrollmentDate')" path="enrollmentTimeStamp">
           <NDatePicker
             v-model:value="model.enrollmentTimeStamp"
             :placeholder="$t('page.enrollment.form.enrollmentDate')"
           />
         </NFormItem>
-        <NFormItem :label="$t('page.enrollment.form.paymentDate')" path="paymentTimeStamp">
+        <NFormItem :label="$t('page.enrollment.common.paymentDate')" path="paymentTimeStamp">
           <NDatePicker v-model:value="model.paymentTimeStamp" :placeholder="$t('page.enrollment.form.paymentDate')" />
         </NFormItem>
-        <NFormItem :label="$t('page.enrollment.form.amount')" path="amount">
-          <NInput v-model:value="model.amount" :placeholder="$t('page.enrollment.form.amount')" />
+        <NFormItem :label="$t('page.enrollment.common.amount')" path="amount">
+          <NInputNumber
+            v-model:value="model.amount"
+            :placeholder="$t('page.enrollment.form.amount')"
+            :parse="parse"
+            :format="format"
+            clearable
+            :precision="2"
+          />
         </NFormItem>
         <NFormItem label="购买课次" path="packageCount">
-          <NInput v-model:value="model.packageCount" />
+          <NInputNumber v-model:value="model.packageCount" :parse="parse" :format="format" clearable :precision="0" />
         </NFormItem>
         <NFormItem label="剩余课次" path="remainingCount">
-          <NInput v-model:value="model.remainingCount" />
+          <NInputNumber v-model:value="model.remainingCount" :parse="parse" :format="format" clearable :precision="0" />
         </NFormItem>
-        <NFormItem :label="$t('page.enrollment.form.referee')" path="referee">
-          <NInput v-model:value="model.referee" :placeholder="$t('page.enrollment.form.referee')" />
+        <NFormItem :label="$t('page.enrollment.common.referee')" path="referee">
+          <NInput v-model:value="model.referee" :placeholder="$t('page.enrollment.form.referee')" clearable />
         </NFormItem>
         <NFormItem :label="$t('page.student.common.remark')" path="remark">
-          <NInput v-model:value="model.remark" :placeholder="$t('page.student.form.remark')" />
+          <NInput v-model:value="model.remark" :placeholder="$t('page.student.form.remark')" clearable />
         </NFormItem>
       </NForm>
       <template #footer>

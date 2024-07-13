@@ -179,6 +179,8 @@ declare namespace Api {
       amount: number;
       paymentTimeStamp: number;
       enrollmentTimeStamp: number;
+      packageCount: number;
+      remainingCount: number;
     }>;
 
     /** enrollment search params */
