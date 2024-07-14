@@ -40,7 +40,7 @@ const title = computed(() => {
 
 type Model = Pick<
   Api.SystemManage.Score,
-  'studentId' | 'lessonId' | 'dateTimeStamp' | 'point' | 'course' | 'type' | 'remark'
+  'studentId' | 'lessonId' | 'dateTimeStamp' | 'point' | 'course' | 'type' | 'remark' | 'studentName'
 >;
 
 const model: Model = reactive(createDefaultModel());
@@ -48,6 +48,7 @@ const model: Model = reactive(createDefaultModel());
 function createDefaultModel(): Model {
   return {
     studentId: null,
+    studentName: null,
     lessonId: null,
     point: null,
     course: null,
@@ -145,6 +146,7 @@ function handleUpdateModelWhenEdit() {
 
   if (props.operateType === 'edit' && props.rowData) {
     Object.assign(model, props.rowData);
+    searchStudent(model.studentId);
   }
 }
 
@@ -197,6 +199,7 @@ watch(visible, () => {
             filterable
             clearable
             remote
+            :default-value="model.studentName"
             :loading="isLoadingStudent"
             :clear-filter-after-select="false"
             @search="getStudentOptions"

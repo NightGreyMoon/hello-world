@@ -112,7 +112,7 @@ async function getLessonOptions() {
   console.log(data);
   if (!error) {
     const options = data.records.map(item => ({
-      label: `${item.name} - ${item.course}`,
+      label: `${item.name}`,
       value: item.id
     }));
 
