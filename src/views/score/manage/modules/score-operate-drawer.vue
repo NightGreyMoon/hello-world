@@ -2,7 +2,7 @@
 import { computed, reactive, ref, watch } from 'vue';
 import { NDatePicker, NSelect } from 'naive-ui';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { addScore, getAllLesson, searchStudent, updateScore } from '@/service/api';
+import { addScore, searchLesson, searchStudent, updateScore } from '@/service/api';
 import { $t } from '@/locales';
 defineOptions({
   name: 'ScoreOperateDrawer'
@@ -88,17 +88,24 @@ async function getStudentOptions(query: string) {
 }
 
 /** the enabled lesson options */
+const isLoadingLesson = ref(false);
 const lessonOptions = ref<CommonType.Option<string>[]>([]);
 
-async function getLessonOptions() {
-  const { error, data } = await getAllLesson();
+async function getLessonOptions(query: string) {
+  if (!query.length) {
+    lessonOptions.value = [];
+    return;
+  }
+  isLoadingLesson.value = true;
+  const { error, data } = await searchLesson(query);
   if (!error) {
-    const options = data.records.map(item => ({
-      label: `${item.name} - ${item.course}`,
+    const options = data.map(item => ({
+      label: item.name,
       value: item.id
     }));
 
     lessonOptions.value = [...options];
+    isLoadingLesson.value = false;
   }
 }
 
@@ -114,11 +121,14 @@ function format(value: number | null) {
 }
 
 const typeOptions = ref<CommonType.Option<string>[]>([
-  { value: '学校考试成绩', label: '学校考试成绩' },
-  { value: '培训班考试成绩', label: '培训班考试成绩' }
+  { value: '在校成绩', label: '在校成绩' },
+  { value: '比弗利', label: '比弗利' }
 ]);
 
 const courseOptions = ref<CommonType.Option<string>[]>([
+  { value: '语文', label: '语文' },
+  { value: '数学', label: '数学' },
+  { value: '英语', label: '英语' },
   { value: '物理', label: '物理' },
   { value: '化学', label: '化学' },
   { value: '编程', label: '编程' },
@@ -171,7 +181,6 @@ watch(visible, () => {
   if (visible.value) {
     handleUpdateModelWhenEdit();
     restoreValidation();
-    getLessonOptions();
   }
 });
 </script>
@@ -208,6 +217,11 @@ watch(visible, () => {
             :options="lessonOptions"
             :placeholder="$t('page.enrollment.form.lesson')"
             filterable
+            clearable
+            remote
+            :loading="isLoadingLesson"
+            :clear-filter-after-select="false"
+            @search="getLessonOptions"
           />
         </NFormItem>
         <NFormItem :label="$t('page.score.manage.date')" path="dateTimeStamp">

@@ -46,14 +46,6 @@ async function getLessonOptions() {
   }
 }
 
-const courseOptions = ref<CommonType.Option<string>[]>([
-  { value: '物理', label: '物理' },
-  { value: '化学', label: '化学' },
-  { value: '编程', label: '编程' },
-  { value: '书法', label: '书法' },
-  { value: '其他', label: '其他' }
-]);
-
 async function handleUpdateModelWhenEdit() {
   const { error, data } = await getCurriculumByClassRoomAndDate(props.classroom, props.year, props.month, props.day);
   if (!error) {

@@ -42,3 +42,11 @@ export function updateLesson(data?: any) {
     data
   });
 }
+
+// 搜索课程
+export function searchLesson(keyboard: string) {
+  return request<SysRoleList>({
+    url: `/Lesson/Search?keyword=${keyboard}`,
+    method: 'get'
+  });
+}

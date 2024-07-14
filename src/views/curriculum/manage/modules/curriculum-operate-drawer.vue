@@ -2,7 +2,7 @@
 import { computed, reactive, ref, watch } from 'vue';
 import { NDatePicker, NSelect, NTimePicker } from 'naive-ui';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { addCurriculum, getAllLesson, getTeacherList, updateCurriculum } from '@/service/api';
+import { addCurriculum, getTeacherList, searchLesson, updateCurriculum } from '@/service/api';
 import { $t } from '@/locales';
 defineOptions({
   name: 'CurriculumOperateDrawer'
@@ -96,28 +96,26 @@ async function getUserOptions() {
 }
 
 /** the enabled lesson options */
+const isLoadingLesson = ref(false);
 const lessonOptions = ref<CommonType.Option<string>[]>([]);
 
-async function getLessonOptions() {
-  const { error, data } = await getAllLesson(); // TODO:改一下单页大小
-  console.log(data);
+async function getLessonOptions(query: string) {
+  if (!query.length) {
+    lessonOptions.value = [];
+    return;
+  }
+  isLoadingLesson.value = true;
+  const { error, data } = await searchLesson(query);
   if (!error) {
-    const options = data.records.map(item => ({
-      label: `${item.name} - ${item.course}`,
+    const options = data.map(item => ({
+      label: item.name,
       value: item.id
     }));
 
     lessonOptions.value = [...options];
+    isLoadingLesson.value = false;
   }
 }
-
-const courseOptions = ref<CommonType.Option<string>[]>([
-  { value: '物理', label: '物理' },
-  { value: '化学', label: '化学' },
-  { value: '编程', label: '编程' },
-  { value: '书法', label: '书法' },
-  { value: '其他', label: '其他' }
-]);
 
 function handleUpdateModelWhenEdit() {
   console.log('接收传递过来的参数', props);
@@ -165,7 +163,6 @@ watch(visible, () => {
     handleUpdateModelWhenEdit();
     restoreValidation();
     getUserOptions();
-    getLessonOptions();
   }
 });
 </script>
@@ -179,6 +176,12 @@ watch(visible, () => {
             v-model:value="model.lessonId"
             :options="lessonOptions"
             :placeholder="$t('page.curriculum.form.lessonName')"
+            filterable
+            clearable
+            remote
+            :loading="isLoadingLesson"
+            :clear-filter-after-select="false"
+            @search="getLessonOptions"
           />
         </NFormItem>
         <NFormItem :label="$t('page.curriculum.manage.teacherName')" path="teacherId">
