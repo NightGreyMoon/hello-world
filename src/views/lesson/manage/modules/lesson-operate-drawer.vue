@@ -57,6 +57,9 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
 };
 
 const courseOptions = ref<CommonType.Option<string>[]>([
+  { value: '语文', label: '语文' },
+  { value: '数学', label: '数学' },
+  { value: '英语', label: '英语' },
   { value: '物理', label: '物理' },
   { value: '化学', label: '化学' },
   { value: '编程', label: '编程' },
