@@ -8,6 +8,7 @@ defineOptions({
   name: 'CardData'
 });
 
+const allStudentCount = ref(0);
 const studentCount = ref(0);
 const enrollmentCount = ref(0);
 const curriculumCount = ref(0);
@@ -16,6 +17,7 @@ const attendanceCount = ref(0);
 async function getData() {
   const { error, data } = await getHomeData();
   if (!error) {
+    allStudentCount.value = data.allStudentCount;
     studentCount.value = data.studentCount;
     enrollmentCount.value = data.enrollmentCount;
     curriculumCount.value = data.curriculumCount;
@@ -36,6 +38,17 @@ interface CardData {
 }
 
 const cardData = computed<CardData[]>(() => [
+  {
+    key: 'studentCount',
+    title: '全部学生数量',
+    value: allStudentCount.value,
+    unit: '',
+    color: {
+      start: '#fcbc25',
+      end: '#f68057'
+    },
+    icon: 'ant-design:usergroup-add-outlined'
+  },
   {
     key: 'visitCount',
     title: '绑定学生数量',
@@ -68,18 +81,18 @@ const cardData = computed<CardData[]>(() => [
       end: '#719de3'
     },
     icon: 'ant-design:contacts-outlined'
-  },
-  {
-    key: 'dealCount',
-    title: '上课出勤数量',
-    value: attendanceCount.value,
-    unit: '',
-    color: {
-      start: '#fcbc25',
-      end: '#f68057'
-    },
-    icon: 'ant-design:book-outlined'
-  }
+  } //,
+  // {
+  //   key: 'dealCount',
+  //   title: '上课出勤数量',
+  //   value: attendanceCount.value,
+  //   unit: '',
+  //   color: {
+  //     start: '#fcbc25',
+  //     end: '#f68057'
+  //   },
+  //   icon: 'ant-design:book-outlined'
+  // }
 ]);
 
 interface GradientBgProps {

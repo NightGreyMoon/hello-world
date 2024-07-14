@@ -86,6 +86,7 @@ watch(visible, () => {
               <NTime :time="item.endTimeStamp" format="HH:mm" />
             </NTag>
             {{ item.lessonCourse }}-{{ item.lessonName }}
+            <NTag>{{ item.status }}</NTag>
           </NListItem>
         </template>
       </NList>
