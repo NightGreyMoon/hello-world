@@ -2,8 +2,8 @@ import { request } from '../request';
 
 // 课程列表
 export function getAllLesson(params?: Api.SystemManage.CommonSearchParams) {
-  return request<SysRoleList>({
-    url: `/Lesson/All`,
+  return request<Lesson>({
+    url: `/Lesson/AllLesson`,
     method: 'get',
     params
   });
@@ -45,8 +45,16 @@ export function updateLesson(data?: any) {
 
 // 搜索课程
 export function searchLesson(keyboard: string) {
-  return request<SysRoleList>({
+  return request<Lesson>({
     url: `/Lesson/Search?keyword=${keyboard}`,
+    method: 'get'
+  });
+}
+
+// 全部课程
+export function allLesson() {
+  return request<Lesson>({
+    url: `/Lesson/All`,
     method: 'get'
   });
 }

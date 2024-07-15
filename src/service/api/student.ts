@@ -90,3 +90,11 @@ export function searchStudent(keyboard: string) {
     method: 'get'
   });
 }
+
+// 全部学生
+export function allStudent() {
+  return request<Student>({
+    url: `/Student/All`,
+    method: 'get'
+  });
+}

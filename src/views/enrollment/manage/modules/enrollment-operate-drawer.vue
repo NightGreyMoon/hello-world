@@ -2,7 +2,7 @@
 import { computed, reactive, ref, watch } from 'vue';
 import { NDatePicker, NSelect } from 'naive-ui';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { addEnrollment, getAllLesson, getAllStudent, updateEnrollment } from '@/service/api';
+import { addEnrollment, allLesson, allStudent, updateEnrollment } from '@/service/api';
 import { $t } from '@/locales';
 defineOptions({
   name: 'EnrollmentOperateDrawer'
@@ -89,18 +89,16 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
 };
 
 /** the enabled student options */
-const userOptions = ref<CommonType.Option<string>[]>([]);
+const studentOptions = ref<CommonType.Option<string>[]>([]);
 
-async function getUserOptions() {
-  const { error, data } = await getAllStudent(); // TODO:改一下单页大小
-  console.log(data);
+async function getStudentOptions() {
+  const { error, data } = await allStudent();
   if (!error) {
-    const options = data.records.map(item => ({
+    const options = data.map(item => ({
       label: item.name,
       value: item.id
     }));
-
-    userOptions.value = [...options];
+    studentOptions.value = [...options];
   }
 }
 
@@ -108,14 +106,12 @@ async function getUserOptions() {
 const lessonOptions = ref<CommonType.Option<string>[]>([]);
 
 async function getLessonOptions() {
-  const { error, data } = await getAllLesson(); // TODO:改一下单页大小
-  console.log(data);
+  const { error, data } = await allLesson();
   if (!error) {
-    const options = data.records.map(item => ({
+    const options = data.map(item => ({
       label: `${item.name}`,
       value: item.id
     }));
-
     lessonOptions.value = [...options];
   }
 }
@@ -176,7 +172,7 @@ watch(visible, () => {
   if (visible.value) {
     handleUpdateModelWhenEdit();
     restoreValidation();
-    getUserOptions();
+    getStudentOptions();
     getLessonOptions();
   }
 });
@@ -189,8 +185,10 @@ watch(visible, () => {
         <NFormItem :label="$t('page.enrollment.common.studentName')" path="studentId">
           <NSelect
             v-model:value="model.studentId"
-            :options="userOptions"
+            :options="studentOptions"
             :placeholder="$t('page.enrollment.form.student')"
+            clearable
+            filterable
           />
         </NFormItem>
         <NFormItem :label="$t('page.enrollment.common.lessonName')" path="lessonId">
@@ -198,6 +196,8 @@ watch(visible, () => {
             v-model:value="model.lessonId"
             :options="lessonOptions"
             :placeholder="$t('page.enrollment.form.lesson')"
+            clearable
+            filterable
           />
         </NFormItem>
         <NFormItem :label="$t('page.enrollment.common.enrollmentDate')" path="enrollmentTimeStamp">
