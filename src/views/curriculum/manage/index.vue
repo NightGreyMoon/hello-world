@@ -82,7 +82,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         if (row.date === null) {
           return '';
         }
-        const date = dayjs(row.date);
+        const date = dayjs(row.dateTimeStamp);
         return date.format('YYYY-MM-DD');
       }
     },
