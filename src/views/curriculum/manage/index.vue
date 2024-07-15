@@ -114,7 +114,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         if (row.startTime === null) {
           return '';
         }
-        const date = dayjs(row.startTime);
+        const date = dayjs(row.startTimeStamp);
         return date.format('HH:mm');
       }
     },
@@ -126,7 +126,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         if (row.endTime === null) {
           return '';
         }
-        const date = dayjs(row.endTime);
+        const date = dayjs(row.endTimeStamp);
         return date.format('HH:mm');
       }
     },
