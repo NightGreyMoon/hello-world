@@ -7,6 +7,7 @@ import { useAppStore } from '@/store/modules/app';
 import {
   confirmCurriculum,
   getAttendanceByCurriculum,
+  getComment,
   getCurriculumById,
   setComment,
   updateSignInForCurriculum
@@ -80,9 +81,13 @@ async function getData() {
   }
 }
 
-function openModal(id: number) {
-  attendanceId.value = id;
-  showModal.value = true;
+async function openModal(id: number) {
+  const { error, data } = await getComment(id);
+  if (!error) {
+    attendanceId.value = id;
+    attendanceComment.value = data;
+    showModal.value = true;
+  }
 }
 
 function submitComment() {
@@ -124,8 +129,7 @@ onMounted(async () => {
         {{ curriculum.teacherName }}
       </template>
       <template #header-extra>
-        <NTag v-if="hasConfirmed">已上课</NTag>
-        <NTag v-else>待上课</NTag>
+        <NTag>{{ curriculum?.status }}</NTag>
       </template>
     </NCard>
     <!--
@@ -178,17 +182,11 @@ onMounted(async () => {
                     <icon-ic-round-edit class="text-icon" />
                   </template>
                 </NButton>
-
-                <NPopconfirm v-else :show-icon="false" :negative-text="null">
-                  <template #trigger>
-                    <NButton tertiary circle type="primary">
-                      <template #icon>
-                        <icon-ic-round-remove-red-eye class="text-icon" />
-                      </template>
-                    </NButton>
+                <NButton v-else tertiary circle type="primary" @click="openModal(attendance.id)">
+                  <template #icon>
+                    <icon-ic-round-remove-red-eye class="text-icon" />
                   </template>
-                  {{ attendance.comment }}
-                </NPopconfirm>
+                </NButton>
               </td>
             </tr>
           </tbody>

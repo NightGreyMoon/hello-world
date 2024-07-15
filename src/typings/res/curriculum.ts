@@ -15,4 +15,5 @@ type Curriculum = {
   month: number;
   day: number;
   hasConfirmed: boolean;
+  status: string;
 };
