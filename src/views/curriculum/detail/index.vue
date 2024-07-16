@@ -188,11 +188,11 @@ onMounted(async () => {
                   <icon-ic-round-remove-circle-outline class="text-icon" />
                   请假
                 </template>
-                <template v-else-if="attendance.hasSigned">
+                <template v-else-if="attendance.hasSigned && curriculum?.hasConfirmed">
                   <icon-ic-round-check-circle-outline class="text-icon" />
                   出勤
                 </template>
-                <template v-else>
+                <template v-else-if="curriculum?.hasConfirmed">
                   <icon-ic-round-not-interested class="text-icon" />
                   缺勤
                 </template>

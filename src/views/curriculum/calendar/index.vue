@@ -110,7 +110,7 @@ function dateChanged(_: number, { year, month, date }: { year: number; month: nu
                 <NTag :bordered="false" type="warning" style="margin-top: 5px">
                   <NTime :time="item.startTimeStamp" format="HH:mm"></NTime>
                   -
-                  <NEllipsis style="max-width: 140px">{{ item.lessonName }}</NEllipsis>
+                  <NEllipsis style="max-width: 100px">{{ item.lessonName }}</NEllipsis>
                 </NTag>
               </li>
             </template>

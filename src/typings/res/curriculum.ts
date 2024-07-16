@@ -1,4 +1,5 @@
 type Curriculum = {
+  canBeConfirmed: boolean;
   id: number;
   teacherName: string;
   lessonName: string;

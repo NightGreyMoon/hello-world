@@ -26,7 +26,7 @@ const { routerPushByKey } = useRouterPush();
 const route = useRoute();
 
 const curriculum = ref<Curriculum>();
-const hasConfirmed = ref(true);
+const canBeConfirmed = ref(false);
 
 const isLoading = ref(true);
 
@@ -83,7 +83,7 @@ async function getData() {
     const { error, data } = await getCurriculumById(curriculumId);
     if (!error) {
       curriculum.value = data;
-      hasConfirmed.value = data.hasConfirmed;
+      canBeConfirmed.value = data.canBeConfirmed;
       isLoading.value = false;
     }
   } catch (error) {
@@ -211,8 +211,9 @@ onMounted(async () => {
             </tr>
           </tbody>
         </NTable>
+        <NEmpty v-else size="large" description="暂无学生上课记录"></NEmpty>
       </NSpace>
-      <template v-if="!hasConfirmed" #action>
+      <template v-if="canBeConfirmed" #action>
         <NButton type="primary" block @click="confirmStatus">确认已上课</NButton>
       </template>
     </NCard>
