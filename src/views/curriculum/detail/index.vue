@@ -7,6 +7,7 @@ import { useAppStore } from '@/store/modules/app';
 import {
   cancelCurriculum,
   confirmCurriculumAndNotify,
+  deleteAttendance,
   getAttendanceByCurriculum,
   getComment,
   getCurriculumById,
@@ -106,6 +107,16 @@ async function cancel() {
   }
 }
 
+async function removeAttendance(id: number) {
+  const { error, data } = await deleteAttendance(id);
+  if (!error) {
+    getData();
+    message.success('已成功移除');
+  } else {
+    message.error('移除失败');
+  }
+}
+
 async function confirmCurriculum() {
   const curriculumId: number = route.query.id;
   const { error, data } = await confirmCurriculumAndNotify(curriculumId);
@@ -194,7 +205,7 @@ onMounted(async () => {
                 </NButton>
               </td>
               <td style="width: 50px">
-                <NPopconfirm @positive-click="cancelCurriculum">
+                <NPopconfirm @positive-click="removeAttendance(attendance.id)">
                   <template #trigger>
                     <NButton type="error" ghost>
                       <icon-ic-round-delete class="text-icon" />

@@ -1,4 +1,5 @@
 export * from './auth';
+export * from './attendance';
 export * from './route';
 export * from './system-manage';
 export * from './sysuser';

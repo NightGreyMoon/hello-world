@@ -23,3 +23,11 @@ export function addAttendance(data?: any) {
     data
   });
 }
+
+// 移除上课记录
+export function deleteAttendance(id?: number) {
+  return request<boolean>({
+    url: `/Attendance/Delete?id=${id}`,
+    method: 'get'
+  });
+}
