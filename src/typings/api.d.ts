@@ -146,6 +146,14 @@ declare namespace Api {
     /** user list */
     type UserList = Common.PaginatingQueryRecord<User>;
 
+    /** attendance */
+    type Attendance = Common.CommonRecord<{
+      id: number;
+      studentId: number;
+      curriculumId: number;
+      comment: string;
+    }>;
+
     /** student */
     type Student = Common.CommonRecord<{
       name: string;

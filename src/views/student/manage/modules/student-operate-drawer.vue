@@ -21,17 +21,6 @@ interface Emits {
   (e: 'submitted'): void;
 }
 
-const enableStatus: any = [
-  {
-    key: 1,
-    name: '启用'
-  },
-  {
-    key: 0,
-    name: '禁用'
-  }
-];
-
 const emit = defineEmits<Emits>();
 
 const visible = defineModel<boolean>('visible', {

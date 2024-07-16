@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router';
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { NEmpty, NRadioGroup, NSpace, NTable, useDialog, useMessage } from 'naive-ui';
 import { Dayjs } from 'dayjs';
+import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { useAppStore } from '@/store/modules/app';
 import {
   confirmCurriculum,
@@ -30,6 +31,24 @@ const hasConfirmed = ref(true);
 const isLoading = ref(true);
 
 const showModal: boolean = ref(false);
+
+const { formRef, validate, restoreValidation } = useNaiveForm();
+const { defaultRequiredRule } = useFormRules();
+type RuleKey = Extract<keyof Model, 'account' | 'status'>;
+const rules: Record<RuleKey, App.Global.FormRule> = {
+  comment: defaultRequiredRule
+};
+
+type Model = Pick<Api.SystemManage.Attendance, 'id' | 'studentId' | 'curriculumId' | 'comment'>;
+const model: Model = reactive(createDefaultModel());
+function createDefaultModel(): Model {
+  return {
+    id: 0,
+    studentId: 0,
+    curriculumId: 0,
+    comment: null
+  };
+}
 
 const attendanceId = ref(0);
 const attendanceComment = ref('');
@@ -84,15 +103,16 @@ async function getData() {
 async function openModal(id: number) {
   const { error, data } = await getComment(id);
   if (!error) {
-    attendanceId.value = id;
-    attendanceComment.value = data;
+    model.id = id;
+    model.comment = data;
     showModal.value = true;
   }
 }
 
-function submitComment() {
-  const body = { comment: attendanceComment.value };
-  setComment(attendanceId.value, body);
+async function submitComment() {
+  await validate();
+  const body = { comment: model.comment };
+  setComment(model.id, body);
   isLoading.value = true;
   getData();
   closeModal();
@@ -197,21 +217,25 @@ onMounted(async () => {
       </template>
     </NCard>
 
-    <NModal v-model:show="showModal" class="custom-card" preset="card" title="提交评语" size="huge" :bordered="false">
-      <NInput
-        v-model:value="attendanceComment"
-        type="textarea"
-        maxlength="100"
-        show-count
-        placeholder="输入你对该学生这节课的评价"
-      />
-      <template #footer>
-        <NSpace justify="end">
-          <NButton @click="closeModal()">取消</NButton>
-          <NButton @click="submitComment()">提交</NButton>
-        </NSpace>
-      </template>
-    </NModal>
+    <NForm ref="formRef" :model="model" :rules="rules">
+      <NModal v-model:show="showModal" class="custom-card" preset="card" title="提交评语" size="huge" :bordered="false">
+        <NFormItem path="comment">
+          <NInput
+            v-model:value="model.comment"
+            type="textarea"
+            maxlength="100"
+            show-count
+            placeholder="输入你对该学生这节课的评价"
+          />
+        </NFormItem>
+        <template #footer>
+          <NSpace justify="end">
+            <NButton @click="closeModal()">取消</NButton>
+            <NButton @click="submitComment()">提交</NButton>
+          </NSpace>
+        </template>
+      </NModal>
+    </NForm>
   </div>
 </template>
 

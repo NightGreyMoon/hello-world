@@ -146,7 +146,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 180,
+      width: 190,
       render: row => {
         const isDelete: boolean = row.sysIsDelete as boolean;
 
