@@ -51,7 +51,7 @@ function createDefaultModel(): Model {
     gender: null,
     grade: null,
     school: '',
-    birthTimeStamp: 1546272000000,
+    birthTimeStamp: null,
     userId: null,
     remark: ''
   };
