@@ -21,17 +21,6 @@ interface Emits {
   (e: 'submitted'): void;
 }
 
-const enableStatus: any = [
-  {
-    key: 1,
-    name: '启用'
-  },
-  {
-    key: 0,
-    name: '禁用'
-  }
-];
-
 const emit = defineEmits<Emits>();
 
 const visible = defineModel<boolean>('visible', {
@@ -78,6 +67,15 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
   startTimeStamp: defaultRequiredRule,
   endTimeStamp: defaultRequiredRule
 };
+
+const roomOptions = ref<CommonType.Option<string>[]>([
+  { value: '1楼教室', label: '1楼教室' },
+  { value: '2楼入门教室', label: '2楼入门教室' },
+  { value: '2楼里间小教室', label: '2楼里间小教室' },
+  { value: '2楼未装修教室', label: '2楼未装修教室' },
+  { value: '4楼大教室', label: '4楼大教室' },
+  { value: '4楼小教室', label: '4楼小教室' }
+]);
 
 /** the enabled student options */
 const userOptions = ref<CommonType.Option<string>[]>([]);
@@ -192,7 +190,11 @@ watch(visible, () => {
           />
         </NFormItem>
         <NFormItem :label="$t('page.curriculum.manage.classRoom')" path="classRoom">
-          <NInput v-model:value="model.classRoom" :placeholder="$t('page.curriculum.form.classRoom')" />
+          <NSelect
+            v-model:value="model.classRoom"
+            :options="roomOptions"
+            :placeholder="$t('page.curriculum.form.classRoom')"
+          />
         </NFormItem>
         <NFormItem :label="$t('page.curriculum.manage.date')" path="dateTimeStamp">
           <NDatePicker v-model:value="model.dateTimeStamp" :placeholder="$t('page.curriculum.form.date')" />

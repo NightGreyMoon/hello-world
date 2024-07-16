@@ -31,6 +31,15 @@ const rules = computed<Record<RuleKey, App.Global.FormRule>>(() => {
   };
 });
 
+const roomOptions = ref<CommonType.Option<string>[]>([
+  { value: '1楼教室', label: '1楼教室' },
+  { value: '2楼入门教室', label: '2楼入门教室' },
+  { value: '2楼里间小教室', label: '2楼里间小教室' },
+  { value: '2楼未装修教室', label: '2楼未装修教室' },
+  { value: '4楼大教室', label: '4楼大教室' },
+  { value: '4楼小教室', label: '4楼小教室' }
+]);
+
 const courseOptions = ref<CommonType.Option<string>[]>([
   { value: '语文', label: '语文' },
   { value: '数学', label: '数学' },
@@ -72,7 +81,12 @@ async function search() {
           path="classRoom"
           class="pr-24px"
         >
-          <NInput v-model:value="model.classRoom" :placeholder="$t('page.curriculum.form.classRoom')" />
+          <NSelect
+            v-model:value="model.classRoom"
+            :options="roomOptions"
+            :placeholder="$t('page.curriculum.form.classRoom')"
+            clearable
+          />
         </NFormItemGi>
 
         <NFormItemGi
