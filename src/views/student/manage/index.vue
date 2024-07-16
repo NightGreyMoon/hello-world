@@ -123,7 +123,8 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 170,
+      fixed: 'right',
+      width: 175,
       render: row => {
         const ifInStudy: boolean = row.inStudy as boolean;
 
