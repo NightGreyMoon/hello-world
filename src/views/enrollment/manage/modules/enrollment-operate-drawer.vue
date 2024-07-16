@@ -222,7 +222,7 @@ watch(visible, () => {
         <NFormItem label="购买课次" path="packageCount">
           <NInputNumber v-model:value="model.packageCount" :parse="parse" :format="format" clearable :precision="0" />
         </NFormItem>
-        <NFormItem label="剩余课次" path="remainingCount">
+        <NFormItem v-if="props.operateType === 'edit'" label="剩余课次" path="remainingCount">
           <NInputNumber v-model:value="model.remainingCount" :parse="parse" :format="format" clearable :precision="0" />
         </NFormItem>
         <NFormItem :label="$t('page.enrollment.common.referee')" path="referee">
