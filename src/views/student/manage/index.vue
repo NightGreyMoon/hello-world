@@ -215,7 +215,7 @@ function exportCSV() {
 </script>
 
 <template>
-  <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+  <div class="flex-col-stretch gap-6px">
     <StudentSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" />
     <NCard
       :title="$t('page.student.common.title')"

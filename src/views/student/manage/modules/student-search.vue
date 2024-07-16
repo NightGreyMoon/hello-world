@@ -88,7 +88,7 @@ async function search() {
               </template>
               {{ $t('common.reset') }}
             </NButton>
-            <NButton type="primary" ghost @click="search">
+            <NButton type="primary" ghost attr-type="submit" keyboard @click="search">
               <template #icon>
                 <icon-ic-round-search class="text-icon" />
               </template>
