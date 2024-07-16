@@ -84,7 +84,7 @@ function dateChanged(_: number, { year, month, date }: { year: number; month: nu
 </script>
 
 <template>
-  <div class="min-h-600px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+  <div>
     <NCard :title="$t('page.curriculum.common.title')" :bordered="false" size="small" class="card-wrapped">
       <template #header-extra>
         <NSelect

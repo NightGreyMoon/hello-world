@@ -123,7 +123,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+  <div>
     <NCard>
       <template #header>排课信息</template>
       <NSkeleton v-if="isLoading" text :repeat="2" />
