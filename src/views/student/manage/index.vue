@@ -116,8 +116,8 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       key: 'remark',
       title: $t('page.student.manage.remark'),
       align: 'left',
-      resizable: true,
-      minWidth: 160
+      width: 80,
+      ellipsis: { tooltip: true }
     },
     {
       key: 'operate',
@@ -239,7 +239,8 @@ function exportCSV() {
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
-        :scroll-x="702"
+        :scroll-x="800"
+        min-height="460"
         :loading="loading"
         remote
         :row-key="row => row.id"
