@@ -1,5 +1,5 @@
 <script setup lang="tsx">
-import { NButton, NDatePicker, NPopconfirm, NTag } from 'naive-ui';
+import { NButton, NDatePicker, NIcon, NPopconfirm, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
 import dayjs from 'dayjs';
 import { disableCurriculum, enableCurriculum, getAllCurriculum } from '@/service/api';
@@ -146,7 +146,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
       key: 'operate',
       title: $t('common.operate'),
       align: 'center',
-      width: 190,
+      width: 140,
       render: row => {
         const isDelete: boolean = row.sysIsDelete as boolean;
 
@@ -154,7 +154,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
           return (
             <div class="flex-center justify-end gap-8px">
               <NButton type="info" ghost size="small" onClick={() => view(row.id)}>
-                查看详情
+                <icon-ic-round-remove-red-eye class="text-icon" />
               </NButton>
             </div>
           );
@@ -162,13 +162,15 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         return (
           <div class="flex-center justify-end gap-8px">
             <NButton type="info" ghost size="small" onClick={() => view(row.id)}>
-              查看详情
+              <NIcon>
+                <icon-ic-round-remove-red-eye class="text-icon" />
+              </NIcon>
             </NButton>
             <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
-              {$t('common.edit')}
+              <icon-ic-outline-edit class="text-icon" />
             </NButton>
             <NButton type="error" ghost size="small" onClick={() => disable(row.id)}>
-              删除
+              <icon-ic-outline-delete-forever class="text-icon" />
             </NButton>
           </div>
         );
