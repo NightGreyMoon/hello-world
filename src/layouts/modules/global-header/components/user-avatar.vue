@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import type { VNode } from 'vue';
 import { useAuthStore } from '@/store/modules/auth';
 import { useRouterPush } from '@/hooks/common/router';
@@ -71,6 +71,11 @@ function handleDropdown(key: DropdownKey) {
     routerPushByKey(key);
   }
 }
+
+onMounted(() => {
+  const isLogin = authStore.isLogin;
+  console.log(`check auth in header:${isLogin}`);
+});
 </script>
 
 <template>
