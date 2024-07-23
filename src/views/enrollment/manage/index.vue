@@ -46,26 +46,29 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
     //  align: 'center',
     //  width: 48
     // },
-    {
-      key: 'id',
-      title: $t('common.index'),
-      width: 64,
-      align: 'center'
-    },
+    // {
+    //   key: 'id',
+    //   title: $t('common.index'),
+    //   width: 64,
+    //   align: 'center'
+    // },
     {
       key: 'studentName',
       title: $t('page.enrollment.manage.studentName'),
-      align: 'center'
+      align: 'center',
+      width: 80
     },
     {
       key: 'studentGrade',
       title: $t('page.enrollment.manage.studentGrade'),
-      align: 'center'
+      align: 'center',
+      width: 80
     },
     {
       key: 'lessonCourse',
       title: $t('page.enrollment.manage.lessonCourse'),
-      align: 'center'
+      align: 'center',
+      width: 80
     },
     {
       key: 'lessonName',
