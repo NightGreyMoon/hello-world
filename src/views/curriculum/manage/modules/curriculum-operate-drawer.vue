@@ -203,7 +203,6 @@ watch(visible, () => {
           <NTimePicker
             v-model:value="model.startTimeStamp"
             format="HH:mm"
-            :hours="[10, 11, 12, 13, 14, 15, 16, 17, 18]"
             :minutes="[0, 10, 20, 30, 40, 50]"
             :placeholder="$t('page.curriculum.form.startTime')"
           />
@@ -212,7 +211,6 @@ watch(visible, () => {
           <NTimePicker
             v-model:value="model.endTimeStamp"
             format="HH:mm"
-            :hours="[10, 11, 12, 13, 14, 15, 16, 17, 18]"
             :minutes="[0, 10, 20, 30, 40, 50]"
             :placeholder="$t('page.curriculum.form.endTime')"
           />
