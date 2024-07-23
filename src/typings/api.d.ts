@@ -228,10 +228,16 @@ declare namespace Api {
       startTimeStamp: number;
       endTimeStamp: number;
     }>;
+
     /** curriculum search params */
     type CurriculumSearchParams = CommonType.RecordNullable<
       Pick<Api.SystemManage.Curriculum, 'teacherName' | 'teacherId' | 'lessonName' | 'classRoom' | 'remark'> &
         CommonSearchParams
+    >;
+
+    /** lesson search params */
+    type LessonSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.Lesson, 'name' | 'course'> & CommonSearchParams
     >;
 
     /** message log */

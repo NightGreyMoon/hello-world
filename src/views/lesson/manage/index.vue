@@ -5,15 +5,29 @@ import { disableLesson, enableLesson, getAllLesson } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
+import LessonSearch from './modules/lesson-search.vue';
 import LessonOperateDrawer from './modules/lesson-operate-drawer.vue';
 
 const appStore = useAppStore();
 
-const { columns, columnChecks, data, loading, getData, mobilePagination } = useTable({
+type Model = Pick<Api.SystemManage.LessonSearchParams, 'name' | 'course'>;
+
+const model: Model = createDefaultModel();
+
+function createDefaultModel(): Model {
+  return {
+    name: '',
+    course: ''
+  };
+}
+
+const { columns, columnChecks, data, loading, getData, mobilePagination, searchParams, resetSearchParams } = useTable({
   apiFn: getAllLesson,
   apiParams: {
     pageNo: 1,
     pageSize: 10,
+    name: model.name,
+    course: model.course,
     // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
     // the value can not be undefined, otherwise the property in Form will not be reactive
     status: null
@@ -24,12 +38,12 @@ const { columns, columnChecks, data, loading, getData, mobilePagination } = useT
     //   align: 'center',
     //   width: 48
     // },
-    {
-      key: 'id',
-      title: $t('common.index'),
-      width: 64,
-      align: 'center'
-    },
+    // {
+    //   key: 'id',
+    //   title: $t('common.index'),
+    //   width: 64,
+    //   align: 'center'
+    // },
     {
       key: 'name',
       title: $t('page.lesson.manage.name'),
@@ -123,6 +137,7 @@ function enable(id: number) {
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
+    <LessonSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getData" />
     <NCard :title="$t('page.lesson.common.title')" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
       <template #header-extra>
         <TableHeaderOperation

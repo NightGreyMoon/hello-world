@@ -1,7 +1,7 @@
 import { request } from '../request';
 
 // 课程列表
-export function getAllLesson(params?: Api.SystemManage.CommonSearchParams) {
+export function getAllLesson(params?: Api.SystemManage.LessonSearchParams) {
   return request<Lesson>({
     url: `/Lesson/AllLesson`,
     method: 'get',
