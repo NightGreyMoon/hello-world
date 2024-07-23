@@ -153,7 +153,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         if (row.status === '已取消' || row.status === '已确认') {
           return (
             <div class="flex-center justify-end gap-8px">
-              <NButton type="info" ghost size="small" onClick={() => view(row.id)}>
+              <NButton type="info" quaternary size="small" onClick={() => view(row.id)}>
                 <icon-ic-round-remove-red-eye class="text-icon" />
               </NButton>
             </div>
@@ -161,15 +161,13 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         }
         return (
           <div class="flex-center justify-end gap-8px">
-            <NButton type="info" ghost size="small" onClick={() => view(row.id)}>
-              <NIcon>
-                <icon-ic-round-remove-red-eye class="text-icon" />
-              </NIcon>
+            <NButton type="info" quaternary size="small" onClick={() => view(row.id)}>
+              <icon-ic-round-remove-red-eye class="text-icon" />
             </NButton>
-            <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+            <NButton type="primary" quaternary size="small" onClick={() => edit(row.id)}>
               <icon-ic-outline-edit class="text-icon" />
             </NButton>
-            <NButton type="error" ghost size="small" onClick={() => disable(row.id)}>
+            <NButton type="error" quaternary size="small" onClick={() => disable(row.id)}>
               <icon-ic-outline-delete-forever class="text-icon" />
             </NButton>
           </div>
