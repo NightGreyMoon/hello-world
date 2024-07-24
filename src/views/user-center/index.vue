@@ -3,20 +3,21 @@ import { computed, reactive } from 'vue';
 import { $t } from '@/locales';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { useAuthStore } from '@/store/modules/auth';
+import { chagnePassword } from '@/service/api';
 
 const { formRef, validate } = useNaiveForm();
 
 interface FormModel {
-  phone: string;
-  code: string;
+  account: string;
   password: string;
+  newPassword: string;
   confirmPassword: string;
 }
 
 const model: FormModel = reactive({
-  phone: '',
-  code: '',
+  account: '',
   password: '',
+  newPassword: '',
   confirmPassword: ''
 });
 
@@ -26,16 +27,23 @@ const rules = computed<RuleRecord>(() => {
   const { formRules, createConfirmPwdRule } = useFormRules();
 
   return {
-    phone: formRules.phone,
+    account: formRules.userName,
     password: formRules.pwd,
-    confirmPassword: createConfirmPwdRule(model.password)
+    newPassword: formRules.pwd,
+    confirmPassword: createConfirmPwdRule(model.newPassword)
   };
 });
 
 async function handleSubmit() {
   await validate();
   // request to reset password
-  window.$message?.success($t('page.login.common.validateSuccess'));
+  const { error, data } = await chagnePassword(model.account, model.password, model.newPassword);
+  console.log(data);
+  if (!error) {
+    window.$message?.success('修改密码成功');
+  } else {
+    window.$message?.error('修改密码失败');
+  }
 }
 </script>
 
@@ -47,13 +55,10 @@ async function handleSubmit() {
         <NTabPane name="changePwd" tab="密码修改">
           <NFlex justify="center">
             <NForm ref="formRef" :model="model" :rules="rules" size="large" :show-label="false">
-              <NFormItem path="phone">
-                <NInput v-model:value="model.phone" :placeholder="$t('page.login.common.phonePlaceholder')" />
+              <NFormItem path="account">
+                <NInput v-model:value="model.account" :placeholder="$t('page.login.common.userNamePlaceholder')" />
               </NFormItem>
               <NFormItem path="code">
-                <NInput v-model:value="model.code" :placeholder="$t('page.login.common.codePlaceholder')" />
-              </NFormItem>
-              <NFormItem path="password">
                 <NInput
                   v-model:value="model.password"
                   type="password"
@@ -62,13 +67,22 @@ async function handleSubmit() {
                   :placeholder="$t('page.login.common.passwordPlaceholder')"
                 />
               </NFormItem>
+              <NFormItem path="newPassword">
+                <NInput
+                  v-model:value="model.newPassword"
+                  type="password"
+                  show-password-on="click"
+                  clearable
+                  :placeholder="$t('page.login.common.newPasswordPlaceholder')"
+                />
+              </NFormItem>
               <NFormItem path="confirmPassword">
                 <NInput
                   v-model:value="model.confirmPassword"
                   type="password"
                   show-password-on="click"
                   clearable
-                  :placeholder="$t('page.login.common.confirmPasswordPlaceholder')"
+                  :placeholder="$t('page.login.common.confirmNewPasswordPlaceholder')"
                 />
               </NFormItem>
               <NSpace vertical :size="18" class="w-full">

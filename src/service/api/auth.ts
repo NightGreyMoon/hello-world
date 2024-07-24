@@ -17,6 +17,25 @@ export function reqLogin(account: string, passWord: string) {
   });
 }
 
+/**
+ * Chagne Password
+ *
+ * @param account User name
+ * @param password Password
+ * @param newPassword New Password
+ */
+export function chagnePassword(account: string, password: string, newPassword: string) {
+  return request<any>({
+    url: '/SysLogin/ChangePassword',
+    method: 'post',
+    data: {
+      account,
+      password,
+      newPassword
+    }
+  });
+}
+
 /** Get user info */
 export function getTokenUserInfo() {
   return request<Api.Auth.UserInfo>({ url: '/SysLogin/GetUserInfo' });
