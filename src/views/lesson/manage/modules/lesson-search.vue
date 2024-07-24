@@ -47,7 +47,6 @@ async function search() {
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.lesson.common.name')" path="name" class="pr-24px">
           <NInput v-model:value="model.name" :placeholder="$t('page.lesson.form.name')" clearable />
         </NFormItemGi>
-
         <NFormItemGi span="24 s:12 m:6" :label="$t('page.lesson.manage.course')" path="course" class="pr-24px">
           <NSelect
             v-model:value="model.course"
@@ -56,8 +55,7 @@ async function search() {
             clearable
           />
         </NFormItemGi>
-
-        <NFormItemGi span="24 s:12 m:6" class="pr-24px">
+        <NFormItemGi span="24 s:12 m:6" class="pr-24px" suffix>
           <NSpace class="w-full" justify="end">
             <NButton @click="reset">
               <template #icon>
