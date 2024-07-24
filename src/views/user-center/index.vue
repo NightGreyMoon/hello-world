@@ -3,9 +3,12 @@ import { computed, reactive } from 'vue';
 import { $t } from '@/locales';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { useAuthStore } from '@/store/modules/auth';
+import { useRouterPush } from '@/hooks/common/router';
 import { chagnePassword } from '@/service/api';
 
 const { formRef, validate } = useNaiveForm();
+const authStore = useAuthStore();
+const { routerPushByKey } = useRouterPush();
 
 interface FormModel {
   account: string;
@@ -40,7 +43,11 @@ async function handleSubmit() {
   const { error, data } = await chagnePassword(model.account, model.password, model.newPassword);
   console.log(data);
   if (!error) {
-    window.$message?.success('修改密码成功');
+    window.$message?.success('修改密码成功，即将跳转重新登录');
+    setTimeout(() => {
+      authStore.resetStore();
+      routerPushByKey('login');
+    }, 1000);
   } else {
     window.$message?.error('修改密码失败');
   }
@@ -51,7 +58,7 @@ async function handleSubmit() {
   <div class="min-h-600px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <NCard title="个人信息" style="margin-bottom: 16px">
       <NTabs type="line" animated pane-style="width:600px">
-        <NTabPane name="changeInfo" tab="信息修改"></NTabPane>
+        <!-- <NTabPane name="changeInfo" tab="信息修改"></NTabPane> -->
         <NTabPane name="changePwd" tab="密码修改">
           <NFlex justify="center">
             <NForm ref="formRef" :model="model" :rules="rules" size="large" :show-label="false">

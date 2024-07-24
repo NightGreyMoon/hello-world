@@ -54,7 +54,15 @@ async function handleSubmit() {
       <div class="flex-y-center justify-between">
         <NCheckbox>{{ $t('page.login.pwdLogin.rememberMe') }}</NCheckbox>
       </div>
-      <NButton type="primary" size="large" round block :loading="authStore.loginLoading" @click="handleSubmit">
+      <NButton
+        type="primary"
+        size="large"
+        round
+        block
+        :loading="authStore.loginLoading"
+        attr-type="submit"
+        @click="handleSubmit"
+      >
         {{ $t('common.confirm') }}
       </NButton>
       <div class="flex-y-center justify-between gap-12px"></div>

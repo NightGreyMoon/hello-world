@@ -358,6 +358,7 @@ declare namespace App {
             passwordPlaceholder: string;
             newPasswordPlaceholder: string;
             confirmPasswordPlaceholder: string;
+            confirmNewPasswordPlaceholder: string;
             codeLogin: string;
             confirm: string;
             back: string;
