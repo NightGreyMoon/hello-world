@@ -64,7 +64,10 @@ export type MappedType<R extends ResponseType, JsonType = any> = R extends keyof
   ? ResponseMap[R]
   : JsonType;
 
-export type CustomAxiosRequestConfig<R extends ResponseType = 'json'> = Omit<AxiosRequestConfig, 'responseType'> & {
+export type CustomAxiosRequestConfig<R extends ResponseType = 'json' | 'blob'> = Omit<
+  AxiosRequestConfig,
+  'responseType'
+> & {
   responseType?: R;
 };
 

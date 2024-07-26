@@ -5,10 +5,12 @@ import { disableLesson, enableLesson, getAllLesson } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
+import { useRouterPush } from '@/hooks/common/router';
 import LessonSearch from './modules/lesson-search.vue';
 import LessonOperateDrawer from './modules/lesson-operate-drawer.vue';
 
 const appStore = useAppStore();
+const { routerPushByKey } = useRouterPush();
 
 type Model = Pick<Api.SystemManage.LessonSearchParams, 'name' | 'course'>;
 
@@ -19,6 +21,10 @@ function createDefaultModel(): Model {
     name: '',
     course: ''
   };
+}
+
+function view(id: number) {
+  routerPushByKey('lesson_report', { query: { id: `${id}` } });
 }
 
 const { columns, columnChecks, data, loading, getData, mobilePagination, searchParams, resetSearchParams } = useTable({
@@ -86,7 +92,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         if (isDelete) {
           return (
             <div class="flex-center justify-end gap-8px">
-              <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+              <NButton type="primary" ghost size="small" onClick={() => view(row.id)}>
                 查看上课记录
               </NButton>
               <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
@@ -100,7 +106,7 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         }
         return (
           <div class="flex-center justify-end gap-8px">
-            <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+            <NButton type="primary" ghost size="small" onClick={() => view(row.id)}>
               查看上课记录
             </NButton>
             <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>

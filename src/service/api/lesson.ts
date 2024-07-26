@@ -18,6 +18,15 @@ export function reportForLesson(params?: Api.SystemManage.AttendanceSearchParams
   });
 }
 
+// 下载课程上课记录
+export function exportForLesson(data?: any) {
+  return request<Lesson>({
+    url: `/Attendance/ExportForLesson?lessonId=${data}`,
+    method: 'get',
+    responseType: 'blob'
+  });
+}
+
 // 获取单个课程
 export function getLesson(data?: any) {
   return request<Lesson>({

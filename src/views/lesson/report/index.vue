@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import dayjs from 'dayjs';
 import { onMounted, ref } from 'vue';
-import { getLesson, reportForLesson } from '@/service/api';
+import { exportForLesson, getLesson, reportForLesson } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -33,6 +33,13 @@ async function getLessonById() {
   } else {
     message.error('取消失败');
   }
+}
+
+function exportReport() {
+  const lessonId: number = route.query.id;
+  const baseURL = import.meta.env.VITE_SERVICE_BASE_URL;
+  const downloadUrl = `${baseURL}/Attendance/ExportForLesson?lessonId=${lessonId}`;
+  window.open(downloadUrl);
 }
 
 const { columns, columnChecks, data, loading, getData, mobilePagination } = useTable({
@@ -165,12 +172,7 @@ onMounted(async () => {
       class="sm:flex-1-hidden card-wrapper"
     >
       <template #header-extra>
-        <TableHeaderOperation
-          v-model:columns="columnChecks"
-          :disabled-delete="checkedRowKeys.length === 0"
-          :loading="loading"
-          @refresh="getData"
-        />
+        <NButton @click="exportReport">导出</NButton>
       </template>
       <NDataTable
         v-model:checked-row-keys="checkedRowKeys"
