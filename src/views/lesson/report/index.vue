@@ -43,14 +43,12 @@ const { columns, columnChecks, data, loading, getData, mobilePagination } = useT
     {
       key: 'studentName',
       title: '学生',
-      align: 'center',
-      width: 120
+      align: 'center'
     },
     {
       key: 'curriculumClassRoom',
       title: '授课教室',
-      align: 'center',
-      width: 100
+      align: 'center'
     },
     {
       key: 'date',
@@ -64,23 +62,27 @@ const { columns, columnChecks, data, loading, getData, mobilePagination } = useT
         return date.format('YYYY-MM-DD');
       }
     },
+    // {
+    //   key: 'startTime',
+    //   title: $t('page.curriculum.manage.startTime'),
+    //   // width: 100,
+    //   render: row => {
+    //     if (row.curriculumStartTimeStamp === null) {
+    //       return '';
+    //     }
+    //     const date = dayjs(row.curriculumStartTimeStamp);
+    //     return date.format('HH:mm');
+    //   }
+    // },
     {
-      key: 'startTime',
-      title: $t('page.curriculum.manage.startTime'),
-      // width: 100,
-      render: row => {
-        if (row.curriculumStartTimeStamp === null) {
-          return '';
-        }
-        const date = dayjs(row.curriculumStartTimeStamp);
-        return date.format('HH:mm');
-      }
+      key: 'curriculumTeacherName',
+      title: '授课老师',
+      align: 'center'
     },
     {
       key: 'status',
       title: '是否出勤',
-      align: 'center',
-      width: 100
+      align: 'center'
     }
     // {
     //   key: 'curriculumDate',

@@ -175,6 +175,7 @@ const routeMap: RouteMap = {
   "home": "/home",
   "lesson": "/lesson",
   "lesson_manage": "/lesson/manage",
+  "lesson_report": "/lesson/report",
   "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",
   "manage": "/manage",
   "manage_menu": "/manage/menu",
