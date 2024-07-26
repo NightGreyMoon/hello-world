@@ -242,7 +242,7 @@ declare namespace Api {
 
     /** attendance search params */
     type AttendanceSearchParams = CommonType.RecordNullable<
-      Pick<Api.SystemManage.Curriculum, 'lessonId'> & CommonSearchParams
+      Pick<Api.SystemManage.Curriculum, 'lessonId' | 'lessonName' | 'lessonCourse'> & CommonSearchParams
     >;
 
     /** message log */

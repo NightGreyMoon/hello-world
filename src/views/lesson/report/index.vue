@@ -1,21 +1,38 @@
 <script setup lang="tsx">
+import { useRoute } from 'vue-router';
 import { NButton, NPopconfirm, NTag } from 'naive-ui';
 import dayjs from 'dayjs';
-import { reportForLesson } from '@/service/api';
+import { onMounted, ref } from 'vue';
+import { getLesson, reportForLesson } from '@/service/api';
 import { useAppStore } from '@/store/modules/app';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
 
 const appStore = useAppStore();
+const route = useRoute();
+const isLoading = ref(true);
 
-type Model = Pick<Api.SystemManage.AttendanceSearchParams, 'lessonId'>;
+type Model = Pick<Api.SystemManage.AttendanceSearchParams, 'lessonId' | 'lessonName' | 'lessonCourse'>;
 
 const model: Model = createDefaultModel();
 
 function createDefaultModel(): Model {
   return {
-    lessonId: 7
+    lessonId: route.query.id,
+    lessonName: null,
+    lessonCourse: null
   };
+}
+
+async function getLessonById() {
+  const lessonId: number = route.query.id;
+  const { error, data } = await getLesson(lessonId);
+  if (!error) {
+    model.lessonName = data.name;
+    isLoading.value = false;
+  } else {
+    message.error('取消失败');
+  }
 }
 
 const { columns, columnChecks, data, loading, getData, mobilePagination } = useTable({
@@ -132,11 +149,21 @@ const { columns, columnChecks, data, loading, getData, mobilePagination } = useT
 });
 
 const { checkedRowKeys } = useTableOperate(data, getData);
+
+onMounted(async () => {
+  getLessonById();
+});
 </script>
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
-    <NCard :title="$t('page.lesson.common.title')" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
+    <NCard
+      v-if="!isLoading"
+      :title="model.lessonName"
+      :bordered="false"
+      size="small"
+      class="sm:flex-1-hidden card-wrapper"
+    >
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"

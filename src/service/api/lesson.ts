@@ -18,6 +18,14 @@ export function reportForLesson(params?: Api.SystemManage.AttendanceSearchParams
   });
 }
 
+// 获取单个课程
+export function getLesson(data?: any) {
+  return request<Lesson>({
+    url: `/Lesson/Get?id=${data}`,
+    method: 'get'
+  });
+}
+
 // 禁用课程
 export function disableLesson(data?: any) {
   return request<boolean>({
