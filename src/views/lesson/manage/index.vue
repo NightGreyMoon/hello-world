@@ -87,6 +87,9 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
           return (
             <div class="flex-center justify-end gap-8px">
               <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+                查看上课记录
+              </NButton>
+              <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
                 {$t('common.edit')}
               </NButton>
               <NButton type="success" ghost size="small" onClick={() => enable(row.id)}>
@@ -97,6 +100,9 @@ const { columns, columnChecks, data, loading, getData, mobilePagination, searchP
         }
         return (
           <div class="flex-center justify-end gap-8px">
+            <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
+              查看上课记录
+            </NButton>
             <NButton type="primary" ghost size="small" onClick={() => edit(row.id)}>
               {$t('common.edit')}
             </NButton>

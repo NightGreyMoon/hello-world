@@ -240,6 +240,11 @@ declare namespace Api {
       Pick<Api.SystemManage.Lesson, 'name' | 'course'> & CommonSearchParams
     >;
 
+    /** attendance search params */
+    type AttendanceSearchParams = CommonType.RecordNullable<
+      Pick<Api.SystemManage.Curriculum, 'lessonId'> & CommonSearchParams
+    >;
+
     /** message log */
     type MessageLog = Common.CommonRecord<{
       id: number;

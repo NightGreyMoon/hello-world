@@ -272,6 +272,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'lesson_manage',
           i18nKey: 'route.lesson_manage'
         }
+      },
+      {
+        name: 'lesson_report',
+        path: '/lesson/report',
+        component: 'view.lesson_report',
+        meta: {
+          title: 'lesson_report',
+          i18nKey: 'route.lesson_report'
+        }
       }
     ]
   },

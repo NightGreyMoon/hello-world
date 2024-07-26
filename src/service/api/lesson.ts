@@ -9,6 +9,15 @@ export function getAllLesson(params?: Api.SystemManage.LessonSearchParams) {
   });
 }
 
+// 课程上课记录列表
+export function reportForLesson(params?: Api.SystemManage.AttendanceSearchParams) {
+  return request<Lesson>({
+    url: `/Attendance/ForLesson`,
+    method: 'get',
+    params
+  });
+}
+
 // 禁用课程
 export function disableLesson(data?: any) {
   return request<boolean>({
