@@ -175,7 +175,7 @@ onMounted(async () => {
         </template>
       </NTabPane>
     </NTabs>
-    <NList v-if="curriculums?.length > 0" hoverable>
+    <NList v-if="curriculums?.length > 0" hoverable style="padding-bottom: 50px">
       <NListItem v-for="curriculum in curriculums" :key="curriculum.id">
         <template #prefix>
           <NButton type="primary" ghost style="height: 70px">
@@ -189,23 +189,31 @@ onMounted(async () => {
             {{ curriculum.curriculumLessonName }}
           </template>
           <template #header-extra>
-            <!--
- <NTag v-if="curriculum.curriculumHasConfirmed" :bordered="false" type="info" size="small">已结束</NTag>
-            <NTag v-else :bordered="false" type="warning" size="small">待开课</NTag> 
--->
-            <NTag :bordered="false" type="info" size="small">{{ curriculum.curriculumStatus }}</NTag>
+            <NTag v-if="curriculum.curriculumStatus == '已取消'" :bordered="false" type="info" size="small">
+              已取消
+            </NTag>
+            <NTag v-else-if="curriculum.curriculumStatus == '已上课'" :bordered="false" type="success" size="small">
+              已上课
+            </NTag>
+            <NTag v-else-if="curriculum.curriculumStatus == '待开课'" :bordered="false" type="warning" size="small">
+              待开课
+            </NTag>
           </template>
           <NTag :bordered="false" checkable>授课教室： {{ curriculum.curriculumClassRoom }}</NTag>
           <br />
           <NTag :bordered="false" checkable>授课教师： {{ curriculum.curriculumTeacherName }}</NTag>
           <br />
-          <template v-if="curriculum.curriculumHasConfirmed">
-            <NTag v-if="curriculum.hasSigned" :bordered="false" type="success">已签到</NTag>
-            <NTag v-else :bordered="false" type="error">缺勤</NTag>
+          <template v-if="curriculum.curriculumStatus == '已上课'">
+            <NButton v-if="curriculum.hasSigned" quaternary type="success">已签到</NButton>
+            <NButton v-else quaternary type="error">缺勤</NButton>
           </template>
           <NTag v-if="curriculum.isCancelled" :bordered="false" checkable>已请假</NTag>
           <NButton
-            v-if="!curriculum.curriculumHasConfirmed && !curriculum.isCancelled"
+            v-if="
+              curriculum.curriculumStatus !== '已取消' &&
+              curriculum.curriculumStatus !== '已上课' &&
+              !curriculum.isCancelled
+            "
             size="tiny"
             tertiary
             type="primary"
@@ -214,7 +222,11 @@ onMounted(async () => {
             请假
           </NButton>
           <NButton
-            v-if="!curriculum.curriculumHasConfirmed && curriculum.isCancelled"
+            v-if="
+              curriculum.curriculumStatus !== '已取消' &&
+              curriculum.curriculumStatus !== '已上课' &&
+              curriculum.isCancelled
+            "
             size="tiny"
             tertiary
             type="primary"
