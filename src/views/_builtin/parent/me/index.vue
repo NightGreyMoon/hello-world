@@ -67,15 +67,16 @@ onMounted(() => {
     </NCard>
     <NCarousel
       v-else
+      show-arrow
       effect="card"
-      prev-slide-style="transform: translateX(-195px) translateZ(-150px);"
+      prev-slide-style="transform: translateX(-185px) translateZ(-150px);"
       next-slide-style="transform: translateX(-115px) translateZ(-150px);"
-      style="height: 200px"
+      style="height: 150px"
       :show-dots="false"
       :on-update:current-index="changeStudent"
     >
-      <NCarouselItem v-for="student in students" :key="students.id" :style="{ width: '90%' }">
-        <NCard size="huge">
+      <NCarouselItem v-for="student in students" :key="students.id" :style="{ width: '92%' }">
+        <NCard size="small">
           <strong>{{ student.name }}</strong>
           <br />
           就读学校：{{ student.school }}
@@ -84,14 +85,16 @@ onMounted(() => {
         </NCard>
       </NCarouselItem>
     </NCarousel>
-    <div style="margin: 10px 2px">
+    <!--
+ <div style="margin: 10px 2px">
       <NButton type="primary" block>
         <template #icon>
           <SvgIcon icon="mdi-plus-thick" />
         </template>
         课程报名
       </NButton>
-    </div>
+    </div> 
+-->
     <NList bordered>
       <NListItem>
         <template #suffix>></template>
@@ -124,20 +127,22 @@ onMounted(() => {
   </NCard>
   <NTabs
     default-value="me"
-    size="large"
+    size="small"
     class="fixedElement"
     justify-content="space-evenly"
     placement="bottom"
     @update:value="handleTabChanged"
   >
-    <NTab name="home" tab="首页">
+    <!--
+ <NTab name="home" tab="首页">
       <template #default>
         <div class="tab-title">
           <SvgIcon icon="mdi-home-outline" class="text-30px" />
           首页
         </div>
       </template>
-    </NTab>
+    </NTab> 
+-->
     <NTab name="calendar" tab="课程">
       <template #default>
         <div class="tab-title">
@@ -159,14 +164,20 @@ onMounted(() => {
 .n-card {
   border-color: #edb549;
   margin-top: 20px;
+  height: 120px;
 }
 
 .fixedElement {
-  background-color: #ececec;
+  background-color: #b5b5b51b;
   position: fixed;
   bottom: 0;
   width: 100%;
   z-index: 100;
+}
+
+.tab-title {
+  font-size: 10px !important;
+  text-align: center;
 }
 
 .n-button--block {

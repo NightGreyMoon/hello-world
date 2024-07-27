@@ -207,20 +207,22 @@ onMounted(async () => {
 
     <NTabs
       default-value="calendar"
-      size="large"
+      size="small"
       class="fixedElement"
       justify-content="space-evenly"
       placement="bottom"
       @update:value="handleTabChanged"
     >
-      <NTab name="home" tab="首页">
+      <!--
+ <NTab name="home" tab="首页">
         <template #default>
           <div class="tab-title">
             <SvgIcon icon="mdi-home-outline" class="text-30px" />
             首页
           </div>
         </template>
-      </NTab>
+      </NTab> 
+-->
       <NTab name="calendar" tab="课程">
         <template #default>
           <div class="tab-title">
@@ -253,7 +255,7 @@ onMounted(async () => {
 
 <style scoped>
 .fixedElement {
-  background-color: #ececec;
+  background-color: #efefef;
   position: fixed;
   bottom: 0;
   width: 100%;

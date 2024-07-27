@@ -83,20 +83,22 @@ onMounted(() => {
   </NCard>
   <NTabs
     default-value="lesson"
-    size="large"
+    size="small"
     class="fixedElement"
     justify-content="space-evenly"
     placement="bottom"
     @update:value="handleTabChanged"
   >
-    <NTab name="home" tab="首页">
+    <!--
+ <NTab name="home" tab="首页">
       <template #default>
         <div class="tab-title">
           <SvgIcon icon="mdi-home-outline" class="text-30px" />
           首页
         </div>
       </template>
-    </NTab>
+    </NTab> 
+-->
     <NTab name="calendar" tab="课程">
       <template #default>
         <div class="tab-title">
