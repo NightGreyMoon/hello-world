@@ -52,7 +52,7 @@ onMounted(() => {
 <template>
   <NCard header-style="text-align: center" :bordered="false">
     <template #header>我的比弗利</template>
-    <div style="margin: 10px 2px">
+    <div style="margin: 10px 30px">
       <NFlex align="center">
         <NAvatar round :size="48" src="/src/assets/imgs/soybean.jpg"></NAvatar>
         <NEllipsis style="max-width: 240px">林多多家长</NEllipsis>
