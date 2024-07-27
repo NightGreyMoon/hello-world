@@ -22,7 +22,7 @@ const dialog = useDialog();
 const { routerPushByKey } = useRouterPush();
 
 async function getDateOptions(year: number, month: number, day: number) {
-  const { error, data } = await getRecenDates(7, year, month + 1, day);
+  const { error, data } = await getRecenDates(30, year, month + 1, day);
   if (!error) {
     dateOptions.value = data;
     defaultTimeStamp.value = data[0].timeStamp;
