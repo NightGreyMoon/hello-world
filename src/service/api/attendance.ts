@@ -9,9 +9,9 @@ export function getComment(id?: number) {
 }
 
 // 更新上课记录的请假状态
-export function udpateCancel(id?: number) {
+export function udpateCancel(id?: number, cancelReason: string) {
   return request<boolean>({
-    url: `/Attendance/Cancel?id=${id}`,
+    url: `/Attendance/Cancel?id=${id}&reason=${cancelReason}`,
     method: 'get'
   });
 }

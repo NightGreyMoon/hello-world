@@ -180,7 +180,9 @@ onMounted(async () => {
             <tr v-for="attendance in attendances" :key="attendance.id">
               <td>{{ attendance.studentName }}</td>
               <td>
+                <NTag v-if="attendance.isCancelled">已请假</NTag>
                 <NSwitch
+                  v-else
                   :value="`${attendance.id}-${attendance.hasSigned}`"
                   :checked-value="`${attendance.id}-true`"
                   :unchecked-value="`${attendance.id}-false`"

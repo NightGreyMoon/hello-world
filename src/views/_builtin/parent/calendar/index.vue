@@ -12,15 +12,18 @@ const appStore = useAppStore();
 const isLoading = ref<true>;
 
 const dateOptions = ref<DateOptions[]>();
-
 const curriculums = ref<Curriculum[]>();
 
 const weekdays = ref<string[]>([]);
-
 const students = ref<Student[]>([]);
 const selectedStudentId = ref(0);
+
 const attendanceComment = ref('');
 const showModal: boolean = ref(false);
+
+const attendanceId = ref(0);
+const cancelReason = ref('');
+const showReasonModal: boolean = ref(false);
 
 async function getStudents() {
   const { error, data } = await getConfirmedStudents(4);
@@ -91,7 +94,11 @@ function handleTabChanged(value: string) {
 }
 
 async function updateIsCancelled(id: number) {
-  const { error, data } = await udpateCancel(id);
+  if (id > 0) {
+    attendanceId.value = id;
+  }
+
+  const { error, data } = await udpateCancel(attendanceId.value, cancelReason.value);
   if (!error) {
     const isCancelled: boolean = data;
     if (isCancelled) {
@@ -100,6 +107,7 @@ async function updateIsCancelled(id: number) {
       message.info('取消请假成功');
     }
     loadToday();
+    closeCancelModal();
   }
 }
 
@@ -109,6 +117,18 @@ async function openModal(id: number) {
     attendanceComment.value = data;
     showModal.value = true;
   }
+}
+
+async function openCancelModal(id: number) {
+  cancelReason.value = '';
+  attendanceId.value = id;
+  showReasonModal.value = true;
+}
+
+function closeCancelModal() {
+  attendanceId.value = 0;
+  cancelReason.value = '';
+  showReasonModal.value = false;
 }
 
 watch(defaultTimeStamp, () => {
@@ -164,10 +184,16 @@ onMounted(async () => {
             {{ dayjs(curriculum.curriculumEndTimeStamp).format('HH:mm') }}
           </NButton>
         </template>
-        <NThing :title="curriculum.curriculumLessonName" content-style="margin-top: 10px;">
+        <NThing content-style="margin-top: 10px;">
+          <template #header>
+            {{ curriculum.curriculumLessonName }}
+          </template>
           <template #header-extra>
-            <NTag v-if="curriculum.curriculumHasConfirmed" :bordered="false" type="info" size="small">已结束</NTag>
-            <NTag v-else :bordered="false" type="warning" size="small">待开课</NTag>
+            <!--
+ <NTag v-if="curriculum.curriculumHasConfirmed" :bordered="false" type="info" size="small">已结束</NTag>
+            <NTag v-else :bordered="false" type="warning" size="small">待开课</NTag> 
+-->
+            <NTag :bordered="false" type="info" size="small">{{ curriculum.curriculumStatus }}</NTag>
           </template>
           <NTag :bordered="false" checkable>授课教室： {{ curriculum.curriculumClassRoom }}</NTag>
           <br />
@@ -183,7 +209,7 @@ onMounted(async () => {
             size="tiny"
             tertiary
             type="primary"
-            @click="updateIsCancelled(curriculum.id)"
+            @click="openCancelModal(curriculum.id)"
           >
             请假
           </NButton>
@@ -250,15 +276,40 @@ onMounted(async () => {
         }"
       />
     </NModal>
+
+    <NModal v-model:show="showReasonModal" class="custom-card" preset="card" title="请假" size="huge" :bordered="false">
+      <NFormItem path="cancelReason">
+        <NInput
+          v-model:value="cancelReason"
+          placeholder="请输入请假原因"
+          type="textarea"
+          maxlength="100"
+          :autosize="{
+            minRows: 3,
+            maxRows: 7
+          }"
+        />
+      </NFormItem>
+      <template #footer>
+        <NSpace justify="end">
+          <NButton @click="closeCancelModal()">取消</NButton>
+          <NButton @click="updateIsCancelled()">提交</NButton>
+        </NSpace>
+      </template>
+    </NModal>
   </div>
 </template>
 
 <style scoped>
 .fixedElement {
-  background-color: #efefef;
+  background-color: #ffffff1b;
   position: fixed;
   bottom: 0;
   width: 100%;
   z-index: 100;
+}
+
+.n-thing-header__title {
+  margin-left: 8px !important;
 }
 </style>
