@@ -69,7 +69,7 @@ onMounted(() => {
       v-else
       show-arrow
       effect="card"
-      prev-slide-style="transform: translateX(-185px) translateZ(-150px);"
+      prev-slide-style="transform: translateX(-195px) translateZ(-150px);"
       next-slide-style="transform: translateX(-115px) translateZ(-150px);"
       style="height: 150px"
       :show-dots="false"
@@ -97,13 +97,13 @@ onMounted(() => {
 -->
     <NList bordered>
       <NListItem>
-        <template #suffix>></template>
         <NButton text block @click="goConfirmStudents">
           <template #icon>
             <SvgIcon icon="mdi-account-plus-outline" />
           </template>
           关联学生
         </NButton>
+        <template #suffix>></template>
       </NListItem>
       <NListItem>
         <template #suffix>></template>
@@ -121,6 +121,15 @@ onMounted(() => {
             <SvgIcon icon="mdi-script-text-outline" />
           </template>
           成绩管理
+        </NButton>
+      </NListItem>
+      <NListItem>
+        <template #suffix>></template>
+        <NButton text>
+          <template #icon>
+            <SvgIcon icon="mdi-key-chain-variant" />
+          </template>
+          修改密码
         </NButton>
       </NListItem>
     </NList>
@@ -168,7 +177,7 @@ onMounted(() => {
 }
 
 .fixedElement {
-  background-color: #b5b5b51b;
+  background-color: #ffffff1b;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -182,5 +191,9 @@ onMounted(() => {
 
 .n-button--block {
   justify-content: start;
+}
+
+.n-list-item {
+  padding-left: 30px !important;
 }
 </style>
