@@ -150,117 +150,104 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="students.length > 0">
-    <!-- 学生Tabs -->
-    <NTabs type="bar" placement="top" animated justify-content="space-evenly" :default-value="0" size="large">
-      <NTab
-        v-for="(student, index) in students"
-        :key="student.id"
-        :name="index"
-        :tab="student.name"
-        @update:value="handleUpdateValue"
-      ></NTab>
-    </NTabs>
-    <!-- 日期Tabs -->
-    <NTabs v-model:value="defaultTimeStamp" type="card" tab-style="text-align:center;" size="small">
-      <NTabPane
-        v-for="dateOption in dateOptions"
-        :key="dateOption.timeStamp"
-        :tab="dateOption.timeStamp"
-        :name="dateOption.timeStamp"
-      >
-        <template #tab>
-          {{ dateOption.dayOfWeek }}
-          <br />
-          {{ dateOption.month }}-{{ dateOption.day }}
-        </template>
-      </NTabPane>
-    </NTabs>
-    <NList v-if="curriculums?.length > 0" hoverable style="padding-bottom: 50px">
-      <NListItem v-for="curriculum in curriculums" :key="curriculum.id">
-        <template #prefix>
-          <NButton type="primary" ghost style="height: 70px">
-            {{ dayjs(curriculum.curriculumStartTimeStamp).format('HH:mm') }}
+  <div>
+    <div v-if="students.length > 0">
+      <!-- 学生Tabs -->
+      <NTabs type="bar" placement="top" animated justify-content="space-evenly" :default-value="0" size="large">
+        <NTab
+          v-for="(student, index) in students"
+          :key="student.id"
+          :name="index"
+          :tab="student.name"
+          @update:value="handleUpdateValue"
+        ></NTab>
+      </NTabs>
+      <!-- 日期Tabs -->
+      <NTabs v-model:value="defaultTimeStamp" type="card" tab-style="text-align:center;" size="small">
+        <NTabPane
+          v-for="dateOption in dateOptions"
+          :key="dateOption.timeStamp"
+          :tab="dateOption.timeStamp"
+          :name="dateOption.timeStamp"
+        >
+          <template #tab>
+            {{ dateOption.dayOfWeek }}
             <br />
-            {{ dayjs(curriculum.curriculumEndTimeStamp).format('HH:mm') }}
-          </NButton>
-        </template>
-        <NThing content-style="margin-top: 10px;">
-          <template #header>
-            {{ curriculum.curriculumLessonName }}
+            {{ dateOption.month }}-{{ dateOption.day }}
           </template>
-          <template #header-extra>
-            <NTag v-if="curriculum.curriculumStatus == '已取消'" :bordered="false" type="info" size="small">
-              已取消
-            </NTag>
-            <NTag v-else-if="curriculum.curriculumStatus == '已上课'" :bordered="false" type="success" size="small">
-              已上课
-            </NTag>
-            <NTag v-else-if="curriculum.curriculumStatus == '待开课'" :bordered="false" type="warning" size="small">
-              待开课
-            </NTag>
+        </NTabPane>
+      </NTabs>
+      <NList v-if="curriculums?.length > 0" hoverable style="padding-bottom: 50px">
+        <NListItem v-for="curriculum in curriculums" :key="curriculum.id">
+          <template #prefix>
+            <NButton type="primary" ghost style="height: 70px">
+              {{ dayjs(curriculum.curriculumStartTimeStamp).format('HH:mm') }}
+              <br />
+              {{ dayjs(curriculum.curriculumEndTimeStamp).format('HH:mm') }}
+            </NButton>
           </template>
-          <NTag :bordered="false" checkable>授课教室： {{ curriculum.curriculumClassRoom }}</NTag>
-          <br />
-          <NTag :bordered="false" checkable>授课教师： {{ curriculum.curriculumTeacherName }}</NTag>
-          <br />
-          <template v-if="curriculum.curriculumStatus == '已上课'">
-            <NButton v-if="curriculum.hasSigned" quaternary type="success">已签到</NButton>
-            <NButton v-else quaternary type="error">缺勤</NButton>
-          </template>
-          <NTag v-if="curriculum.isCancelled" :bordered="false" checkable>已请假</NTag>
-          <NButton
-            v-if="
-              curriculum.curriculumStatus !== '已取消' &&
-              curriculum.curriculumStatus !== '已上课' &&
-              !curriculum.isCancelled
-            "
-            size="tiny"
-            tertiary
-            type="primary"
-            @click="openCancelModal(curriculum.id)"
-          >
-            请假
-          </NButton>
-          <NButton
-            v-if="
-              curriculum.curriculumStatus !== '已取消' &&
-              curriculum.curriculumStatus !== '已上课' &&
-              curriculum.isCancelled
-            "
-            size="tiny"
-            tertiary
-            type="primary"
-            @click="updateIsCancelled(curriculum.id)"
-          >
-            取消请假
-          </NButton>
-          <NDivider v-if="curriculum.comment" vertical />
-          <NButton v-if="curriculum.comment" size="tiny" type="primary" @click="openModal(curriculum.id)">
-            查看评价
-          </NButton>
-        </NThing>
-      </NListItem>
-    </NList>
-    <NEmpty v-else size="large" description="该日期暂无排课"></NEmpty>
+          <NThing content-style="margin-top: 10px;">
+            <template #header>
+              {{ curriculum.curriculumLessonName }}
+            </template>
+            <template #header-extra>
+              <NTag v-if="curriculum.curriculumStatus == '已取消'" :bordered="false" type="info" size="small">
+                已取消
+              </NTag>
+              <NTag v-else-if="curriculum.curriculumStatus == '已上课'" :bordered="false" type="success" size="small">
+                已上课
+              </NTag>
+              <NTag v-else-if="curriculum.curriculumStatus == '待开课'" :bordered="false" type="warning" size="small">
+                待开课
+              </NTag>
+            </template>
+            <NTag :bordered="false" checkable>授课教室： {{ curriculum.curriculumClassRoom }}</NTag>
+            <br />
+            <NTag :bordered="false" checkable>授课教师： {{ curriculum.curriculumTeacherName }}</NTag>
+            <br />
+            <template v-if="curriculum.curriculumStatus == '已上课'">
+              <NButton v-if="curriculum.hasSigned" quaternary type="success">已签到</NButton>
+              <NButton v-else quaternary type="error">缺勤</NButton>
+            </template>
+            <NTag v-if="curriculum.isCancelled" :bordered="false" checkable>已请假</NTag>
+            <NButton
+              v-if="
+                curriculum.curriculumStatus !== '已取消' &&
+                curriculum.curriculumStatus !== '已上课' &&
+                !curriculum.isCancelled
+              "
+              size="tiny"
+              tertiary
+              type="primary"
+              @click="openCancelModal(curriculum.id)"
+            >
+              请假
+            </NButton>
+            <NButton
+              v-if="
+                curriculum.curriculumStatus !== '已取消' &&
+                curriculum.curriculumStatus !== '已上课' &&
+                curriculum.isCancelled
+              "
+              size="tiny"
+              tertiary
+              type="primary"
+              @click="updateIsCancelled(curriculum.id)"
+            >
+              取消请假
+            </NButton>
+            <NDivider v-if="curriculum.comment" vertical />
+            <NButton v-if="curriculum.comment" size="tiny" type="primary" @click="openModal(curriculum.id)">
+              查看评价
+            </NButton>
+          </NThing>
+        </NListItem>
+      </NList>
+      <NEmpty v-else size="large" description="该日期暂无排课"></NEmpty>
 
-    <NModal v-model:show="showModal" class="custom-card" preset="card" title="教师评语" size="huge" :bordered="false">
-      <NInput
-        v-model:value="attendanceComment"
-        type="textarea"
-        maxlength="100"
-        :autosize="{
-          minRows: 3,
-          maxRows: 7
-        }"
-      />
-    </NModal>
-
-    <NModal v-model:show="showReasonModal" class="custom-card" preset="card" title="请假" size="huge" :bordered="false">
-      <NFormItem path="cancelReason">
+      <NModal v-model:show="showModal" class="custom-card" preset="card" title="教师评语" size="huge" :bordered="false">
         <NInput
-          v-model:value="cancelReason"
-          placeholder="请输入请假原因"
+          v-model:value="attendanceComment"
           type="textarea"
           maxlength="100"
           :autosize="{
@@ -268,43 +255,64 @@ onMounted(async () => {
             maxRows: 7
           }"
         />
-      </NFormItem>
-      <template #footer>
-        <NSpace justify="end">
-          <NButton @click="closeCancelModal()">取消</NButton>
-          <NButton @click="updateIsCancelled()">提交</NButton>
-        </NSpace>
-      </template>
-    </NModal>
-  </div>
-  <NSpace v-else vertical align="center" style="height: 400px">
-    <NCard size="small" :bordered="false">
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-    </NCard>
-    <NCard size="small" content-style="text-align:center;">
-      还没有关联的学生，去找到您的孩子并关联吧
-      <br />
-      <br />
-      <NButton>点击这里去关联</NButton>
-    </NCard>
-  </NSpace>
-  <!-- 底部Tab栏 -->
-  <NTabs
-    default-value="calendar"
-    size="small"
-    class="fixedElement"
-    justify-content="space-evenly"
-    placement="bottom"
-    @update:value="handleTabChanged"
-  >
-    <!--
+      </NModal>
+
+      <NModal
+        v-model:show="showReasonModal"
+        class="custom-card"
+        preset="card"
+        title="请假"
+        size="huge"
+        :bordered="false"
+      >
+        <NFormItem path="cancelReason">
+          <NInput
+            v-model:value="cancelReason"
+            placeholder="请输入请假原因"
+            type="textarea"
+            maxlength="100"
+            :autosize="{
+              minRows: 3,
+              maxRows: 7
+            }"
+          />
+        </NFormItem>
+        <template #footer>
+          <NSpace justify="end">
+            <NButton @click="closeCancelModal()">取消</NButton>
+            <NButton @click="updateIsCancelled()">提交</NButton>
+          </NSpace>
+        </template>
+      </NModal>
+    </div>
+    <NSpace v-else vertical align="center" style="height: 400px">
+      <NCard size="small" :bordered="false">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+      </NCard>
+      <NCard size="small" content-style="text-align:center;">
+        还没有关联的学生，去找到您的孩子并关联吧
+        <br />
+        <br />
+        <NButton>点击这里去关联</NButton>
+      </NCard>
+    </NSpace>
+    <!-- 底部Tab栏 -->
+    <NTabs
+      default-value="calendar"
+      size="small"
+      class="fixedElement"
+      justify-content="space-evenly"
+      placement="bottom"
+      @update:value="handleTabChanged"
+    >
+      <!--
  <NTab name="home" tab="首页">
         <template #default>
           <div class="tab-title">
@@ -314,21 +322,22 @@ onMounted(async () => {
         </template>
       </NTab> 
 -->
-    <NTab name="calendar" tab="课程">
-      <template #default>
+      <NTab name="calendar" tab="课程">
+        <template #default>
+          <div class="tab-title">
+            <SvgIcon icon="mdi-book-education-outline" class="text-30px" />
+            课程
+          </div>
+        </template>
+      </NTab>
+      <NTab name="me" tab="我的">
         <div class="tab-title">
-          <SvgIcon icon="mdi-book-education-outline" class="text-30px" />
-          课程
+          <SvgIcon icon="mdi-account-outline" class="text-30px" />
+          我的
         </div>
-      </template>
-    </NTab>
-    <NTab name="me" tab="我的">
-      <div class="tab-title">
-        <SvgIcon icon="mdi-account-outline" class="text-30px" />
-        我的
-      </div>
-    </NTab>
-  </NTabs>
+      </NTab>
+    </NTabs>
+  </div>
 </template>
 
 <style scoped>
