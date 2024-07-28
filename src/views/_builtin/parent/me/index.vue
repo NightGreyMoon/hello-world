@@ -2,9 +2,11 @@
 import { computed, onMounted, ref, watch } from 'vue';
 import { NAvatar, NButton, NCard, NEllipsis, NFlex, NListItem, NSpace, NTabPane, NTabs } from 'naive-ui';
 import { useRouterPush } from '@/hooks/common/router';
+import { useAuthStore } from '@/store/modules/auth';
 import { getConfirmedStudents } from '@/service/api';
 
 const { routerPushByKey } = useRouterPush();
+const authStore = useAuthStore();
 
 const students = ref<Student[]>([]);
 const student = ref<Student>();
@@ -56,7 +58,7 @@ onMounted(() => {
     <div style="margin: 10px 30px">
       <NFlex align="center">
         <NAvatar round :size="48" src="/src/assets/imgs/soybean.jpg"></NAvatar>
-        <NEllipsis style="max-width: 240px">林多多家长</NEllipsis>
+        <NEllipsis style="max-width: 240px">{{ authStore.userInfo.userName }}</NEllipsis>
       </NFlex>
     </div>
     <!-- 学生卡片 -->
