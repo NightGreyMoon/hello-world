@@ -150,7 +150,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
+  <div v-if="students.length > 0">
+    <!-- 学生Tabs -->
     <NTabs type="bar" placement="top" animated justify-content="space-evenly" :default-value="0" size="large">
       <NTab
         v-for="(student, index) in students"
@@ -160,7 +161,7 @@ onMounted(async () => {
         @update:value="handleUpdateValue"
       ></NTab>
     </NTabs>
-
+    <!-- 日期Tabs -->
     <NTabs v-model:value="defaultTimeStamp" type="card" tab-style="text-align:center;" size="small">
       <NTabPane
         v-for="dateOption in dateOptions"
@@ -243,40 +244,6 @@ onMounted(async () => {
     </NList>
     <NEmpty v-else size="large" description="该日期暂无排课"></NEmpty>
 
-    <NTabs
-      default-value="calendar"
-      size="small"
-      class="fixedElement"
-      justify-content="space-evenly"
-      placement="bottom"
-      @update:value="handleTabChanged"
-    >
-      <!--
- <NTab name="home" tab="首页">
-        <template #default>
-          <div class="tab-title">
-            <SvgIcon icon="mdi-home-outline" class="text-30px" />
-            首页
-          </div>
-        </template>
-      </NTab> 
--->
-      <NTab name="calendar" tab="课程">
-        <template #default>
-          <div class="tab-title">
-            <SvgIcon icon="mdi-book-education-outline" class="text-30px" />
-            课程
-          </div>
-        </template>
-      </NTab>
-      <NTab name="me" tab="我的">
-        <div class="tab-title">
-          <SvgIcon icon="mdi-account-outline" class="text-30px" />
-          我的
-        </div>
-      </NTab>
-    </NTabs>
-
     <NModal v-model:show="showModal" class="custom-card" preset="card" title="教师评语" size="huge" :bordered="false">
       <NInput
         v-model:value="attendanceComment"
@@ -310,6 +277,58 @@ onMounted(async () => {
       </template>
     </NModal>
   </div>
+  <NSpace v-else vertical align="center" style="height: 400px">
+    <NCard size="small" :bordered="false">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+    </NCard>
+    <NCard size="small" content-style="text-align:center;">
+      还没有关联的学生，去找到您的孩子并关联吧
+      <br />
+      <br />
+      <NButton>点击这里去关联</NButton>
+    </NCard>
+  </NSpace>
+  <!-- 底部Tab栏 -->
+  <NTabs
+    default-value="calendar"
+    size="small"
+    class="fixedElement"
+    justify-content="space-evenly"
+    placement="bottom"
+    @update:value="handleTabChanged"
+  >
+    <!--
+ <NTab name="home" tab="首页">
+        <template #default>
+          <div class="tab-title">
+            <SvgIcon icon="mdi-home-outline" class="text-30px" />
+            首页
+          </div>
+        </template>
+      </NTab> 
+-->
+    <NTab name="calendar" tab="课程">
+      <template #default>
+        <div class="tab-title">
+          <SvgIcon icon="mdi-book-education-outline" class="text-30px" />
+          课程
+        </div>
+      </template>
+    </NTab>
+    <NTab name="me" tab="我的">
+      <div class="tab-title">
+        <SvgIcon icon="mdi-account-outline" class="text-30px" />
+        我的
+      </div>
+    </NTab>
+  </NTabs>
 </template>
 
 <style scoped>

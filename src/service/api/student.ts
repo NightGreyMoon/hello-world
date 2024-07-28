@@ -98,3 +98,11 @@ export function allStudent() {
     method: 'get'
   });
 }
+
+// 根据关键字匹配待确认关联的学生
+export function studentsToConfirm(keyboard: string) {
+  return request<Student>({
+    url: `/Student/AllToConfrim?keyword=${keyboard}`,
+    method: 'get'
+  });
+}

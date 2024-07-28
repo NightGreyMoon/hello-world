@@ -51,6 +51,7 @@ onMounted(() => {
 
 <template>
   <NCard header-style="text-align: center" :bordered="false">
+    <!-- 家长信息 -->
     <template #header>我的比弗利</template>
     <div style="margin: 10px 30px">
       <NFlex align="center">
@@ -58,7 +59,14 @@ onMounted(() => {
         <NEllipsis style="max-width: 240px">林多多家长</NEllipsis>
       </NFlex>
     </div>
-    <NCard v-if="students.length == 1" size="huge">
+    <!-- 学生卡片 -->
+    <NCard v-if="students.length == 0" size="small" content-style="text-align:center;">
+      还没有关联的学生，去找到您的孩子并关联吧
+      <br />
+      <br />
+      <NButton @click="goConfirmStudents()">点击这里去关联</NButton>
+    </NCard>
+    <NCard v-else-if="students.length == 1" size="small">
       <strong>{{ students[0].name }}</strong>
       <br />
       就读学校：{{ students[0].school }}
@@ -85,16 +93,19 @@ onMounted(() => {
         </NCard>
       </NCarouselItem>
     </NCarousel>
-    <!--
- <div style="margin: 10px 2px">
-      <NButton type="primary" block>
+
+    <div style="margin: 10px 2px">
+      <!--
+ <NButton type="primary" block>
         <template #icon>
           <SvgIcon icon="mdi-plus-thick" />
         </template>
         课程报名
-      </NButton>
-    </div> 
+      </NButton> 
 -->
+    </div>
+
+    <!-- 菜单项 -->
     <NList bordered>
       <NListItem>
         <NButton text block @click="goConfirmStudents">
@@ -134,6 +145,7 @@ onMounted(() => {
       </NListItem>
     </NList>
   </NCard>
+  <!-- 底部Tab栏 -->
   <NTabs
     default-value="me"
     size="small"

@@ -71,8 +71,8 @@ const ForceOffline = (msg: any) => {
 };
 onMounted(async () => {
   console.log('开始');
-  signalR.on('PublicNotice', receiveNotice);
-  signalR.on('ForceOffline', ForceOffline);
+  // signalR.on('PublicNotice', receiveNotice);
+  // signalR.on('ForceOffline', ForceOffline);
 });
 </script>
 
