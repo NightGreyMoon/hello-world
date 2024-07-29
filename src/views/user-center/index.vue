@@ -57,10 +57,10 @@ async function handleSubmit() {
 <template>
   <div class="min-h-600px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <NCard title="个人信息" style="margin-bottom: 16px">
-      <NTabs type="line" animated pane-style="width:600px">
+      <NTabs type="line" animated>
         <!-- <NTabPane name="changeInfo" tab="信息修改"></NTabPane> -->
         <NTabPane name="changePwd" tab="密码修改">
-          <NFlex justify="center">
+          <NFlex vertical align="center">
             <NForm ref="formRef" :model="model" :rules="rules" size="large" :show-label="false">
               <NFormItem path="account">
                 <NInput v-model:value="model.account" :placeholder="$t('page.login.common.userNamePlaceholder')" />
