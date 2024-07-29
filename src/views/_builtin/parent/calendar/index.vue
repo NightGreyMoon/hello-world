@@ -131,6 +131,11 @@ function closeCancelModal() {
   showReasonModal.value = false;
 }
 
+function goConfirmStudents() {
+  routerPushByKey('parent_confirm-student');
+  // window.location = '#/parent/confirm-student';
+}
+
 watch(defaultTimeStamp, () => {
   if (defaultTimeStamp.value > 0) {
     loadToday();
@@ -286,7 +291,7 @@ onMounted(async () => {
       </NModal>
     </div>
     <NSpace v-else vertical align="center" style="height: 400px">
-      <NCard size="small" :bordered="false">
+      <div>
         <br />
         <br />
         <br />
@@ -295,12 +300,12 @@ onMounted(async () => {
         <br />
         <br />
         <br />
-      </NCard>
+      </div>
       <NCard size="small" content-style="text-align:center;">
         还没有关联的学生，去找到您的孩子并关联吧
         <br />
         <br />
-        <NButton>点击这里去关联</NButton>
+        <NButton @click="goConfirmStudents()">点击这里去关联</NButton>
       </NCard>
     </NSpace>
     <!-- 底部Tab栏 -->
