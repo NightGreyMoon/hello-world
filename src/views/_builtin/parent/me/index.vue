@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
-import { NAvatar, NButton, NCard, NEllipsis, NFlex, NListItem, NSpace, NTabPane, NTabs } from 'naive-ui';
+import { NAvatar, NButton, NCard, NEllipsis, NFlex, NListItem, NTabPane, NTabs, useMessage } from 'naive-ui';
 import { useRouterPush } from '@/hooks/common/router';
 import { useAuthStore } from '@/store/modules/auth';
 import { getConfirmedStudents } from '@/service/api';
@@ -10,6 +10,8 @@ const authStore = useAuthStore();
 
 const students = ref<Student[]>([]);
 const student = ref<Student>();
+
+const message = useMessage();
 
 const studectIndex = ref<0>;
 
@@ -35,13 +37,12 @@ function goConfirmStudents() {
 }
 
 function goChangePwd() {
-  routerPushByKey('user-center');
-  // window.location = '#/parent/confirm-student';
+  // routerPushByKey('user-center');
+  message.info('该功能即将上线，敬请期待');
 }
 
 function goLessons() {
-  routerPushByKey('parent_confirm-student');
-  // window.location = '/parent/lesson';
+  routerPushByKey('parent_lesson');
 }
 
 function changeStudent(currentIndex: number) {
@@ -135,7 +136,7 @@ onMounted(() => {
         </NListItem>
         <NListItem>
           <template #suffix>></template>
-          <NButton text>
+          <NButton text block @click="goChangePwd()">
             <template #icon>
               <SvgIcon icon="mdi-script-text-outline" />
             </template>
@@ -144,7 +145,7 @@ onMounted(() => {
         </NListItem>
         <NListItem>
           <template #suffix>></template>
-          <NButton text @click="goChangePwd()">
+          <NButton text block @click="goChangePwd()">
             <template #icon>
               <SvgIcon icon="mdi-key-chain-variant" />
             </template>
