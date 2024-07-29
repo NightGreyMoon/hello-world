@@ -34,6 +34,11 @@ function goConfirmStudents() {
   // window.location = '#/parent/confirm-student';
 }
 
+function goChangePwd() {
+  routerPushByKey('user-center');
+  // window.location = '#/parent/confirm-student';
+}
+
 function goLessons() {
   routerPushByKey('parent_confirm-student');
   // window.location = '/parent/lesson';
@@ -139,7 +144,7 @@ onMounted(() => {
         </NListItem>
         <NListItem>
           <template #suffix>></template>
-          <NButton text>
+          <NButton text @click="goChangePwd()">
             <template #icon>
               <SvgIcon icon="mdi-key-chain-variant" />
             </template>
